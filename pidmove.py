@@ -1,8 +1,8 @@
-# main.py
-# Created on 6 Jul 2021 for Team Pheasant.
+# pidmove.py
+# Created on 7 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
-# Main program.
+# Module for movement based on PID. Includes programs for line tracking, line squaring, and gyro movement.
 
 
 from pybricks.hubs import EV3Brick
@@ -11,6 +11,14 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 
-import pidmove
+class PIDLoop:
+    pass
 
-bot = EV3Brick()
+class LineTrack(PIDLoop):
+    pass
+
+class LineSquare(PIDLoop):
+    pass
+
+class GyroStraight(PIDLoop):
+    pass
