@@ -10,6 +10,7 @@ from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
 from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
+
 from enum import Enum, auto
 
 class PIDLoop:
@@ -37,16 +38,23 @@ class LineTrack(PIDLoop):
     kd_DEFAULT = None
 
     def __init__(self,
-                 threshold: int,
                  trackingEdge: LineEdge,
                  port: Port,
+                 speed: float,
+                 stopCondition: function,
+                 threshold: int,
                  kp: float = kp_DEFAULT,
                  ki: float = ki_DEFAULT,
                  kd: float = kd_DEFAULT) -> None:
 
-        super().__init__(threshold, kp, ki, kd)
         self.trackingEdge = trackingEdge
         self.port = port
+        self.speed = speed
+        self.stopCondition = stopCondition
+        super().__init__(threshold, kp, ki, kd)
+
+    def loop(self):
+        pass
 
 class LineSquare(PIDLoop):
     
@@ -56,14 +64,14 @@ class LineSquare(PIDLoop):
     kd_DEFAULT = None
 
     def __init__(self,
-                 threshold: int,
                  ports: (Port),
+                 threshold: int,
                  kp: float = kp_DEFAULT,
                  ki: float = ki_DEFAULT,
                  kd: float = kd_DEFAULT) -> None:
 
-        super().__init__(threshold, kp, ki, kd)
         self.ports = ports
+        super().__init__(threshold, kp, ki, kd)
 
 class GyroStraight(PIDLoop):
     
@@ -73,11 +81,18 @@ class GyroStraight(PIDLoop):
     kd_DEFAULT = None
 
     def __init__(self,
-                 threshold: int,
                  port: Port,
+                 speed: float,
+                 stopCondition: function,
+                 threshold: int,
                  kp: float = kp_DEFAULT,
                  ki: float = ki_DEFAULT,
                  kd: float = kd_DEFAULT) -> None:
 
-        super().__init__(threshold, kp, ki, kd)
         self.port = port
+        self.speed = speed
+        self.stopCondition = stopCondition
+        super().__init__(threshold, kp, ki, kd)
+
+    def loop(self):
+        pass
