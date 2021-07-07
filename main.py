@@ -11,6 +11,6 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 
-import pidmove
+import movement
 
 bot = EV3Brick()
