@@ -26,6 +26,25 @@ class PIDLoop:
         self.ki = ki
         self.kd = kd
 
+        self.prevError = 0
+        self.integral = 0
+
+    def update(error):
+        
+        # Proportional term
+        pTerm = self.kp * error
+
+        # Integral term
+        self.integral += error
+        iTerm = self.integral * ki
+
+        # Differential term
+        dTerm = (error - self.prevError) * self.kd
+
+        self.prevError = error
+
+        return pTerm + iTerm + dTerm
+
 class LineEdge(Enum):
     LEFT = auto()
     RIGHT = auto()
