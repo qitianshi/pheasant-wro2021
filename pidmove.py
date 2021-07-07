@@ -32,7 +32,7 @@ class LineEdge(Enum):
 
 class LineTrack(PIDLoop):
 
-    # TODO: Add default tuning values for line tracking
+    # TODO: Add default tuning values for line tracking.
     kp_DEFAULT = None
     ki_DEFAULT = None
     kd_DEFAULT = None
@@ -58,7 +58,7 @@ class LineTrack(PIDLoop):
 
 class LineSquare(PIDLoop):
     
-    # TODO: Add default tuning values for line squaring
+    # TODO: Add default tuning values for line squaring.
     kp_DEFAULT = None
     ki_DEFAULT = None
     kd_DEFAULT = None
@@ -75,7 +75,7 @@ class LineSquare(PIDLoop):
 
 class GyroStraight(PIDLoop):
     
-    # TODO: Add default tuning values for gyro straight
+    # TODO: Add default tuning values for gyro straight.
     kp_DEFAULT = None
     ki_DEFAULT = None
     kd_DEFAULT = None
@@ -84,7 +84,7 @@ class GyroStraight(PIDLoop):
                  port: Port,
                  speed: float,
                  stopCondition: function,
-                 threshold: int,
+                 angle: int,
                  kp: float = kp_DEFAULT,
                  ki: float = ki_DEFAULT,
                  kd: float = kd_DEFAULT) -> None:
@@ -92,7 +92,23 @@ class GyroStraight(PIDLoop):
         self.port = port
         self.speed = speed
         self.stopCondition = stopCondition
-        super().__init__(threshold, kp, ki, kd)
+        super().__init__(angle, kp, ki, kd)
 
     def loop(self):
         pass
+
+class GyroTurn(GyroStraight):
+
+    # TODO: Add default tuning values for gyro turn.
+    kp_DEFAULT = None
+    ki_DEFAULT = None
+    kd_DEFAULT = None
+
+    def __init__(self,
+                 port: Port,
+                 angle: int,
+                 kp: float = kp_DEFAULT,
+                 ki: float = ki_DEFAULT,
+                 kd: float = kd_DEFAULT):
+
+        super().__init__(port, 0, lambda: abs(GyroSensor.angle() - angle) < 1, angle, kp, ki, kd)       # Lambda expression for stop condition may need to be modified for its margin of error.
