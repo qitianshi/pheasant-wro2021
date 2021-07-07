@@ -10,6 +10,13 @@
 			"request": "launch",
 			"program": "/home/robot/${workspaceRootFolderName}/main.py",
 			"interactiveTerminal": false
+		},
+		{
+			"name": "Python: Current File",
+			"type": "python",
+			"request": "launch",
+			"program": "${file}",
+			"console": "integratedTerminal"
 		}
 	]
 }
