@@ -5,8 +5,12 @@
 # Implements line-tracking movement using a reflected light intensity sensor.
 
 
-from pybricks.ev3devices import Motor, ColorSensor
-from pybricks.parameters import Port
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
+from pybricks.parameters import Port, Stop, Direction, Button, Color
+from pybricks.tools import wait, StopWatch, DataLog
+from pybricks.robotics import DriveBase
+
 from .PIDLoop import PIDLoop
 from enum import Enum, auto
 
