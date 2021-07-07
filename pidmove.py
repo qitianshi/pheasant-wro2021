@@ -53,8 +53,11 @@ class LineTrack(PIDLoop):
         self.stopCondition = stopCondition
         super().__init__(threshold, kp, ki, kd)
 
-    def loop(self):
-        pass
+        self.__run()
+
+    def __run(self):
+        while not self.stopCondition:
+            pass
 
 class LineSquare(PIDLoop):
     
@@ -72,6 +75,11 @@ class LineSquare(PIDLoop):
 
         self.ports = ports
         super().__init__(threshold, kp, ki, kd)
+
+        self.__run()
+
+    def __run(self):
+        pass
 
 class GyroStraight(PIDLoop):
     
@@ -94,8 +102,11 @@ class GyroStraight(PIDLoop):
         self.stopCondition = stopCondition
         super().__init__(angle, kp, ki, kd)
 
-    def loop(self):
-        pass
+        self.__run()
+
+    def __run(self):
+        while not self.stopCondition:
+            pass
 
 class GyroTurn(GyroStraight):
 
@@ -112,3 +123,8 @@ class GyroTurn(GyroStraight):
                  kd: float = kd_DEFAULT):
 
         super().__init__(port, 0, lambda: abs(GyroSensor.angle() - angle) < 1, angle, kp, ki, kd)       # Lambda expression for stop condition may need to be modified for its margin of error.
+
+        self.__run()
+
+    def __run(self):
+        pass
