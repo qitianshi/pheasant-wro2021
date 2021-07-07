@@ -38,5 +38,5 @@ class GyroStraight(PIDLoop):
 
     # TODO: Implement movement control.
     def __run(self):
-        while not self.stopCondition:
+        while not self.stopCondition():
             pass
