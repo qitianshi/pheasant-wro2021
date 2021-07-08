@@ -1,3 +1,5 @@
+#!/usr/bin/env pybricks-micropython
+
 # main.py
 # Created on 6 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
