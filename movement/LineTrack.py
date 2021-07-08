@@ -33,7 +33,7 @@ class LineTrack(PIDLoop):
                  threshold: int,
                  kp: float = kp_DEFAULT,
                  ki: float = ki_DEFAULT,
-                 kd: float = kd_DEFAULT) -> None:
+                 kd: float = kd_DEFAULT):
 
         self.trackingEdge = trackingEdge
         self.port = port

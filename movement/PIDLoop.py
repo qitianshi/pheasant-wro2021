@@ -21,7 +21,7 @@ class PIDLoop:
         self.prevError = 0
         self.integral = 0
 
-    def update(error):
+    def update(error: float) -> float:
 
         # Proportional term
         pTerm = self.kp * error

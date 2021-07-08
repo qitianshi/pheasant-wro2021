@@ -25,7 +25,7 @@ class LineSquare(PIDLoop):
                  threshold: int,
                  kp: float = kp_DEFAULT,
                  ki: float = ki_DEFAULT,
-                 kd: float = kd_DEFAULT) -> None:
+                 kd: float = kd_DEFAULT):
 
         self.ports = ports
         super().__init__(threshold, kp, ki, kd)
