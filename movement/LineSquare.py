@@ -13,25 +13,56 @@ from pybricks.robotics import DriveBase
 
 from .PIDLoop import PIDLoop
 
-class LineSquare(PIDLoop):
+class LinePosition:
+    AHEAD = 0
+    BEHIND = 0
 
-    # TODO: Add default tuning values for line squaring.
+class LineSquare:
+
     kp_DEFAULT = None
     ki_DEFAULT = None
     kd_DEFAULT = None
 
     def __init__(self,
-                 ports: (Port),
-                 threshold: int,
+                 leftThreshold: int,
+                 rightThreshold: int,
+                 linePosition: LinePosition,
+                 leftSensor: ColorSensor,
+                 rightSensor: ColorSensor,
+                 leftMotor: Motor,
+                 rightMotor: Motor,
                  kp: float = kp_DEFAULT,
                  ki: float = ki_DEFAULT,
                  kd: float = kd_DEFAULT):
 
-        self.ports = ports
-        super().__init__(threshold, kp, ki, kd)
+        # Line parameters
+        self.leftThreshold = leftThreshold
+        self.rightThreshold = rightThreshold
+        self.linePosition = linePosition
+
+        # Hardware parameters
+        self.leftSensor = leftSensor
+        self.rightSensor = rightSensor
+        self.leftMotor = leftMotor
+        self.rightMotor = rightMotor
+
+        # PID parameters
+        self.leftPid = PIDLoop(leftThreshold, kp, ki, kd)
+        self.rightPid = PIDLoop(rightThreshold, kp, ki, kd)
 
         self.__run()
 
-    # TODO: Implement movement control.
     def __run(self):
-        pass
+
+        directionMultiplier = 1 if self.linePosition == LinePosition.AHEAD else -1
+        
+        while not ((self.leftSensor.reflection() == self.leftThreshold and self.leftMotor.speed() == 0) and (self.rightSensor.reflection() == self.rightThreshold and self.rightMotor.speed() == 0)):
+
+            leftMotor.run(leftPid.update() * directionMultiplier)
+            rightMotor.run(rightPid.update() * directionMultiplier)
+
+    @classmethod
+    def setDefaultTuning(cls, kp: float, ki: float, kd: float):
+        cls.kp_DEFAULT = kp
+        cls.ki_DEFAULT = ki
+        cls.kd_DEFAULT = kd
