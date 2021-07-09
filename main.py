@@ -15,6 +15,14 @@ from pybricks.robotics import DriveBase
 
 import movement
 
+# TODO: Add PID tuning values
+# Initialize PID settings
+movement.LineTrack.setDefaultTuning(None, None, None)
+movement.LineSquare.setDefaultTuning(None, None, None)
+movement.GyroStraight.setDefaultTuning(None, None, None)
+movement.GyroTurn.setDefaultTuning(None, None, None)
+
+# Initialize hardware
 bot = EV3Brick()
 leftColor = ColorSensor(Port.S2)
 rightColor = ColorSensor(Port.S3)
