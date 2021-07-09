@@ -15,28 +15,48 @@ from .PIDLoop import PIDLoop
 
 class GyroStraight(PIDLoop):
 
-    # TODO: Add default tuning values for gyro straight.
     kp_DEFAULT = None
     ki_DEFAULT = None
     kd_DEFAULT = None
 
     def __init__(self,
-                 port: Port,
+                 angle: int,
                  speed: float,
                  stopCondition,
-                 angle: int,
+                 sensor: GyroSensor,
+                 leftMotor: Motor,
+                 rightMotor: Motor,
                  kp: float = kp_DEFAULT,
                  ki: float = ki_DEFAULT,
                  kd: float = kd_DEFAULT):
 
-        self.port = port
+        # Angle parameters
+        self.angle = angle
+
+        # Movement parameters
         self.speed = speed
         self.stopCondition = stopCondition
+
+        # Hardware parameters
+        self.sensor = sensor
+        self.leftMotor = leftMotor
+        self.rightMotor = rightMotor
+
+        # PID parameters
         super().__init__(angle, kp, ki, kd)
 
         self.__run()
 
-    # TODO: Implement movement control.
     def __run(self):
         while not self.stopCondition():
-            pass
+            
+            output = self.update(self.sensor.angle() - self.angle)
+
+            self.leftMotor.run(self.speed + output)
+            self.rightMotor.run(self.speed - output)
+
+    @classmethod
+    def setDefaultTuning(cls, kp: float, ki: float, kd: float):
+        cls.kp_DEFAULT = kp
+        cls.ki_DEFAULT = ki
+        cls.kd_DEFAULT = kd
