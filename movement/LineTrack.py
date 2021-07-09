@@ -25,24 +25,45 @@ class LineTrack(PIDLoop):
     kd_DEFAULT = None
 
     def __init__(self,
+                 threshold: int,
                  trackingEdge: LineEdge,
-                 port: Port,
                  speed: float,
                  stopCondition,
-                 threshold: int,
+                 sensor: ColorSensor,
+                 leftMotor: Motor,
+                 rightMotor: Motor,
                  kp: float = kp_DEFAULT,
                  ki: float = ki_DEFAULT,
                  kd: float = kd_DEFAULT):
 
+        # Line parameters
+        self.threshold = threshold
         self.trackingEdge = trackingEdge
-        self.port = port
+
+        # Movement parameters
         self.speed = speed
         self.stopCondition = stopCondition
+
+        # Hardware parameters
+        self.sensor = sensor
+        self.leftMotor = leftMotor
+        self.rightMotor = rightMotor
+
+        # PID parameters
         super().__init__(threshold, kp, ki, kd)
 
         self.__run()
 
-    # TODO: Implement movement control.
     def __run(self):
         while not self.stopCondition():
-            pass
+
+            output = self.update(self.sensor.reflection() - self.threshold) * (1 if self.trackingEdge == LineEdge.LEFT else -1)
+
+            self.leftMotor.run(self.speed + output)
+            self.rightMotor.run(self.speed - output)
+
+    @classmethod
+    def setDefaultTuning(cls, kp: float, ki: float, kd: float):
+        cls.kp_DEFAULT = kp
+        cls.ki_DEFAULT = ki
+        cls.kd_DEFAULT = kd
