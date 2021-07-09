@@ -16,3 +16,7 @@ from pybricks.robotics import DriveBase
 import movement
 
 bot = EV3Brick()
+leftColor = ColorSensor(Port.S2)
+rightColor = ColorSensor(Port.S3)
+leftMotor = Motor(Port.B, positive_direction=Direction.COUNTERCLOCKWISE)
+rightMotor = Motor(Port.C, positive_direction=Direction.COUNTERCLOCKWISE)
