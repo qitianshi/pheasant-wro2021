@@ -12,11 +12,10 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 
 from .PIDLoop import PIDLoop
-from enum import Enum, auto
 
-class LineEdge(Enum):
-    LEFT = auto()
-    RIGHT = auto()
+class LineEdge():           # Enum workaround (MicroPython does not support enums).
+    LEFT = 0
+    RIGHT = 1
 
 class LineTrack(PIDLoop):
 
