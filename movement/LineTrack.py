@@ -19,7 +19,6 @@ class LineEdge():           # Enum workaround (MicroPython does not support enum
 
 class LineTrack(PIDLoop):
 
-    # TODO: Add default tuning values for line tracking.
     kp_DEFAULT = None
     ki_DEFAULT = None
     kd_DEFAULT = None
