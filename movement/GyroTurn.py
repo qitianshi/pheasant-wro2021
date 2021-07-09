@@ -15,23 +15,26 @@ from .GyroStraight import GyroStraight
 
 class GyroTurn(GyroStraight):
 
-    # TODO: Add default tuning values for gyro turn.
     kp_DEFAULT = None
     ki_DEFAULT = None
     kd_DEFAULT = None
 
     def __init__(self,
-                 port: Port,
                  angle: int,
+                 sensor: GyroSensor,
+                 leftMotor: Motor,
+                 rightMotor: Motor,
                  kp: float = kp_DEFAULT,
                  ki: float = ki_DEFAULT,
                  kd: float = kd_DEFAULT):
 
         # Lambda expression for stop condition may need to be modified for its margin of error.
-        super().__init__(port, 0, lambda: abs(GyroSensor.angle() - angle) < 1, angle, kp, ki, kd)
+        stopCondition = lambda: sensor.angle() == angle and leftMotor.speed() == 0 and rightMotor().speed == 0
 
-        self.__run()
+        super().__init__(angle, 0, stopCondition, sensor, leftMotor, rightMotor, kp, ki, kd)
 
-    # TODO: Implement movement control.
-    def __run(self):
-        pass
+    @classmethod
+    def setDefaultTuning(cls, kp: float, ki: float, kd: float):
+        cls.kp_DEFAULT = kp
+        cls.ki_DEFAULT = ki
+        cls.kd_DEFAULT = kd
