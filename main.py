@@ -14,6 +14,7 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 
 import movement
+import runlogic
 
 # TODO: Add PID tuning values
 # Initialize PID settings
