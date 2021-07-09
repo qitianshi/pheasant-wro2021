@@ -14,21 +14,21 @@ class PIDLoop:
                  kd: float):
 
         self.setpoint = setpoint
-        self.kp = ki
+        self.kp = kp
         self.ki = ki
         self.kd = kd
 
         self.prevError = 0
         self.integral = 0
 
-    def update(error: float) -> float:
+    def update(self, error: float) -> float:
 
         # Proportional term
-        pTerm = self.kp * error
+        pTerm = error * self.kp
 
         # Integral term
         self.integral += error
-        iTerm = self.integral * ki
+        iTerm = self.integral * self.ki
 
         # Differential term
         dTerm = (error - self.prevError) * self.kd
