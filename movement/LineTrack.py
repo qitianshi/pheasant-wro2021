@@ -13,7 +13,7 @@ from pybricks.robotics import DriveBase
 
 from .PIDLoop import PIDLoop
 
-class LineEdge():           # Enum workaround (MicroPython does not support enums).
+class LineEdge:           # Enum workaround (MicroPython does not support enums).
     LEFT = 0
     RIGHT = 1
 
@@ -54,9 +54,12 @@ class LineTrack(PIDLoop):
         self.__run()
 
     def __run(self):
+
+        directionMultiplier = 1 if self.trackingEdge == LineEdge.LEFT else -1
+
         while not self.stopCondition():
 
-            output = self.update(self.sensor.reflection() - self.threshold) * (1 if self.trackingEdge == LineEdge.LEFT else -1)
+            output = self.update(self.sensor.reflection() - self.threshold) * directionMultiplier
 
             self.leftMotor.run(self.speed + output)
             self.rightMotor.run(self.speed - output)
