@@ -14,9 +14,9 @@ def blockPlacement(surplusColor, houses):
 
     :param surplusColor: The color of the surplus energy.
     :type surplusColor: Color
-    :param houses: The energy requirement of each house. Must be in the format ((Color, Color), (Color, Color), (Color, Color)), arranged from left to right.
+    :param houses: The energy requirement of each house, arranged from left to right.
     :type houses: ((Color, Color), (Color, Color), (Color, Color))
-    :return: The placement of energy blocks for each house and the storage battery, in the format ((Color, Color), (Color, Color), (Color, Color), (Color, Color)), arranged from the left house to the right house, then the storage battery.
+    :return: The placement of energy blocks for each house and the storage battery, arranged from the left house to the right house, then the storage battery.
     :rtype: [(Color, Color), (Color, Color), (Color, Color), (Color, Color)]
     """
 
