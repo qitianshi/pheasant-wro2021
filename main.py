@@ -25,7 +25,11 @@ movement.GyroTurn.setDefaultTuning(None, None, None)
 
 # Initialize hardware
 bot = EV3Brick()
+frontColor = ColorSensor(Port.S1)
 leftColor = ColorSensor(Port.S2)
 rightColor = ColorSensor(Port.S3)
+gyro = GyroSensor(Port.S4)
+frontClaw = Motor(Port.A)
 leftMotor = Motor(Port.B, positive_direction=Direction.COUNTERCLOCKWISE)
 rightMotor = Motor(Port.C, positive_direction=Direction.COUNTERCLOCKWISE)
+rearClaw = Motor(Port.D)
