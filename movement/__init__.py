@@ -9,3 +9,4 @@ from .LineTrack import *
 from .LineSquare import *
 from .GyroStraight import *
 from .GyroTurn import *
+from .EncoderStraight import *
