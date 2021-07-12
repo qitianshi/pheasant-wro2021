@@ -17,7 +17,7 @@ class LinePosition:
     AHEAD = 0
     BEHIND = 0
 
-class LineSquare:
+class LineSquare(PIDLoop):
 
     kp_DEFAULT = None
     ki_DEFAULT = None
@@ -60,9 +60,3 @@ class LineSquare:
 
             leftMotor.run(leftPid.update() * directionMultiplier)
             rightMotor.run(rightPid.update() * directionMultiplier)
-
-    @classmethod
-    def setDefaultTuning(cls, kp: float, ki: float, kd: float):
-        cls.kp_DEFAULT = kp
-        cls.ki_DEFAULT = ki
-        cls.kd_DEFAULT = kd

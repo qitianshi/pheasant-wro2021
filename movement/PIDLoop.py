@@ -36,3 +36,9 @@ class PIDLoop:
         self.prevError = error
 
         return pTerm + iTerm + dTerm
+
+    @classmethod
+    def setDefaultTuning(cls, kp: float, ki: float, kd: float):
+        cls.kp_DEFAULT = kp
+        cls.ki_DEFAULT = ki
+        cls.kd_DEFAULT = kd

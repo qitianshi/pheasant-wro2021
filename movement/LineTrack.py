@@ -63,9 +63,3 @@ class LineTrack(PIDLoop):
 
             self.leftMotor.run(self.speed + output)
             self.rightMotor.run(self.speed - output)
-
-    @classmethod
-    def setDefaultTuning(cls, kp: float, ki: float, kd: float):
-        cls.kp_DEFAULT = kp
-        cls.ki_DEFAULT = ki
-        cls.kd_DEFAULT = kd

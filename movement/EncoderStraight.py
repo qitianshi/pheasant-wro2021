@@ -5,13 +5,21 @@
 # Implements straight-line movement using a motor encoder.
 
 
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
+from pybricks.parameters import Port, Stop, Direction, Button, Color
+from pybricks.tools import wait, StopWatch, DataLog
+from pybricks.robotics import DriveBase
+
+from .PIDLoop import PIDLoop
+
 class EncoderStraight(PIDLoop):
 
     kp_DEFAULT = None
     ki_DEFAULT = None
     kd_DEFAULT = None
 
-    def __init__(self
+    def __init__(self,
                  speed: float,
                  stopCondition,
                  leftMotor,
@@ -41,9 +49,3 @@ class EncoderStraight(PIDLoop):
 
             self.leftMotor.run(self.speed + output)
             self.rightMotor.run(self.speed - output)
-
-    @classmethod
-    def setDefaultTuning(cls, kp: float, ki: float, kd: float):
-        cls.kp_DEFAULT = kp
-        cls.ki_DEFAULT = ki
-        cls.kd_DEFAULT = kd

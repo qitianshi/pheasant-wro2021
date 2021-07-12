@@ -32,9 +32,3 @@ class GyroTurn(GyroStraight):
         stopCondition = lambda: sensor.angle() == angle and leftMotor.speed() == 0 and rightMotor().speed == 0
 
         super().__init__(angle, 0, stopCondition, sensor, leftMotor, rightMotor, kp, ki, kd)
-
-    @classmethod
-    def setDefaultTuning(cls, kp: float, ki: float, kd: float):
-        cls.kp_DEFAULT = kp
-        cls.ki_DEFAULT = ki
-        cls.kd_DEFAULT = kd
