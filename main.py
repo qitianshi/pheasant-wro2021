@@ -24,7 +24,7 @@ movement.GyroStraight.setDefaultTuning(None, None, None)
 movement.GyroTurn.setDefaultTuning(None, None, None)
 
 # Initialize hardware
-bot = EV3Brick()
+brick = EV3Brick()
 frontColor = ColorSensor(Port.S1)
 leftColor = ColorSensor(Port.S2)
 rightColor = ColorSensor(Port.S3)
