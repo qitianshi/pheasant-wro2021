@@ -51,9 +51,9 @@ class LineTrack(PIDLoop):
         # PID parameters
         super().__init__(threshold, kp, ki, kd)
 
-        self.__run()
+        self.run()
 
-    def __run(self):
+    def run(self):
 
         directionMultiplier = 1 if self.trackingEdge == LineEdge.LEFT else -1
 

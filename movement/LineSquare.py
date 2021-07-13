@@ -50,9 +50,9 @@ class LineSquare(PIDLoop):
         self.leftPid = PIDLoop(leftThreshold, kp, ki, kd)
         self.rightPid = PIDLoop(rightThreshold, kp, ki, kd)
 
-        self.__run()
+        self.run()
 
-    def __run(self):
+    def run(self):
 
         directionMultiplier = 1 if self.linePosition == LinePosition.AHEAD else -1
         

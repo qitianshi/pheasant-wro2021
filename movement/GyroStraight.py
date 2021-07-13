@@ -45,9 +45,9 @@ class GyroStraight(PIDLoop):
         # PID parameters
         super().__init__(angle, kp, ki, kd)
 
-        self.__run()
+        self.run()
 
-    def __run(self):
+    def run(self):
         while not self.stopCondition():
             
             output = self.update(self.sensor.angle() - self.angle)
