@@ -9,6 +9,7 @@
 
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
+from pybricks.iodevices import Ev3devSensor
 from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
@@ -25,7 +26,7 @@ movement.GyroTurn.setDefaultTuning(None, None, None)
 
 # Initialize hardware
 brick = EV3Brick()
-frontColor = ColorSensor(Port.S1)
+frontColor = Ev3devSensor(Port.S1)
 leftColor = ColorSensor(Port.S2)
 rightColor = ColorSensor(Port.S3)
 gyro = GyroSensor(Port.S4)
