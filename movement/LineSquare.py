@@ -60,5 +60,5 @@ class LineSquare(PIDLoop):
         
         while not ((self.leftSensor.reflection() == self.leftThreshold and self.leftMotor.speed() == 0) and (self.rightSensor.reflection() == self.rightThreshold and self.rightMotor.speed() == 0)):
 
-            leftMotor.run(leftPid.update() * directionMultiplier)
-            rightMotor.run(rightPid.update() * directionMultiplier)
+            self.leftMotor.run(self.leftPid.update() * directionMultiplier)
+            self.rightMotor.run(self.rightPid.update() * directionMultiplier)
