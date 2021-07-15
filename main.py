@@ -34,3 +34,7 @@ frontClaw = Motor(Port.A)
 leftMotor = Motor(Port.B, positive_direction=Direction.COUNTERCLOCKWISE)
 rightMotor = Motor(Port.C, positive_direction=Direction.CLOCKWISE)
 rearClaw = Motor(Port.D)
+
+# Constants
+LEFT_THRESHOLD = 50
+RIGHT_THRESHOLD = 48
