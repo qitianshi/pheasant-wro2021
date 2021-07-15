@@ -22,7 +22,7 @@ import runlogic
 movement.LineTrack.setDefaultTuning(None, None, None)
 movement.LineSquare.setDefaultTuning(None, None, None)
 movement.GyroStraight.setDefaultTuning(None, None, None)
-movement.GyroTurn.setDefaultTuning(None, None, None)
+movement.GyroTurn.setDefaultTuning(None, None, None, None, None, None)
 
 # Initialize hardware
 brick = EV3Brick()
