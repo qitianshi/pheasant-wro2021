@@ -4,8 +4,9 @@
 
 # Computes placement of energy unit blocks.
 
-
-from pybricks.parameters import Color
+# pylint: disable=F0401
+from pybricks.parameters import Color       # type: ignore
+# pylint: enable=F0401
 
 def blockPlacement(surplusColor, houses):
     

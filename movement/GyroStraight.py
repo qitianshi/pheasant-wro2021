@@ -5,11 +5,13 @@
 # Implements straight-line movement using a gyroscopic sensor.
 
 
-from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
-from pybricks.parameters import Port, Stop, Direction, Button, Color
-from pybricks.tools import wait, StopWatch, DataLog
-from pybricks.robotics import DriveBase
+# pylint: disable=F0401
+from pybricks.hubs import EV3Brick                                          # type: ignore
+from pybricks.ev3devices import Motor, ColorSensor, GyroSensor              # type: ignore
+from pybricks.parameters import Port, Stop, Direction, Button, Color        # type: ignore
+from pybricks.tools import wait, StopWatch, DataLog                         # type: ignore
+from pybricks.robotics import DriveBase                                     # type: ignore
+# pylint: enable=F0401
 
 from .PIDLoop import PIDLoop
 
