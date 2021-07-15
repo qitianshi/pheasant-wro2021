@@ -50,9 +50,9 @@ class GyroTurn(PIDLoop):
 
         # PID parameters
         if leftDriven and rightDriven:
-            super().__init__(angle, kp_DOUBLE_DEFAULT, ki_DOUBLE_DEFAULT, kd_DOUBLE_DEFAULT)
+            super().__init__(angle, GyroTurn.kp_DOUBLE_DEFAULT, GyroTurn.ki_DOUBLE_DEFAULT, GyroTurn.kd_DOUBLE_DEFAULT)
         else:
-            super().__init__(angle, kp_SINGLE_DEFAULT, ki_SINGLE_DEFAULT, kd_SINGLE_DEFAULT)
+            super().__init__(angle, GyroTurn.kp_SINGLE_DEFAULT, GyroTurn.ki_SINGLE_DEFAULT, GyroTurn.kd_SINGLE_DEFAULT)
 
         self.run()
 
