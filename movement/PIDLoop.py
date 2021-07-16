@@ -7,6 +7,8 @@
 
 class PIDLoop:
 
+    INTEGRAL_LIMIT = None
+
     def __init__(self,
                  setpoint: int,
                  kp: float,
@@ -29,6 +31,9 @@ class PIDLoop:
         # Integral term
         self.integral += error
         iTerm = self.integral * self.ki
+        if self.__class__.INTEGRAL_LIMIT != None:       # Apply integral limit, if set.
+            self.integral = min(self.integral, self.__class__.INTEGRAL_LIMIT)
+            self.integral = max(self.integral, self.__class__.INTEGRAL_LIMIT * -1)
 
         # Differential term
         dTerm = (error - self.prevError) * self.kd
@@ -42,3 +47,7 @@ class PIDLoop:
         cls.kp_DEFAULT = kp
         cls.ki_DEFAULT = ki
         cls.kd_DEFAULT = kd
+
+    @classmethod
+    def setIntegralLimit(cls, limit: float):
+        cls.INTEGRAL_LIMIT = limit
