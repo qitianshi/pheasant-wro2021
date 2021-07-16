@@ -9,6 +9,7 @@
 # pylint: disable=F0401
 from pybricks.hubs import EV3Brick                                          # type: ignore
 from pybricks.ev3devices import Motor, ColorSensor, GyroSensor              # type: ignore
+from pybricks.nxtdevices import ColorSensor as NxtColorSensor               # type: ignore
 from pybricks.parameters import Port, Stop, Direction, Button, Color        # type: ignore
 from pybricks.tools import wait, StopWatch, DataLog                         # type: ignore
 from pybricks.robotics import DriveBase                                     # type: ignore
@@ -26,7 +27,7 @@ movement.GyroTurn.setDefaultTuning(None, None, None, None, None, None)
 
 # Initialize hardware
 brick = EV3Brick()
-frontColor = ColorSensor(Port.S1)
+frontColor = NxtColorSensor(Port.S1)
 leftColor = ColorSensor(Port.S2)
 rightColor = ColorSensor(Port.S3)
 gyro = GyroSensor(Port.S4)
