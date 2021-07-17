@@ -8,6 +8,7 @@
 class PIDLoop:
 
     INTEGRAL_LIMIT = None
+    OUTPUT_LIMIT = None
 
     def __init__(self,
                  setpoint: int,
@@ -31,7 +32,7 @@ class PIDLoop:
         # Integral term
         self.integral += error
         iTerm = self.integral * self.ki
-        if self.__class__.INTEGRAL_LIMIT != None:       # Apply integral limit, if set.
+        if self.__class__.INTEGRAL_LIMIT != None:       # Applies integral limit, if set.
             self.integral = min(self.integral, self.__class__.INTEGRAL_LIMIT)
             self.integral = max(self.integral, self.__class__.INTEGRAL_LIMIT * -1)
 
@@ -40,7 +41,12 @@ class PIDLoop:
 
         self.prevError = error
 
-        return pTerm + iTerm + dTerm
+        # Applies output limit, if set.
+        output = pTerm + iTerm + dTerm
+        output = min(output, self.__class__.OUTPUT_LIMIT)
+        output = max(output, self.__class__.OUTPUT_LIMIT * -1)
+
+        return output
 
     @classmethod
     def setDefaultTuning(cls, kp: float, ki: float, kd: float):
@@ -51,3 +57,7 @@ class PIDLoop:
     @classmethod
     def setIntegralLimit(cls, limit: float):
         cls.INTEGRAL_LIMIT = limit
+
+    @classmethod
+    def setOutputLimit(cls, limit: float):
+        cls.OUTPUT_LIMIT = limit
