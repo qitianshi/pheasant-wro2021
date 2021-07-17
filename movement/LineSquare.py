@@ -70,3 +70,6 @@ class LineSquare(PIDLoop):
 
             self.leftMotor.run(self.leftPid.update(self.leftSensor.reflection() - self.leftThreshold) * directionMultiplier)
             self.rightMotor.run(self.rightPid.update(self.rightSensor.reflection() - self.rightThreshold) * directionMultiplier)
+
+        self.leftMotor.hold()
+        self.rightMotor.hold()

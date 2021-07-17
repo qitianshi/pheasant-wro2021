@@ -82,6 +82,9 @@ class GyroTurn(PIDLoop):
             self.leftMotor.run(self.leftDriven * output)
             self.rightMotor.run(self.rightDriven * output * -1)
 
+        self.leftMotor.hold()
+        self.rightMotor.hold()
+
     @classmethod
     def setDefaultTuning(cls,
                          kpSingle: float,
