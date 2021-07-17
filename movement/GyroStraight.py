@@ -17,10 +17,6 @@ from .PIDLoop import PIDLoop
 
 class GyroStraight(PIDLoop):
 
-    kp_DEFAULT = None
-    ki_DEFAULT = None
-    kd_DEFAULT = None
-
     def __init__(self,
                  angle: int,
                  speed: float,
@@ -30,7 +26,9 @@ class GyroStraight(PIDLoop):
                  rightMotor: Motor,
                  kp: float = None,
                  ki: float = None,
-                 kd: float = None):
+                 kd: float = None,
+                 integralLimit: float = None,
+                 outputLimit: float = None):
 
         # Angle parameters
         self.angle = angle
@@ -48,13 +46,15 @@ class GyroStraight(PIDLoop):
         super().__init__(angle,
                          kp if kp != None else GyroStraight.kp_DEFAULT,
                          ki if ki != None else GyroStraight.ki_DEFAULT,
-                         kd if kd != None else GyroStraight.kd_DEFAULT)
+                         kd if kd != None else GyroStraight.kd_DEFAULT,
+                         integralLimit if integralLimit != None else GyroStraight.INTEGRAL_LIMIT_DEFAULT,
+                         outputLimit if outputLimit != None else GyroStraight.OUTPUT_LIMIT_DEFAULT)
 
         self.run()
 
     def run(self):
         while not self.stopCondition():
-            
+
             output = self.update(self.sensor.angle() - self.angle)
 
             self.leftMotor.run(self.speed + output)

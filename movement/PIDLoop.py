@@ -7,19 +7,27 @@
 
 class PIDLoop:
 
-    INTEGRAL_LIMIT = None
-    OUTPUT_LIMIT = None
+    kp_DEFAULT = None
+    ki_DEFAULT = None
+    kd_DEFAULT = None
+
+    INTEGRAL_LIMIT_DEFAULT = None
+    OUTPUT_LIMIT_DEFAULT = None
 
     def __init__(self,
                  setpoint: int,
                  kp: float,
                  ki: float,
-                 kd: float):
+                 kd: float,
+                 integralLimit: float,
+                 outputLimit: float):
 
         self.setpoint = setpoint
         self.kp = kp
         self.ki = ki
         self.kd = kd
+        self.integralLimit = integralLimit
+        self.outputLimit = outputLimit
 
         self.prevError = 0
         self.integral = 0
@@ -32,19 +40,19 @@ class PIDLoop:
         # Integral term
         self.integral += error
         iTerm = self.integral * self.ki
-        if self.__class__.INTEGRAL_LIMIT != None:       # Applies integral limit, if set.
-            self.integral = min(self.integral, self.__class__.INTEGRAL_LIMIT)
-            self.integral = max(self.integral, self.__class__.INTEGRAL_LIMIT * -1)
+        if self.integralLimit != None:       # Applies integral limit, if set.
+            self.integral = min(self.integral, self.integralLimit)
+            self.integral = max(self.integral, self.integralLimit * -1)
 
         # Differential term
         dTerm = (error - self.prevError) * self.kd
 
         self.prevError = error
 
-        # Applies output limit, if set.
         output = pTerm + iTerm + dTerm
-        output = min(output, self.__class__.OUTPUT_LIMIT)
-        output = max(output, self.__class__.OUTPUT_LIMIT * -1)
+        if self.outputLimit != None:                    # Applies output limit, if set.
+            output = min(output, self.outputLimit)
+            output = max(output, self.outputLimit * -1)
 
         return output
 
@@ -55,9 +63,9 @@ class PIDLoop:
         cls.kd_DEFAULT = kd
 
     @classmethod
-    def setIntegralLimit(cls, limit: float):
-        cls.INTEGRAL_LIMIT = limit
+    def setDefaultIntegralLimit(cls, limit: float):
+        cls.INTEGRAL_LIMIT_DEFAULT = limit
 
     @classmethod
-    def setOutputLimit(cls, limit: float):
-        cls.OUTPUT_LIMIT = limit
+    def setDefaultOutputLimit(cls, limit: float):
+        cls.OUTPUT_LIMIT_DEFAULT = limit

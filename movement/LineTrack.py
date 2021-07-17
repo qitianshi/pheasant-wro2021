@@ -21,10 +21,6 @@ class LineEdge:           # Enum workaround (MicroPython does not support enums)
 
 class LineTrack(PIDLoop):
 
-    kp_DEFAULT = None
-    ki_DEFAULT = None
-    kd_DEFAULT = None
-
     def __init__(self,
                  threshold: int,
                  trackingEdge: LineEdge,
@@ -35,7 +31,9 @@ class LineTrack(PIDLoop):
                  rightMotor: Motor,
                  kp: float = None,
                  ki: float = None,
-                 kd: float = None):
+                 kd: float = None,
+                 integralLimit: float = None,
+                 outputLimit: float = None):
 
         # Line parameters
         self.threshold = threshold
@@ -54,7 +52,9 @@ class LineTrack(PIDLoop):
         super().__init__(threshold,
                          kp if kp != None else LineTrack.kp_DEFAULT,
                          ki if ki != None else LineTrack.ki_DEFAULT,
-                         kd if kd != None else LineTrack.kd_DEFAULT)
+                         kd if kd != None else LineTrack.kd_DEFAULT,
+                         integralLimit if integralLimit != None else LineTrack.INTEGRAL_LIMIT_DEFAULT,
+                         outputLimit if outputLimit != None else LineTrack.OUTPUT_LIMIT_DEFAULT)
 
         self.run()
 

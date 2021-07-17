@@ -21,10 +21,6 @@ class LinePosition:
 
 class LineSquare(PIDLoop):
 
-    kp_DEFAULT = None
-    ki_DEFAULT = None
-    kd_DEFAULT = None
-
     def __init__(self,
                  leftThreshold: int,
                  rightThreshold: int,
@@ -33,9 +29,11 @@ class LineSquare(PIDLoop):
                  rightSensor: ColorSensor,
                  leftMotor: Motor,
                  rightMotor: Motor,
-                 kp: float = kp_DEFAULT,
-                 ki: float = ki_DEFAULT,
-                 kd: float = kd_DEFAULT):
+                 kp: float = None,
+                 ki: float = None,
+                 kd: float = None,
+                 integralLimit: float = None,
+                 outputLimit: float = None):
 
         # Line parameters
         self.leftThreshold = leftThreshold
@@ -49,8 +47,18 @@ class LineSquare(PIDLoop):
         self.rightMotor = rightMotor
 
         # PID parameters
-        self.leftPid = PIDLoop(leftThreshold, kp, ki, kd)
-        self.rightPid = PIDLoop(rightThreshold, kp, ki, kd)
+        self.leftPid = PIDLoop(leftThreshold,
+                               kp if kp != None else LineSquare.kp_DEFAULT,
+                               ki if ki != None else LineSquare.ki_DEFAULT,
+                               kd if kd != None else LineSquare.kd_DEFAULT,
+                               integralLimit if integralLimit != None else LineSquare.INTEGRAL_LIMIT_DEFAULT,
+                               outputLimit if outputLimit != None else LineSquare.OUTPUT_LIMIT_DEFAULT)
+        self.rightPid = PIDLoop(rightThreshold,
+                               kp if kp != None else LineSquare.kp_DEFAULT,
+                               ki if ki != None else LineSquare.ki_DEFAULT,
+                               kd if kd != None else LineSquare.kd_DEFAULT,
+                               integralLimit if integralLimit != None else LineSquare.INTEGRAL_LIMIT_DEFAULT,
+                               outputLimit if outputLimit != None else LineSquare.OUTPUT_LIMIT_DEFAULT)
 
         self.run()
 
