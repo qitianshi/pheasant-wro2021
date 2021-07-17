@@ -4,6 +4,7 @@
 
 # Computes placement of energy unit blocks.
 
+
 # pylint: disable=F0401
 from pybricks.parameters import Color       # type: ignore
 # pylint: enable=F0401

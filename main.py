@@ -6,6 +6,7 @@
 
 # Main program.
 
+
 # pylint: disable=F0401
 from pybricks.hubs import EV3Brick                                          # type: ignore
 from pybricks.ev3devices import Motor, ColorSensor, GyroSensor              # type: ignore
