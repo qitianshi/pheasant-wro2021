@@ -28,9 +28,9 @@ class GyroStraight(PIDLoop):
                  sensor: GyroSensor,
                  leftMotor: Motor,
                  rightMotor: Motor,
-                 kp: float = kp_DEFAULT,
-                 ki: float = ki_DEFAULT,
-                 kd: float = kd_DEFAULT):
+                 kp: float = None,
+                 ki: float = None,
+                 kd: float = None):
 
         # Angle parameters
         self.angle = angle
@@ -45,7 +45,10 @@ class GyroStraight(PIDLoop):
         self.rightMotor = rightMotor
 
         # PID parameters
-        super().__init__(angle, kp, ki, kd)
+        super().__init__(angle,
+                         kp if kp != None else GyroStraight.kp_DEFAULT,
+                         ki if ki != None else GyroStraight.ki_DEFAULT,
+                         kd if kd != None else GyroStraight.kd_DEFAULT)
 
         self.run()
 
