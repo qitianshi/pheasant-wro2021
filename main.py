@@ -23,7 +23,9 @@ import runlogic
 movement.LineTrack.setDefaultTuning(1.8, 0.001, 75)
 movement.LineTrack.setIntegralLimit(75)
 movement.LineSquare.setDefaultTuning(None, None, None)
-movement.GyroStraight.setDefaultTuning(None, None, None)
+movement.GyroStraight.setDefaultTuning(25, 0.3, 6000)
+movement.GyroStraight.setIntegralLimit(100)
+movement.GyroStraight.setOutputLimit(1000)
 movement.GyroTurn.setDefaultTuning(None, None, None, None, None, None)
 
 # Initialize hardware
