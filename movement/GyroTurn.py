@@ -75,7 +75,7 @@ class GyroTurn(PIDLoop):
 
     def run(self):
 
-        while not (self.sensor.angle() == self.angle and self.leftMotor.speed() == 0 and self.rightMotor().speed == 0):
+        while not (self.sensor.angle() == self.angle and self.leftMotor.speed() == 0 and self.rightMotor.speed() == 0):
 
             output = self.update(self.sensor.angle() - self.angle)
 
