@@ -20,7 +20,8 @@ import runlogic
 
 # TODO: Add PID tuning values
 # Initialize PID settings
-movement.LineTrack.setDefaultTuning(None, None, None)
+movement.LineTrack.setDefaultTuning(1.8, 0.001, 75)
+movement.LineTrack.setIntegralLimit(75)
 movement.LineSquare.setDefaultTuning(None, None, None)
 movement.GyroStraight.setDefaultTuning(None, None, None)
 movement.GyroTurn.setDefaultTuning(None, None, None, None, None, None)
