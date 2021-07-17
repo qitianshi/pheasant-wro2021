@@ -33,9 +33,9 @@ class LineTrack(PIDLoop):
                  sensor: ColorSensor,
                  leftMotor: Motor,
                  rightMotor: Motor,
-                 kp: float = kp_DEFAULT,
-                 ki: float = ki_DEFAULT,
-                 kd: float = kd_DEFAULT):
+                 kp: float = None,
+                 ki: float = None,
+                 kd: float = None):
 
         # Line parameters
         self.threshold = threshold
@@ -51,7 +51,10 @@ class LineTrack(PIDLoop):
         self.rightMotor = rightMotor
 
         # PID parameters
-        super().__init__(threshold, kp, ki, kd)
+        super().__init__(threshold,
+                         kp if kp != None else LineTrack.kp_DEFAULT,
+                         ki if ki != None else LineTrack.ki_DEFAULT,
+                         kd if kd != None else LineTrack.kd_DEFAULT)
 
         self.run()
 
