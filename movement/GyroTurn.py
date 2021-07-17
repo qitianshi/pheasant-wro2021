@@ -18,12 +18,15 @@ from .PIDLoop import PIDLoop
 class GyroTurn(PIDLoop):
 
     # Different tuning values depending on the number of wheels being driven for turning.
+
+    # For single motor turning
     kp_SINGLE_DEFAULT = None
     ki_SINGLE_DEFAULT = None
     kd_SINGLE_DEFAULT = None
     INTEGRAL_LIMIT_SINGLE_DEFAULT = None
     OUTPUT_LIMIT_SINGLE_DEFAULT = None
 
+    # For double motor turning
     kp_DOUBLE_DEFAULT = None
     ki_DOUBLE_DEFAULT = None
     kd_DOUBLE_DEFAULT = None
@@ -43,6 +46,20 @@ class GyroTurn(PIDLoop):
                  integralLimit: float = None,
                  outputLimit: float = None):
 
+        # Resolves optional arguments with default values
+        if leftDriven and rightDriven:
+            kp = kp if kp != None else GyroTurn.kp_DOUBLE_DEFAULT
+            ki = ki if ki != None else GyroTurn.ki_DOUBLE_DEFAULT
+            kd = kd if kd != None else GyroTurn.kd_DOUBLE_DEFAULT
+            integralLimit = integralLimit if integralLimit != None else GyroTurn.INTEGRAL_LIMIT_DOUBLE_DEFAULT
+            outputLimit = outputLimit if outputLimit != None else GyroTurn.OUTPUT_LIMIT_DOUBLE_DEFAULT
+        else:
+            kp = kp if kp != None else GyroTurn.kp_SINGLE_DEFAULT
+            ki = ki if ki != None else GyroTurn.ki_SINGLE_DEFAULT
+            kd = kd if kd != None else GyroTurn.kd_SINGLE_DEFAULT
+            integralLimit = integralLimit if integralLimit != None else GyroTurn.INTEGRAL_LIMIT_SINGLE_DEFAULT
+            outputLimit = outputLimit if outputLimit != None else GyroTurn.OUTPUT_LIMIT_SINGLE_DEFAULT
+
         # Angle parameters
         self.angle = angle
 
@@ -56,20 +73,7 @@ class GyroTurn(PIDLoop):
         self.rightMotor = rightMotor
 
         # PID parameters
-        if leftDriven and rightDriven:
-            super().__init__(angle,
-                             kp if kp != None else GyroTurn.kp_DOUBLE_DEFAULT,
-                             ki if ki != None else GyroTurn.ki_DOUBLE_DEFAULT,
-                             kd if kd != None else GyroTurn.kd_DOUBLE_DEFAULT,
-                             integralLimit if integralLimit != None else GyroTurn.INTEGRAL_LIMIT_DOUBLE_DEFAULT,
-                             outputLimit if outputLimit != None else GyroTurn.OUTPUT_LIMIT_DOUBLE_DEFAULT)
-        else:
-            super().__init__(angle,
-                             kp if kp != None else GyroTurn.kp_SINGLE_DEFAULT,
-                             ki if ki != None else GyroTurn.ki_SINGLE_DEFAULT,
-                             kd if kd != None else GyroTurn.kd_SINGLE_DEFAULT,
-                             integralLimit if integralLimit != None else GyroTurn.INTEGRAL_LIMIT_SINGLE_DEFAULT,
-                             outputLimit if outputLimit != None else GyroTurn.OUTPUT_LIMIT_SINGLE_DEFAULT)
+        super().__init__(angle, kp, ki, kd, integralLimit, outputLimit)
 
         self.run()
 
@@ -97,6 +101,7 @@ class GyroTurn(PIDLoop):
         cls.kp_SINGLE_DEFAULT = kpSingle
         cls.ki_SINGLE_DEFAULT = kiSingle
         cls.kd_SINGLE_DEFAULT = kdSingle
+        
         cls.kp_DOUBLE_DEFAULT = kpDouble
         cls.ki_DOUBLE_DEFAULT = kiDouble
         cls.kd_DOUBLE_DEFAULT = kdDouble

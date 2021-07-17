@@ -49,12 +49,7 @@ class LineTrack(PIDLoop):
         self.rightMotor = rightMotor
 
         # PID parameters
-        super().__init__(threshold,
-                         kp if kp != None else LineTrack.kp_DEFAULT,
-                         ki if ki != None else LineTrack.ki_DEFAULT,
-                         kd if kd != None else LineTrack.kd_DEFAULT,
-                         integralLimit if integralLimit != None else LineTrack.INTEGRAL_LIMIT_DEFAULT,
-                         outputLimit if outputLimit != None else LineTrack.OUTPUT_LIMIT_DEFAULT)
+        super().__init__(threshold, kp, ki, kd, integralLimit, outputLimit)
 
         self.run()
 

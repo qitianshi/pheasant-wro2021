@@ -7,10 +7,10 @@
 
 class PIDLoop:
 
+    # Class attributes to be implemented in subclasses.
     kp_DEFAULT = None
     ki_DEFAULT = None
     kd_DEFAULT = None
-
     INTEGRAL_LIMIT_DEFAULT = None
     OUTPUT_LIMIT_DEFAULT = None
 
@@ -22,6 +22,14 @@ class PIDLoop:
                  integralLimit: float,
                  outputLimit: float):
 
+        # Resolves optional arguments with default values
+        kp = kp if kp != None else self.__class__.kp_DEFAULT
+        ki = ki if ki != None else self.__class__.ki_DEFAULT
+        kd = kd if kd != None else self.__class__.kd_DEFAULT
+        integralLimit = integralLimit if integralLimit != None else self.__class__.INTEGRAL_LIMIT_DEFAULT
+        integralLimit = outputLimit if outputLimit != None else self.__class__.OUTPUT_LIMIT_DEFAULT
+
+        # PID parameters
         self.setpoint = setpoint
         self.kp = kp
         self.ki = ki
@@ -29,6 +37,7 @@ class PIDLoop:
         self.integralLimit = integralLimit
         self.outputLimit = outputLimit
 
+        # PID loop terms
         self.prevError = 0
         self.integral = 0
 
@@ -40,7 +49,7 @@ class PIDLoop:
         # Integral term
         self.integral += error
         iTerm = self.integral * self.ki
-        if self.integralLimit != None:       # Applies integral limit, if set.
+        if self.integralLimit != None:          # Applies integral limit, if set.
             self.integral = min(self.integral, self.integralLimit)
             self.integral = max(self.integral, self.integralLimit * -1)
 
@@ -50,7 +59,7 @@ class PIDLoop:
         self.prevError = error
 
         output = pTerm + iTerm + dTerm
-        if self.outputLimit != None:                    # Applies output limit, if set.
+        if self.outputLimit != None:            # Applies output limit, if set.
             output = min(output, self.outputLimit)
             output = max(output, self.outputLimit * -1)
 

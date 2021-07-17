@@ -51,18 +51,8 @@ class LineSquare(PIDLoop):
         self.rightMotor = rightMotor
 
         # PID parameters
-        self.leftPid = PIDLoop(leftThreshold,
-                               kp if kp != None else LineSquare.kp_DEFAULT,
-                               ki if ki != None else LineSquare.ki_DEFAULT,
-                               kd if kd != None else LineSquare.kd_DEFAULT,
-                               integralLimit if integralLimit != None else LineSquare.INTEGRAL_LIMIT_DEFAULT,
-                               outputLimit if outputLimit != None else LineSquare.OUTPUT_LIMIT_DEFAULT)
-        self.rightPid = PIDLoop(rightThreshold,
-                               kp if kp != None else LineSquare.kp_DEFAULT,
-                               ki if ki != None else LineSquare.ki_DEFAULT,
-                               kd if kd != None else LineSquare.kd_DEFAULT,
-                               integralLimit if integralLimit != None else LineSquare.INTEGRAL_LIMIT_DEFAULT,
-                               outputLimit if outputLimit != None else LineSquare.OUTPUT_LIMIT_DEFAULT)
+        self.leftPid = PIDLoop(leftThreshold, kp, ki, kd, integralLimit, outputLimit)
+        self.rightPid = PIDLoop(rightThreshold, kp, ki, kd, integralLimit, outputLimit)
 
         self.run()
 

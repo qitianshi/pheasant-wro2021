@@ -43,12 +43,7 @@ class GyroStraight(PIDLoop):
         self.rightMotor = rightMotor
 
         # PID parameters
-        super().__init__(angle,
-                         kp if kp != None else GyroStraight.kp_DEFAULT,
-                         ki if ki != None else GyroStraight.ki_DEFAULT,
-                         kd if kd != None else GyroStraight.kd_DEFAULT,
-                         integralLimit if integralLimit != None else GyroStraight.INTEGRAL_LIMIT_DEFAULT,
-                         outputLimit if outputLimit != None else GyroStraight.OUTPUT_LIMIT_DEFAULT)
+        super().__init__(angle, kp, ki, kd, integralLimit, outputLimit)
 
         self.run()
 
