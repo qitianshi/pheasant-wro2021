@@ -18,7 +18,6 @@ from pybricks.robotics import DriveBase                                     # ty
 import movement
 import runlogic
 
-# TODO: Add PID tuning values
 # Initialize PID settings
 movement.LineTrack.setDefaultTuning(1.8, 0.001, 75)
 movement.LineTrack.setDefaultIntegralLimit(75)
