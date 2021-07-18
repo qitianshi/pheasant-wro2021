@@ -59,7 +59,7 @@ def moveForwardTillGreenThenTurn():
     # Turns around to align with blocks at left house.
     drive.reset_angle(0)
     drive.run_angle(100, 30, wait=True)
-    movement.GyroTurn(90, False, True, gyro, leftMotor, rightMotor)
+    movement.GyroTurn(-90, False, True, gyro, leftMotor, rightMotor)
     drive.run_time(-400, 1000, wait=True)
 
 moveForwardTillGreenThenTurn()
