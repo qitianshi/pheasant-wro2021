@@ -35,10 +35,11 @@ frontColor = NxtColorSensor(Port.S1)
 leftColor = ColorSensor(Port.S2)
 rightColor = ColorSensor(Port.S3)
 gyro = GyroSensor(Port.S4, Direction.COUNTERCLOCKWISE)
-frontClaw = Motor(Port.A)
+# frontClaw = Motor(Port.A)
 leftMotor = Motor(Port.B, positive_direction=Direction.COUNTERCLOCKWISE)
 rightMotor = Motor(Port.C, positive_direction=Direction.CLOCKWISE)
 rearClaw = Motor(Port.D)
+drive = movement.TwoWheelDrive(leftMotor, rightMotor)
 
 # Constants
 LEFT_THRESHOLD = 47
@@ -52,17 +53,14 @@ def moveForwardTillGreenThenTurn():
     # Moves forward until robot reaches the green area.
     movement.GyroStraight(0, 500, lambda: leftMotor.angle() > 180, gyro, leftMotor, rightMotor)
     movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.RIGHT, 500, lambda: leftColor.color() == Color.GREEN, rightColor, leftMotor, rightMotor)
-    leftMotor.hold()
-    rightMotor.hold()
+    drive.hold()
     wait(50)
 
     # Turns around to align with blocks at left house.
-    leftMotor.reset_angle(0)
-    leftMotor.run_angle(100, 30, wait=False)
-    rightMotor.run_angle(100, 30, wait=True)
+    drive.reset_angle(0)
+    drive.run_angle(100, 30, wait=True)
     movement.GyroTurn(90, False, True, gyro, leftMotor, rightMotor)
-    leftMotor.run_time(-400, 1000, wait=False)
-    rightMotor.run_time(-400, 1000, wait=True)
+    drive.run_time(-400, 1000, wait=True)
 
 moveForwardTillGreenThenTurn()
 
