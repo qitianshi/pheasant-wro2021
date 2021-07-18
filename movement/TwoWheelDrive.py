@@ -20,6 +20,9 @@ class TwoWheelDrive:
         self.leftMotor = leftMotor
         self.rightMotor = rightMotor
 
+    def angle(self):
+        return (self.leftMotor.angle() + self.rightMotor.angle()) / 2
+
     def reset_angle(self, angle: int = 0):
         self.leftMotor.reset_angle(angle)
         self.rightMotor.reset_angle(angle)
