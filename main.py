@@ -100,7 +100,7 @@ def scanBlocksAtLeftHouse():
 
     print("Left house:", blocks[0])
 
-def turnThenCollectYellowSurplusAndLeftBlocks():
+def collectYellowSurplusAndLeftBlocks():
 
     # Drives forward to align with blocks.
     drive.reset_angle()
@@ -126,7 +126,7 @@ def turnThenCollectYellowSurplusAndLeftBlocks():
     drive.hold()
     wait(50)
 
-def turnThenRotateSolarPanels():
+def rotateSolarPanels():
 
     # Turns to align to black line for line tracking.
     drive.reset_angle()
@@ -148,7 +148,7 @@ def turnThenRotateSolarPanels():
     movement.GyroStraight(-180, -300, lambda: leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK, gyro, leftMotor, rightMotor)
     drive.hold()
 
-def turnThenCollectYellowRightBlocks():
+def collectYellowRightBlocks():
 
     # Turns to align to black line for line tracking.
     drive.reset_angle()
@@ -180,7 +180,7 @@ def turnThenCollectYellowRightBlocks():
     drive.hold()
     wait(50)
 
-def turnThenCollectGreenSurplus():
+def collectGreenSurplus():
     
     # Turn to point side sensor at surplus green blocks.
     for _ in range(2):      # Performs turn twice to ensure accuracy.
@@ -213,9 +213,9 @@ def turnThenCollectGreenSurplus():
 
 moveForwardTillGreenThenTurn()
 scanBlocksAtLeftHouse()
-turnThenCollectYellowSurplusAndLeftBlocks()
-turnThenRotateSolarPanels()
-turnThenCollectYellowRightBlocks()
-turnThenCollectGreenSurplus()
+collectYellowSurplusAndLeftBlocks()
+rotateSolarPanels()
+collectYellowRightBlocks()
+collectGreenSurplus()
 
 wait(1000)
