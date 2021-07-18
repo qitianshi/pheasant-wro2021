@@ -27,7 +27,7 @@ movement.LineSquare.setDefaultOutputLimit(60)
 movement.GyroStraight.setDefaultTuning(25, 0.3, 6000)
 movement.GyroStraight.setDefaultIntegralLimit(100)
 movement.GyroStraight.setDefaultOutputLimit(1000)
-movement.GyroTurn.setDefaultTuning(20, 0, 10000000, 10, 0, 10000000)
+movement.GyroTurn.setDefaultTuning(23, 0, 10000000, 12, 0, 10000000)
 
 # Initialize hardware
 brick = EV3Brick()
