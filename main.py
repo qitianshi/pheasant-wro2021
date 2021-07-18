@@ -113,8 +113,35 @@ def turnThenCollectYellowSurplusAndLeftBlocks():
 
     # TODO: Lower the front claw.
 
+    movement.GyroStraight(-180, -300, lambda: rightColor.color() == Color.BLACK, gyro, leftMotor, rightMotor)
+    drive.hold()
+    wait(50)
+
+def turnThenRotateSolarPanels():
+
+    # Turn to align to black line for line tracking.
+    drive.reset_angle()
+    drive.run_angle(200, 60)
+    movement.GyroTurn(-90, True, True, gyro, leftMotor, rightMotor)
+
+    # Travel to solar panels.
+    movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 300, lambda: rightColor.color() == Color.BLACK, leftColor, leftMotor, rightMotor)
+    drive.reset_angle()
+    movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 100, lambda: drive.angle() > 100, leftColor, leftMotor, rightMotor)
+    drive.hold()
+
+    # Turn to solar panels.
+    movement.GyroTurn(-180, True, True, gyro, leftMotor, rightMotor)
+
+    # TODO: Rotate solar panels.
+
+    # Return to line.
+    movement.GyroStraight(-180, -300, lambda: leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK, gyro, leftMotor, rightMotor)
+    drive.hold()
+
 moveForwardTillGreenThenTurn()
 scanBlocksAtLeftHouse()
 turnThenCollectYellowSurplusAndLeftBlocks()
+turnThenRotateSolarPanels()
 
 wait(1000)
