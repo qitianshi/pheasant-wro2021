@@ -20,8 +20,8 @@ import movement
 import runlogic
 
 # Initialize PID settings
-movement.LineTrack.setDefaultTuning(1.8, 0.001, 75)
-movement.LineTrack.setDefaultIntegralLimit(75)
+movement.LineTrack.setDefaultTuning(1.8, 0.0002, 1)
+movement.LineTrack.setDefaultIntegralLimit(50)
 movement.LineSquare.setDefaultTuning(20, 0, 10000000)
 movement.LineSquare.setDefaultOutputLimit(60)
 movement.GyroStraight.setDefaultTuning(22, 0.2, 10000000)
@@ -35,7 +35,7 @@ frontColor = NxtColorSensor(Port.S1)
 leftColor = ColorSensor(Port.S2)
 rightColor = ColorSensor(Port.S3)
 gyro = GyroSensor(Port.S4)
-frontClaw = Motor(Port.A)
+# frontClaw = Motor(Port.A)
 leftMotor = Motor(Port.B, positive_direction=Direction.COUNTERCLOCKWISE)
 rightMotor = Motor(Port.C, positive_direction=Direction.CLOCKWISE)
 rearClaw = Motor(Port.D)
@@ -43,3 +43,5 @@ rearClaw = Motor(Port.D)
 # Constants
 LEFT_THRESHOLD = 47
 RIGHT_THRESHOLD = 48
+
+movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 1000, lambda: False, leftColor, leftMotor, rightMotor)
