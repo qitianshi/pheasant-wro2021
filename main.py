@@ -41,5 +41,5 @@ rightMotor = Motor(Port.C, positive_direction=Direction.CLOCKWISE)
 rearClaw = Motor(Port.D)
 
 # Constants
-LEFT_THRESHOLD = 50
+LEFT_THRESHOLD = 47
 RIGHT_THRESHOLD = 48
