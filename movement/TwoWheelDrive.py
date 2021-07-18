@@ -32,14 +32,14 @@ class TwoWheelDrive:
         self.leftMotor.run(speed)
         self.rightMotor.run(speed)
 
-    def run_time(self, speed, time, then=Stop.Hold, wait=True):
+    def run_time(self, speed, time, then=Stop.HOLD, wait=True):
         self.leftMotor.run_time(speed, time, then=then, wait=False)
         self.rightMotor.run_time(speed, time, then=then, wait=wait)
 
-    def run_angle(self, speed, rotation_angle, then=Stop.Hold, wait=True):
+    def run_angle(self, speed, rotation_angle, then=Stop.HOLD, wait=True):
         self.leftMotor.run_angle(speed, rotation_angle, then=then, wait=False)
         self.rightMotor.run_angle(speed, rotation_angle, then=then, wait=wait)
 
-    def run_target(self, speed, target_angle, then=Stop.Hold, wait=True):
+    def run_target(self, speed, target_angle, then=Stop.HOLD, wait=True):
         self.leftMotor.run_target(speed, target_angle, then=then, wait=False)
         self.rightMotor.run_target(speed, target_angle, then=then, wait=wait)
