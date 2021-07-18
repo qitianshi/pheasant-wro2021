@@ -155,10 +155,13 @@ def turnThenCollectYellowRightBlocks():
     drive.run_angle(200, 60)
     movement.GyroTurn(-90, True, True, gyro, leftMotor, rightMotor)
 
+    # Reverses to align with vertical line.
+    movement.GyroStraight(-90, -100, lambda: rightColor.color() == Color.BLACK, gyro, leftMotor, rightMotor)
+
     # Travels to yellow blocks.
     drive.reset_angle()
-    movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 300, lambda: drive.angle() > 320, leftColor, leftMotor, rightMotor)    
-    movement.GyroStraight(-90, 100, lambda: drive.angle() > 450, gyro, leftMotor, rightMotor)
+    movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 300, lambda: drive.angle() > 430, leftColor, leftMotor, rightMotor)    
+    movement.GyroStraight(-90, 100, lambda: drive.angle() > 560, gyro, leftMotor, rightMotor)
     drive.hold()
 
     # Turns and collects.
@@ -170,16 +173,49 @@ def turnThenCollectYellowRightBlocks():
     drive.hold()
 
     # TODO: Lower claw
+    wait(100)
 
     # Returns to the line.
-    movement.GyroStraight(-180, -300, lambda: drive.angle() < 0, gyro, leftMotor, rightMotor)
+    movement.GyroStraight(-180, -300, lambda: drive.angle() < 50, gyro, leftMotor, rightMotor)
     drive.hold()
     wait(50)
+
+def turnThenCollectGreenSurplus():
+    
+    # Turn to point side sensor at surplus green blocks.
+    for _ in range(2):      # Performs turn twice to ensure accuracy.
+        movement.GyroTurn(-90, False, True, gyro, leftMotor, rightMotor)
+    drive.hold()
+    wait(50)
+
+    # Drives forward while sensing if the surplus energy blocks are present.
+    drive.reset_angle()
+    drive.run_angle(200, 340, then=Stop.HOLD, wait=False)
+    surplusAtGreen = False
+    wait(10)                            # Waits before running loop to allow motors to start moving.
+    while drive.angle() < 340:
+        if sideColor.color() != None or sideColor.color() != Color.BLACK:
+            surplusAtGreen = True
+    if surplusAtGreen:
+        print("Surplus at green.")
+
+    # Turns to face the blocks
+    movement.GyroTurn(0, False, True, gyro, leftMotor, rightMotor)
+
+    # Drives forwards to collect.
+    movement.GyroStraight(0, 300, lambda: leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK, gyro, leftMotor, rightMotor)
+    drive.hold()
+
+    # Turns and travels towards green energy blocks.
+    movement.GyroTurn(90, True, False, gyro, leftMotor, rightMotor)
+    movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.LEFT, 200, lambda: leftColor.color() == Color.BLACK, rightColor, leftMotor, rightMotor)
+    drive.hold()
 
 moveForwardTillGreenThenTurn()
 scanBlocksAtLeftHouse()
 turnThenCollectYellowSurplusAndLeftBlocks()
 turnThenRotateSolarPanels()
 turnThenCollectYellowRightBlocks()
+turnThenCollectGreenSurplus()
 
 wait(1000)
