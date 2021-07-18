@@ -48,6 +48,14 @@ RIGHT_THRESHOLD = 48
 # Variables
 blocks = []
 
+# Preflight checks
+if brick.battery.voltage() < 7500:      # In millivolts.
+
+    print("Low battery.")
+
+    from sys import exit
+    exit()
+
 def moveForwardTillGreenThenTurn():
 
     # Moves forward until robot reaches the green area.
