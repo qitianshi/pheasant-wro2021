@@ -211,11 +211,43 @@ def collectGreenSurplus():
     movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.LEFT, 200, lambda: leftColor.color() == Color.BLACK, rightColor, leftMotor, rightMotor)
     drive.hold()
 
+def collectGreenBlocks():
+    
+    # Turn to collect right-most green blocks.
+    while leftColor.reflection() < LEFT_THRESHOLD:
+        drive.run(-100)
+    drive.hold()
+    movement.GyroTurn(0, True, True, gyro, leftMotor, rightMotor)
+    drive.hold()
+
+    # Line square to black line.
+    movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor, leftMotor, rightMotor)
+
+    # TODO: Collect green blocks.
+    wait(100)
+
+    # Travel to left-most green blocks.
+    movement.GyroTurn(90, True, False, gyro, leftMotor, rightMotor)
+    drive.reset_angle()
+    movement.GyroStraight(90, 200, lambda: drive.angle() > 100, gyro, leftMotor, rightMotor)
+    drive.hold()
+    movement.GyroTurn(0, True, True, gyro, leftMotor, rightMotor)
+    movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor, leftMotor, rightMotor)
+
+    # TODO: Collect green blocks.
+    wait(100)
+
+    # Turn towards right side of playfield.
+    movement.GyroTurn(-90, False, True, gyro, leftMotor, rightMotor)
+    movement.GyroStraight(-90, -100, lambda: rightColor.color() == Color.BLACK, gyro, leftMotor, rightMotor)
+    drive.hold()
+
 moveForwardTillGreenThenTurn()
 scanBlocksAtLeftHouse()
 collectYellowSurplusAndLeftBlocks()
 rotateSolarPanels()
 collectYellowRightBlocks()
 collectGreenSurplus()
+collectGreenBlocks()
 
 wait(1000)
