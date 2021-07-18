@@ -17,7 +17,7 @@ from .PIDLoop import PIDLoop
 
 class GyroTurn(PIDLoop):
 
-    # Different tuning values depending on the number of wheels being driven for turning.
+    # Different tuning values used depending on the number of wheels being driven for turning.
 
     # For single motor turning
     kp_SINGLE_DEFAULT = None
@@ -46,7 +46,7 @@ class GyroTurn(PIDLoop):
                  integralLimit: float = None,
                  outputLimit: float = None):
 
-        # Resolves optional arguments with default values
+        # Resolves optional arguments with default values.
         if leftDriven and rightDriven:
             kp = kp if kp != None else GyroTurn.kp_DOUBLE_DEFAULT
             ki = ki if ki != None else GyroTurn.ki_DOUBLE_DEFAULT

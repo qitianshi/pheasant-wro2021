@@ -7,7 +7,7 @@
 
 class PIDLoop:
 
-    # Class attributes to be implemented in subclasses.
+    # Class attributes to be implemented in subclasses
     kp_DEFAULT = None
     ki_DEFAULT = None
     kd_DEFAULT = None
@@ -22,7 +22,7 @@ class PIDLoop:
                  integralLimit: float,
                  outputLimit: float):
 
-        # Resolves optional arguments with default values
+        # Resolves optional arguments with default values.
         kp = kp if kp != None else self.__class__.kp_DEFAULT
         ki = ki if ki != None else self.__class__.ki_DEFAULT
         kd = kd if kd != None else self.__class__.kd_DEFAULT

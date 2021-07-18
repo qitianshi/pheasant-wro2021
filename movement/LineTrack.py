@@ -15,7 +15,7 @@ from pybricks.robotics import DriveBase                                     # ty
 
 from .PIDLoop import PIDLoop
 
-class LineEdge:           # Enum workaround (MicroPython does not support enums).
+class LineEdge:           # Enum workaround (MicroPython does not support enums)
     LEFT = 0
     RIGHT = 1
 
