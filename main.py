@@ -113,35 +113,65 @@ def turnThenCollectYellowSurplusAndLeftBlocks():
 
     # TODO: Lower the front claw.
 
+    # Returns to the line.
     movement.GyroStraight(-180, -300, lambda: rightColor.color() == Color.BLACK, gyro, leftMotor, rightMotor)
     drive.hold()
     wait(50)
 
 def turnThenRotateSolarPanels():
 
-    # Turn to align to black line for line tracking.
+    # Turns to align to black line for line tracking.
     drive.reset_angle()
     drive.run_angle(200, 60)
     movement.GyroTurn(-90, True, True, gyro, leftMotor, rightMotor)
 
-    # Travel to solar panels.
+    # Travels to solar panels.
     movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 300, lambda: rightColor.color() == Color.BLACK, leftColor, leftMotor, rightMotor)
     drive.reset_angle()
     movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 100, lambda: drive.angle() > 100, leftColor, leftMotor, rightMotor)
     drive.hold()
 
-    # Turn to solar panels.
+    # Turns to solar panels.
     movement.GyroTurn(-180, True, True, gyro, leftMotor, rightMotor)
 
     # TODO: Rotate solar panels.
 
-    # Return to line.
+    # Returns to line.
     movement.GyroStraight(-180, -300, lambda: leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK, gyro, leftMotor, rightMotor)
     drive.hold()
+
+def turnThenCollectYellowRightBlocks():
+
+    # Turns to align to black line for line tracking.
+    drive.reset_angle()
+    drive.run_angle(200, 60)
+    movement.GyroTurn(-90, True, True, gyro, leftMotor, rightMotor)
+
+    # Travels to yellow blocks.
+    drive.reset_angle()
+    movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 300, lambda: drive.angle() > 320, leftColor, leftMotor, rightMotor)    
+    movement.GyroStraight(-90, 100, lambda: drive.angle() > 450, gyro, leftMotor, rightMotor)
+    drive.hold()
+
+    # Turns and collects.
+    movement.GyroTurn(-180, True, True, gyro, leftMotor, rightMotor)
+    drive.hold()
+    wait(50)
+    drive.reset_angle()
+    movement.GyroStraight(-180, 300, lambda: drive.angle() > 220, gyro, leftMotor, rightMotor)
+    drive.hold()
+
+    # TODO: Lower claw
+
+    # Returns to the line.
+    movement.GyroStraight(-180, -300, lambda: drive.angle() < 0, gyro, leftMotor, rightMotor)
+    drive.hold()
+    wait(50)
 
 moveForwardTillGreenThenTurn()
 scanBlocksAtLeftHouse()
 turnThenCollectYellowSurplusAndLeftBlocks()
 turnThenRotateSolarPanels()
+turnThenCollectYellowRightBlocks()
 
 wait(1000)
