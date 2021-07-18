@@ -83,8 +83,8 @@ class GyroTurn(PIDLoop):
 
             output = self.update(self.sensor.angle() - self.angle)
 
-            self.leftMotor.run(self.leftDriven * output)
-            self.rightMotor.run(self.rightDriven * output * -1)
+            self.leftMotor.run(self.leftDriven * output * -1)
+            self.rightMotor.run(self.rightDriven * output)
 
         self.leftMotor.hold()
         self.rightMotor.hold()

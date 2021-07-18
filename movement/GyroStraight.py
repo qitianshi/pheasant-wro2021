@@ -52,5 +52,5 @@ class GyroStraight(PIDLoop):
 
             output = self.update(self.sensor.angle() - self.angle)
 
-            self.leftMotor.run(self.speed + output)
-            self.rightMotor.run(self.speed - output)
+            self.leftMotor.run(self.speed - output)
+            self.rightMotor.run(self.speed + output)
