@@ -83,13 +83,33 @@ def scanBlocksAtLeftHouse():
 
         if measuredColor != None and measuredColor != Color.BLACK:
             secondColor.append(measuredColor)
-    
-    drive.hold()
 
     blocks[0].append(max(set(secondColor), key=secondColor.count))      # Finds the most frequent color. The sensor sometimes detects a wrong color when it is sensing the edge of the block.
     print("Left house:", blocks[0])
 
+def turnThenCollectYellowSurplusAndLeftBlocks():
+    
+    # Drives forward to align with blocks.
+    drive.reset_angle()
+    drive.run_target(100, 170)
+
+    # Turns, then squares with the line.
+    movement.GyroTurn(-170, False, True, gyro, leftMotor, rightMotor)
+    movement.GyroTurn(-180, False, True, gyro, leftMotor, rightMotor, 20)
+    movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor, leftMotor, rightMotor)
+
+    # Drives forwards to collect the blocks.
+    drive.reset_angle()
+    movement.GyroStraight(-180, 300, lambda: drive.angle() > 100, gyro, leftMotor, rightMotor)                   # Move forward to get off the black line.
+    movement.GyroStraight(-180, 300, lambda: rightColor.color() == Color.BLACK, gyro, leftMotor, rightMotor)
+    drive.reset_angle()
+    movement.GyroStraight(-180, 300, lambda: drive.angle() > 220, gyro, leftMotor, rightMotor)
+    drive.hold()
+
+    # TODO: Lower the front claw.
+
 moveForwardTillGreenThenTurn()
 scanBlocksAtLeftHouse()
+turnThenCollectYellowSurplusAndLeftBlocks()
 
 wait(1000)
