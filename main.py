@@ -84,11 +84,16 @@ def scanBlocksAtLeftHouse():
         if measuredColor != None and measuredColor != Color.BLACK:
             secondColor.append(measuredColor)
 
-    blocks[0].append(max(set(secondColor), key=secondColor.count))      # Finds the most frequent color. The sensor sometimes detects a wrong color when it is sensing the edge of the block.
+    if len(secondColor) == 0:
+        blocks[0].append(None)
+    else:
+        # Finds the most frequent color. The sensor sometimes detects a wrong color when it is sensing the edge of the block.
+        blocks[0].append(max(set(secondColor), key=secondColor.count))
+
     print("Left house:", blocks[0])
 
 def turnThenCollectYellowSurplusAndLeftBlocks():
-    
+
     # Drives forward to align with blocks.
     drive.reset_angle()
     drive.run_target(100, 170)
