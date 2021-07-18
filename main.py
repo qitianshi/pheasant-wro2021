@@ -31,7 +31,7 @@ movement.GyroTurn.setDefaultTuning(23, 0, 10000000, 12, 0, 10000000)
 
 # Initialize hardware
 brick = EV3Brick()
-frontColor = NxtColorSensor(Port.S1)
+sideColor = NxtColorSensor(Port.S1)
 leftColor = ColorSensor(Port.S2)
 rightColor = ColorSensor(Port.S3)
 gyro = GyroSensor(Port.S4, Direction.COUNTERCLOCKWISE)
@@ -64,14 +64,14 @@ def scanBlocksAtLeftHouse():
 
     # Scans the first block
     wait(50)
-    firstColor = frontColor.color()
+    firstColor = sideColor.color()
     firstColor = firstColor if firstColor != Color.BLACK else None
     blocks.append([firstColor])
 
     # Drives forward until it goes past the first block. If no block is present, this step is skipped.
     gyro.reset_angle(-90)
     drive.reset_angle()
-    while frontColor.color() != Color.BLACK:
+    while sideColor.color() != Color.BLACK:
         drive.run(200)
 
     # Drives forward to scan the second block.
@@ -79,7 +79,7 @@ def scanBlocksAtLeftHouse():
     secondColor = []
     while not (leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK):
 
-        measuredColor = frontColor.color()
+        measuredColor = sideColor.color()
 
         if measuredColor != None and measuredColor != Color.BLACK:
             secondColor.append(measuredColor)
