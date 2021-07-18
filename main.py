@@ -43,3 +43,27 @@ rearClaw = Motor(Port.D)
 # Constants
 LEFT_THRESHOLD = 47
 RIGHT_THRESHOLD = 48
+
+# Variables
+blocks = []
+
+def moveForwardTillGreenThenTurn():
+
+    # Moves forward until robot reaches the green area.
+    movement.GyroStraight(0, 500, lambda: leftMotor.angle() > 180, gyro, leftMotor, rightMotor)
+    movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.RIGHT, 500, lambda: leftColor.color() == Color.GREEN, rightColor, leftMotor, rightMotor)
+    leftMotor.hold()
+    rightMotor.hold()
+    wait(50)
+
+    # Turns around to align with blocks at left house.
+    leftMotor.reset_angle(0)
+    leftMotor.run_angle(100, 30, wait=False)
+    rightMotor.run_angle(100, 30, wait=True)
+    movement.GyroTurn(90, False, True, gyro, leftMotor, rightMotor)
+    leftMotor.run_time(-400, 1000, wait=False)
+    rightMotor.run_time(-400, 1000, wait=True)
+
+moveForwardTillGreenThenTurn()
+
+wait(1000)
