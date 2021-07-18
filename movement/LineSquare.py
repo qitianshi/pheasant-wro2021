@@ -39,6 +39,13 @@ class LineSquare(PIDLoop):
                  integralLimit: float = None,
                  outputLimit: float = None):
 
+        # Resolves optional arguments with default values.
+        kp = kp if kp != None else LineSquare.kp_DEFAULT
+        ki = ki if ki != None else LineSquare.ki_DEFAULT
+        kd = kd if kd != None else LineSquare.kd_DEFAULT
+        integralLimit = integralLimit if integralLimit != None else LineSquare.INTEGRAL_LIMIT_DEFAULT
+        outputLimit = outputLimit if outputLimit != None else LineSquare.OUTPUT_LIMIT_DEFAULT
+
         # Line parameters
         self.leftThreshold = leftThreshold
         self.rightThreshold = rightThreshold
