@@ -51,10 +51,8 @@ blocks = []
 def moveForwardTillGreenThenTurn():
 
     # Moves forward until robot reaches the green area.
-    movement.GyroStraight(0, 500, lambda: leftMotor.angle() > 180, gyro, leftMotor, rightMotor)
-    movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.RIGHT, 500, lambda: leftColor.color() == Color.GREEN, rightColor, leftMotor, rightMotor)
-    drive.hold()
-    wait(50)
+    movement.GyroStraight(0, 800, lambda: leftMotor.angle() > 360, gyro, leftMotor, rightMotor)
+    movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.RIGHT, 400, lambda: leftColor.color() == Color.GREEN, rightColor, leftMotor, rightMotor)
 
     # Turns around to align with blocks at left house.
     drive.reset_angle(0)
@@ -62,6 +60,36 @@ def moveForwardTillGreenThenTurn():
     movement.GyroTurn(-90, False, True, gyro, leftMotor, rightMotor)
     drive.run_time(-400, 1000, wait=True)
 
+def scanBlocksAtLeftHouse():
+
+    # Scans the first block
+    wait(50)
+    firstColor = frontColor.color()
+    firstColor = firstColor if firstColor != Color.BLACK else None
+    blocks.append([firstColor])
+
+    # Drives forward until it goes past the first block. If no block is present, this step is skipped.
+    gyro.reset_angle(-90)
+    drive.reset_angle()
+    while frontColor.color() != Color.BLACK:
+        drive.run(200)
+
+    # Drives forward to scan the second block.
+    drive.run(200)
+    secondColor = []
+    while not (leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK):
+
+        measuredColor = frontColor.color()
+
+        if measuredColor != None and measuredColor != Color.BLACK:
+            secondColor.append(measuredColor)
+    
+    drive.hold()
+
+    blocks[0].append(max(set(secondColor), key=secondColor.count))      # Finds the most frequent color. The sensor sometimes detects a wrong color when it is sensing the edge of the block.
+    print("Left house:", blocks[0])
+
 moveForwardTillGreenThenTurn()
+scanBlocksAtLeftHouse()
 
 wait(1000)
