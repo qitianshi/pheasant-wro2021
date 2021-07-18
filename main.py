@@ -182,7 +182,7 @@ def collectYellowRightBlocks():
 
 def collectGreenSurplus():
     
-    # Turn to point side sensor at surplus green blocks.
+    # Turns to point side sensor at surplus green blocks.
     for _ in range(2):      # Performs turn twice to ensure accuracy.
         movement.GyroTurn(-90, False, True, gyro, leftMotor, rightMotor)
     drive.hold()
@@ -194,7 +194,7 @@ def collectGreenSurplus():
     surplusAtGreen = False
     wait(10)                            # Waits before running loop to allow motors to start moving.
     while drive.angle() < 340:
-        if sideColor.color() != None or sideColor.color() != Color.BLACK:
+        if sideColor.color() != None and sideColor.color() != Color.BLACK:
             surplusAtGreen = True
     if surplusAtGreen:
         print("Surplus at green.")
@@ -213,34 +213,83 @@ def collectGreenSurplus():
 
 def collectGreenBlocks():
     
-    # Turn to collect right-most green blocks.
+    # Turns to collect right-most green blocks.
     while leftColor.reflection() < LEFT_THRESHOLD:
         drive.run(-100)
     drive.hold()
     movement.GyroTurn(0, True, True, gyro, leftMotor, rightMotor)
     drive.hold()
 
-    # Line square to black line.
+    # Line-squares to black line.
     movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor, leftMotor, rightMotor)
 
     # TODO: Collect green blocks.
     wait(100)
 
-    # Travel to left-most green blocks.
+    # Travels to left-most green blocks.
     movement.GyroTurn(90, True, False, gyro, leftMotor, rightMotor)
     drive.reset_angle()
     movement.GyroStraight(90, 200, lambda: drive.angle() > 100, gyro, leftMotor, rightMotor)
     drive.hold()
     movement.GyroTurn(0, True, True, gyro, leftMotor, rightMotor)
     movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor, leftMotor, rightMotor)
+    drive.run_angle(-100, 60)
 
-    # TODO: Collect green blocks.
+    # TODO: Collects green blocks.
     wait(100)
 
-    # Turn towards right side of playfield.
+    # Turns towards right side of playfield.
     movement.GyroTurn(-90, False, True, gyro, leftMotor, rightMotor)
-    movement.GyroStraight(-90, -100, lambda: rightColor.color() == Color.BLACK, gyro, leftMotor, rightMotor)
     drive.hold()
+
+def collectBlueSurplus():
+    
+    # Travels to blue area.
+    drive.reset_angle()
+    movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.LEFT, 600, lambda: drive.angle() > 1500, rightColor, leftMotor, rightMotor)
+    movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.LEFT, 250, lambda: leftColor.color() == Color.BLACK, rightColor, leftMotor, rightMotor)
+    drive.hold()
+    drive.reset_angle()
+    drive.run_angle(100, 50)
+
+    # Drives to surplus blocks.
+    movement.GyroTurn(0, True, True, gyro, leftMotor, rightMotor)
+    drive.hold()
+    wait(10)
+    drive.reset_angle()
+    movement.GyroStraight(0, -400, lambda: drive.angle() < -400, gyro, leftMotor, rightMotor)
+
+    # Scans for surplus blocks.
+    drive.run(-200)
+    surplusAtBlue = False
+    while leftColor.color() != Color.BLACK or rightColor.color() != Color.BLACK:
+        detectedColor = sideColor.color()
+        if detectedColor != Color.BLACK and detectedColor != None:
+            surplusAtBlue = True
+    drive.hold()
+
+    movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor, leftMotor, rightMotor)
+
+    # Collects blue surplus, if present.
+    if surplusAtBlue:
+
+        print("Surplus at blue.")
+
+        # Aligns to blue surplus.
+        drive.run_angle(100, 65)
+        movement.GyroTurn(90, True, True, gyro, leftMotor, rightMotor)
+        drive.reset_angle()
+
+        # Drives forward to collect blocks.
+        movement.GyroStraight(90, 300, lambda: drive.angle() > 380, gyro, leftMotor, rightMotor)
+
+        # TODO: Lower the claw.
+        wait(100)
+
+        # Returns to save point.
+        movement.GyroStraight(90, -300, lambda: drive.angle() < 125, gyro, leftMotor, rightMotor)
+        movement.GyroTurn(0, True, True, gyro, leftMotor, rightMotor)
+        movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor, leftMotor, rightMotor)
 
 moveForwardTillGreenThenTurn()
 scanBlocksAtLeftHouse()
@@ -249,5 +298,6 @@ rotateSolarPanels()
 collectYellowRightBlocks()
 collectGreenSurplus()
 collectGreenBlocks()
+collectBlueSurplus()
 
 wait(1000)
