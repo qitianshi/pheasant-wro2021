@@ -15,6 +15,8 @@ class DoubleMotorMovement:
     RIGHT_MOTOR_DEFAULT = None
 
     def __init__(self, leftMotor: Motor, rightMotor: Motor):
+
+        # Resolves optional arguments with default values.
         self.leftMotor = leftMotor if leftMotor != None else self.__class__.LEFT_MOTOR_DEFAULT
         self.rightMotor = rightMotor if rightMotor != None else self.__class__.RIGHT_MOTOR_DEFAULT
 
