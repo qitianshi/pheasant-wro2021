@@ -13,7 +13,7 @@ from pybricks.tools import wait, StopWatch, DataLog                         # ty
 from pybricks.robotics import DriveBase                                     # type: ignore
 # pylint: enable=F0401
 
-from .PIDLoop import PIDLoop
+from .base.PIDLoop import PIDLoop
 
 class LinePosition:
     AHEAD = 0
