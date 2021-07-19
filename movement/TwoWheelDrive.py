@@ -11,14 +11,15 @@ from pybricks.parameters import Port, Stop, Direction                       # ty
 from pybricks.tools import wait                                             # type: ignore
 # pylint: enable=F0401
 
-class TwoWheelDrive:
+from .base.DoubleMotorMovement import DoubleMotorMovement
+
+class TwoWheelDrive(DoubleMotorMovement):
 
     def __init__(self,
-                 leftMotor: Motor,
-                 rightMotor: Motor):
+                 leftMotor: Motor = None,
+                 rightMotor: Motor = None):
 
-        self.leftMotor = leftMotor
-        self.rightMotor = rightMotor
+        DoubleMotorMovement.__init__(self, leftMotor, rightMotor)
 
     def speed(self):
         return (self.leftMotor.speed() + self.rightMotor.speed()) / 2
