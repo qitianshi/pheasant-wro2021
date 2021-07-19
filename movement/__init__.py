@@ -5,9 +5,14 @@
 # Package for movement-based functionality. Includes programs for line tracking, line squaring, gyro movement, and gyro turning.
 
 
-from .LineTrack import *
-from .LineSquare import *
+# Built-in modules
 from .GyroStraight import *
 from .GyroTurn import *
-from .PIDLoop import *
+from .LineSquare import *
+from .LineTrack import *
 from .TwoWheelDrive import *
+
+# Base classes, for building custom programs
+from .base.DoubleMotorMovement import *
+from .base.GyroMovement import *
+from .base.PIDLoop import *
