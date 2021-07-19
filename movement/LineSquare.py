@@ -14,12 +14,13 @@ from pybricks.robotics import DriveBase                                     # ty
 # pylint: enable=F0401
 
 from .base.PIDLoop import PIDLoop
+from .base.DoubleMotorMovement import DoubleMotorMovement
 
 class LinePosition:
     AHEAD = 0
     BEHIND = 1
 
-class LineSquare(PIDLoop):
+class LineSquare(PIDLoop, DoubleMotorMovement):
 
     MOVE_TO_LINE_SPEED = 250
     LINE_WAIT_TIME = 75
@@ -55,8 +56,7 @@ class LineSquare(PIDLoop):
         # Hardware parameters
         self.leftSensor = leftSensor
         self.rightSensor = rightSensor
-        self.leftMotor = leftMotor
-        self.rightMotor = rightMotor
+        DoubleMotorMovement.__init__(self, leftMotor, rightMotor)
 
         # PID parameters
         self.leftPid = PIDLoop(leftThreshold, kp, ki, kd, integralLimit, outputLimit)

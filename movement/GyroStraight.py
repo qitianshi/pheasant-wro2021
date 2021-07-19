@@ -14,16 +14,18 @@ from pybricks.robotics import DriveBase                                     # ty
 # pylint: enable=F0401
 
 from .base.PIDLoop import PIDLoop
+from .base.GyroMovement import GyroMovement
+from .base.DoubleMotorMovement import DoubleMotorMovement
 
-class GyroStraight(PIDLoop):
+class GyroStraight(PIDLoop, GyroMovement, DoubleMotorMovement):
 
     def __init__(self,
                  angle: int,
                  speed: float,
                  stopCondition,
-                 sensor: GyroSensor,
-                 leftMotor: Motor,
-                 rightMotor: Motor,
+                 sensor: GyroSensor = None,
+                 leftMotor: Motor = None,
+                 rightMotor: Motor = None,
                  kp: float = None,
                  ki: float = None,
                  kd: float = None,
@@ -38,12 +40,11 @@ class GyroStraight(PIDLoop):
         self.stopCondition = stopCondition
 
         # Hardware parameters
-        self.sensor = sensor
-        self.leftMotor = leftMotor
-        self.rightMotor = rightMotor
+        GyroMovement.__init__(self, sensor)
+        DoubleMotorMovement.__init__(self, leftMotor, rightMotor)
 
         # PID parameters
-        super().__init__(angle, kp, ki, kd, integralLimit, outputLimit)
+        PIDLoop.__init__(self, angle, kp, ki, kd, integralLimit, outputLimit)
 
         self.run()
 
