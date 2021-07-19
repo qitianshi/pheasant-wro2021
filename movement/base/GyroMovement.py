@@ -14,7 +14,7 @@ class GyroMovement:
     DEFAULT_GYRO = None
 
     def __init__(self, sensor: GyroSensor):
-        self.sensor = sensor
+        self.sensor = sensor if sensor != None else self.__class__.DEFAULT_GYRO
 
     @classmethod
     def setDefaultGyroSensor(cls, sensor: GyroSensor):
