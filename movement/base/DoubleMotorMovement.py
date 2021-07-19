@@ -14,6 +14,10 @@ class DoubleMotorMovement:
     LEFT_MOTOR_DEFAULT = None
     RIGHT_MOTOR_DEFAULT = None
 
+    def __init__(self, leftMotor: Motor, rightMotor: Motor):
+        self.leftMotor = leftMotor
+        self.rightMotor = rightMotor
+
     @classmethod
     def setDefaultMotors(cls, leftMotor: Motor, rightMotor: Motor):
         cls.LEFT_MOTOR_DEFAULT = leftMotor
