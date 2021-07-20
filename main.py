@@ -26,7 +26,6 @@ rightColor = ColorSensor(Port.S3)
 gyro = GyroSensor(Port.S4, Direction.COUNTERCLOCKWISE)
 leftMotor = Motor(Port.B, positive_direction=Direction.COUNTERCLOCKWISE)
 rightMotor = Motor(Port.C, positive_direction=Direction.CLOCKWISE)
-rearClaw = Motor(Port.D)
 
 # Initialize movement package settings
 movement.DoubleMotorMovement.setDefaultMotors(leftMotor, rightMotor)
@@ -43,6 +42,9 @@ drive = movement.TwoWheelDrive(leftMotor, rightMotor)
 
 # Initialize pheasant_utils package settings
 utils.FrontClaw.MOTOR = Motor(Port.A)
+utils.FrontClaw.MOTOR.reset_angle(utils.FrontClaw.ANGLE_RANGE)
+utils.RearClaw.MOTOR = Motor(Port.D)
+utils.RearClaw.MOTOR.reset_angle(utils.RearClaw.ANGLE_RANGE)
 
 # Constants
 LEFT_THRESHOLD = 47
@@ -80,7 +82,6 @@ def scanBlocksAtLeftHouse():
     blocks.append([firstColor])
 
     # Drives forward until it goes past the first block. If no block is present, this step is skipped.
-    gyro.reset_angle(-90)
     drive.reset_angle()
     while sideColor.color() != Color.BLACK:
         drive.run(200)
@@ -122,7 +123,8 @@ def collectYellowSurplusAndLeftBlocks():
     movement.GyroStraight(-180, 300, lambda: drive.angle() > 220)
     drive.hold()
 
-    # TODO: Lower the front claw.
+    # Lowers the front claw.
+    utils.FrontClaw.closeGate()
 
     # Returns to the line.
     movement.GyroStraight(-180, -300, lambda: rightColor.color() == Color.BLACK)
