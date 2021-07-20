@@ -14,7 +14,7 @@ from pybricks.parameters import Port, Button                                # ty
 from pybricks.tools import wait                                             # type: ignore
 # pylint: enable=F0401
 
-SPEED = 600
+SPEED = 400
 brick = EV3Brick()
 motors = {}
 
@@ -57,7 +57,7 @@ while True:
     elif Button.DOWN in pressedButtons:
         motors[upDownMotor].run(SPEED * -1)
     else:
-        motors[upDownMotor].hold()
+        motors[upDownMotor].stop()
 
     # Motor control for left/right buttons.
     if Button.LEFT in pressedButtons:
@@ -65,4 +65,4 @@ while True:
     elif Button.RIGHT in pressedButtons:
         motors[leftRightMotor].run(SPEED * -1)
     else:
-        motors[leftRightMotor].hold()
+        motors[leftRightMotor].stop()
