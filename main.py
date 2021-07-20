@@ -43,8 +43,10 @@ drive = movement.TwoWheelDrive(leftMotor, rightMotor)
 # Initialize pheasant_utils package settings
 utils.FrontClaw.MOTOR = Motor(Port.A)
 utils.FrontClaw.MOTOR.reset_angle(utils.FrontClaw.ANGLE_RANGE)
-utils.RearClaw.MOTOR = Motor(Port.D)
+utils.FrontClaw.resetRaised()
+utils.RearClaw.MOTOR = Motor(Port.D, positive_direction=Direction.COUNTERCLOCKWISE)
 utils.RearClaw.MOTOR.reset_angle(utils.RearClaw.ANGLE_RANGE)
+utils.RearClaw.resetRaised()
 
 # Constants
 LEFT_THRESHOLD = 47
@@ -141,13 +143,25 @@ def rotateSolarPanels():
     # Travels to solar panels.
     movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 300, lambda: rightColor.color() == Color.BLACK, leftColor)
     drive.reset_angle()
-    movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 100, lambda: drive.angle() > 100, leftColor)
+    movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 75, lambda: drive.angle() > 100, leftColor)
     drive.hold()
+    wait(20)
 
     # Turns to solar panels.
-    movement.GyroTurn(-180, True, True)
+    movement.GyroTurn(0, True, True)
+    wait(50)
+    movement.GyroTurn(0, True, True)
 
-    # TODO: Rotate solar panels.
+    # Rotates solar panels.
+    utils.RearClaw.resetLowered()
+    drive.reset_angle()
+    movement.GyroStraight(0, -100, lambda: drive.angle() < -120)
+    movement.GyroTurn(5, True, True)
+    wait(10)
+    movement.GyroTurn(-5, True, True)
+    wait(10)
+    movement.GyroTurn(0, True, True)
+    utils.RearClaw.resetRaised()
 
     # Returns to line.
     movement.GyroStraight(-180, -300, lambda: leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK)
