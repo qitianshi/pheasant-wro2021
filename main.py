@@ -11,9 +11,8 @@
 from pybricks.hubs import EV3Brick                                          # type: ignore
 from pybricks.ev3devices import Motor, ColorSensor, GyroSensor              # type: ignore
 from pybricks.nxtdevices import ColorSensor as NxtColorSensor               # type: ignore
-from pybricks.parameters import Port, Stop, Direction, Button, Color        # type: ignore
-from pybricks.tools import wait, StopWatch, DataLog                         # type: ignore
-from pybricks.robotics import DriveBase                                     # type: ignore
+from pybricks.parameters import Port, Stop, Direction, Color                # type: ignore
+from pybricks.tools import wait                                             # type: ignore
 # pylint: enable=F0401
 
 import movement
