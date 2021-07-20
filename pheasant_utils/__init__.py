@@ -5,6 +5,6 @@
 # Utilities.
 
 
-from .BlockPlacement import *
 from .FrontClaw import *
+from .Logic import *
 from .RearClaw import *

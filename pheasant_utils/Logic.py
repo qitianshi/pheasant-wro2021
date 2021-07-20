@@ -1,8 +1,8 @@
-# BlockPlacement.py
+# Logic.py
 # Created on 9 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
-# Computes placement of energy unit blocks.
+# Functions for handling run logic.
 
 
 # pylint: disable=F0401
