@@ -6,3 +6,4 @@
 
 
 from .BlockPlacement import *
+from .FrontClaw import *
