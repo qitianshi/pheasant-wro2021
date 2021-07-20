@@ -7,7 +7,6 @@
 
 # pylint: disable=F0401
 from pybricks.ev3devices import Motor                                       # type: ignore
-from pybricks.parameters import Port                                        # type: ignore
 from pybricks.tools import wait                                             # type: ignore
 # pylint: enable=F0401
 
