@@ -63,11 +63,11 @@ class FrontClaw:
     def resetLowered(cls):
         
         # Quickly goes near the minimum position.
-        # cls.MOTOR.run_target(600, 100)
+        cls.MOTOR.run_target(600, 100)
 
         # Slowly goes to the max position.
         cls.MOTOR.dc(-40)                       # Outputs by duty cycle to bypass speed control.
-        wait(7000)
+        wait(1250)
         cls.MOTOR.hold()
 
         wait(50)
