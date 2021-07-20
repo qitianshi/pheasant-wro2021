@@ -16,7 +16,7 @@ from pybricks.tools import wait                                             # ty
 # pylint: enable=F0401
 
 import movement
-import runlogic
+import pheasant_utils
 
 # Initialize hardware
 brick = EV3Brick()
@@ -28,9 +28,8 @@ frontClaw = Motor(Port.A)
 leftMotor = Motor(Port.B, positive_direction=Direction.COUNTERCLOCKWISE)
 rightMotor = Motor(Port.C, positive_direction=Direction.CLOCKWISE)
 rearClaw = Motor(Port.D)
-drive = movement.TwoWheelDrive(leftMotor, rightMotor)
 
-# Initialize PID settings
+# Initialize movement package settings
 movement.DoubleMotorMovement.setDefaultMotors(leftMotor, rightMotor)
 movement.GyroMovement.setDefaultGyroSensor(gyro)
 movement.GyroStraight.setDefaultTuning(22, 0.2, 10000000)
@@ -41,6 +40,7 @@ movement.LineSquare.setDefaultTuning(20, 0, 10000000)
 movement.LineSquare.setDefaultOutputLimit(60)
 movement.LineTrack.setDefaultTuning(1.8, 0.0002, 1)
 movement.LineTrack.setDefaultIntegralLimit(50)
+drive = movement.TwoWheelDrive(leftMotor, rightMotor)
 
 # Constants
 LEFT_THRESHOLD = 47
