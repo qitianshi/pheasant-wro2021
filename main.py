@@ -184,15 +184,14 @@ def collectYellowRightBlocks():
     drive.hold()
 
     # Turns and collects.
-    movement.GyroTurn(-180, True, True)
+    utils.FrontClaw.resetRaised()
+    movement.GyroTurn(-180, True, True, kp=9)
     drive.hold()
     wait(50)
     drive.reset_angle()
     movement.GyroStraight(-180, 300, lambda: drive.angle() > 220)
     drive.hold()
-
-    # TODO: Lower claw
-    wait(100)
+    utils.FrontClaw.closeGate()
 
     # Returns to the line.
     movement.GyroStraight(-180, -300, lambda: drive.angle() < 50)
@@ -204,6 +203,7 @@ def collectGreenSurplus():
     # Turns to point side sensor at surplus green blocks.
     for _ in range(2):      # Performs turn twice to ensure accuracy.
         movement.GyroTurn(-90, False, True)
+        wait(20)
     drive.hold()
     wait(50)
 
