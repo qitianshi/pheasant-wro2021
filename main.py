@@ -43,10 +43,8 @@ drive = movement.TwoWheelDrive(leftMotor, rightMotor)
 # Initialize pheasant_utils package settings
 utils.FrontClaw.MOTOR = Motor(Port.A)
 utils.FrontClaw.MOTOR.reset_angle(utils.FrontClaw.ANGLE_RANGE)
-utils.FrontClaw.resetRaised()
 utils.RearClaw.MOTOR = Motor(Port.D, positive_direction=Direction.COUNTERCLOCKWISE)
 utils.RearClaw.MOTOR.reset_angle(utils.RearClaw.ANGLE_RANGE)
-utils.RearClaw.resetRaised()
 
 # Constants
 LEFT_THRESHOLD = 47
@@ -222,8 +220,10 @@ def collectGreenSurplus():
     movement.GyroTurn(0, False, True)
 
     # Drives forwards to collect.
+    utils.FrontClaw.openGate()
     movement.GyroStraight(0, 300, lambda: leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK)
     drive.hold()
+    utils.FrontClaw.closeGate()
 
     # Turns and travels towards green energy blocks.
     movement.GyroTurn(90, True, False)
@@ -310,10 +310,12 @@ def collectBlueSurplus():
         movement.GyroTurn(0, True, True)
         movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor)
 
-moveForwardTillGreenThenTurn()
-scanBlocksAtLeftHouse()
-collectYellowSurplusAndLeftBlocks()
-rotateSolarPanels()
+# moveForwardTillGreenThenTurn()
+# scanBlocksAtLeftHouse()
+# collectYellowSurplusAndLeftBlocks()
+# rotateSolarPanels()
+utils.FrontClaw.closeGate()
+gyro.reset_angle(0)
 collectYellowRightBlocks()
 collectGreenSurplus()
 collectGreenBlocks()
