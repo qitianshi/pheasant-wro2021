@@ -49,7 +49,6 @@ while True:
         # Waits for the center button to be released.
         while Button.CENTER in brick.buttons.pressed():
             wait(50)
-            print("waiting")
 
     # Motor control for up/down buttons
     if Button.UP in pressedButtons:
