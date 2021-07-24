@@ -2,7 +2,7 @@
 # Created on 7 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
-# Package for movement-based functionality. Includes programs for line tracking, line squaring, gyro straight, and gyro turning.
+# Package for movement-based functionality.
 
 
 # Built-in modules
