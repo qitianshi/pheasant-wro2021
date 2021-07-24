@@ -16,13 +16,13 @@ from .Claw import Claw
 class RearClaw(Claw):
 
     ANGLE_RANGE = 310                         
-    LOAD_MULTIPLIER = 1
+    LOAD_MULTIPLIER = 1.1
     LIFTING_THRESHOLD = 0.25
     
     @classmethod
     def lift(cls):
-        cls.goTo(0.4)
+        cls.goTo(0.6)
 
     @classmethod
     def collect(cls):
-        cls.goTo(0.2)
+        cls.goTo(0.33)
