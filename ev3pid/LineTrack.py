@@ -26,7 +26,6 @@ class LineTrack(PIDLoop, DoubleMotorBase):
                  threshold: int,
                  trackingEdge: LineEdge,
                  speed: float,
-                 stopCondition,
                  sensor: ColorSensor,
                  leftMotor: Motor = None,
                  rightMotor: Motor = None,
@@ -42,7 +41,6 @@ class LineTrack(PIDLoop, DoubleMotorBase):
 
         # Movement parameters
         self.speed = speed
-        self.stopCondition = stopCondition
 
         # Hardware parameters
         self.sensor = sensor
@@ -51,13 +49,11 @@ class LineTrack(PIDLoop, DoubleMotorBase):
         # PID parameters
         super().__init__(threshold, kp, ki, kd, integralLimit, outputLimit)
 
-        self.run()
-
-    def run(self):
+    def run(self, stopCondition):
 
         directionMultiplier = 1 if self.trackingEdge == LineEdge.LEFT else -1
 
-        while not self.stopCondition():
+        while not stopCondition():
 
             output = self.update(self.sensor.reflection() - self.threshold) * directionMultiplier
 

@@ -22,7 +22,6 @@ class GyroStraight(PIDLoop, GyroMovement, DoubleMotorBase):
     def __init__(self,
                  angle: int,
                  speed: float,
-                 stopCondition,
                  sensor: GyroSensor = None,
                  leftMotor: Motor = None,
                  rightMotor: Motor = None,
@@ -37,7 +36,6 @@ class GyroStraight(PIDLoop, GyroMovement, DoubleMotorBase):
 
         # Movement parameters
         self.speed = speed
-        self.stopCondition = stopCondition
 
         # Hardware parameters
         GyroMovement.__init__(self, sensor)
@@ -46,10 +44,8 @@ class GyroStraight(PIDLoop, GyroMovement, DoubleMotorBase):
         # PID parameters
         PIDLoop.__init__(self, angle, kp, ki, kd, integralLimit, outputLimit)
 
-        self.run()
-
-    def run(self):
-        while not self.stopCondition():
+    def run(self, stopCondition):
+        while not stopCondition():
 
             output = self.update(self.sensor.angle() - self.angle)
 

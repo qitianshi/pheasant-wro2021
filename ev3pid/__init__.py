@@ -14,3 +14,6 @@ from .LineTrack import *
 # Base classes, for building custom programs
 from .base.GyroMovement import *
 from .base.PIDLoop import *
+
+# Dependencies
+from ev3move import DoubleMotorBase
