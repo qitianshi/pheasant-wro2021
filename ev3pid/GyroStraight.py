@@ -15,9 +15,9 @@ from pybricks.robotics import DriveBase                                     # ty
 
 from .base.PIDLoop import PIDLoop
 from .base.GyroMovement import GyroMovement
-from .base.DoubleMotorMovement import DoubleMotorMovement
+from ev3move import DoubleMotorBase
 
-class GyroStraight(PIDLoop, GyroMovement, DoubleMotorMovement):
+class GyroStraight(PIDLoop, GyroMovement, DoubleMotorBase):
 
     def __init__(self,
                  angle: int,
@@ -41,7 +41,7 @@ class GyroStraight(PIDLoop, GyroMovement, DoubleMotorMovement):
 
         # Hardware parameters
         GyroMovement.__init__(self, sensor)
-        DoubleMotorMovement.__init__(self, leftMotor, rightMotor)
+        DoubleMotorBase.__init__(self, leftMotor, rightMotor)
 
         # PID parameters
         PIDLoop.__init__(self, angle, kp, ki, kd, integralLimit, outputLimit)

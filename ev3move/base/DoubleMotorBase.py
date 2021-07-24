@@ -1,16 +1,16 @@
-# DoubleMotorMovement.py
+# DoubleMotorBase.py
 # Created on 19 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
-# Base class for ev3pid modules involving two motors.
+# Base class for ev3move modules involving two motors.
 
 
 # pylint: disable=F0401
 from pybricks.ev3devices import Motor                                       # type: ignore
 # pylint: enable=F0401
 
-class DoubleMotorMovement:
-    
+class DoubleMotorBase:
+
     LEFT_MOTOR_DEFAULT = None
     RIGHT_MOTOR_DEFAULT = None
 

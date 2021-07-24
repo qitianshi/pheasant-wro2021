@@ -14,13 +14,13 @@ from pybricks.robotics import DriveBase                                     # ty
 # pylint: enable=F0401
 
 from .base.PIDLoop import PIDLoop
-from .base.DoubleMotorMovement import DoubleMotorMovement
+from ev3move import DoubleMotorBase
 
 class LineEdge:           # Enum workaround (MicroPython does not support enums)
     LEFT = 0
     RIGHT = 1
 
-class LineTrack(PIDLoop, DoubleMotorMovement):
+class LineTrack(PIDLoop, DoubleMotorBase):
 
     def __init__(self,
                  threshold: int,
@@ -46,7 +46,7 @@ class LineTrack(PIDLoop, DoubleMotorMovement):
 
         # Hardware parameters
         self.sensor = sensor
-        DoubleMotorMovement.__init__(self, leftMotor, rightMotor)
+        DoubleMotorBase.__init__(self, leftMotor, rightMotor)
 
         # PID parameters
         super().__init__(threshold, kp, ki, kd, integralLimit, outputLimit)

@@ -10,15 +10,15 @@ from pybricks.ev3devices import Motor                                       # ty
 from pybricks.parameters import Stop                                        # type: ignore
 # pylint: enable=F0401
 
-from .base.DoubleMotorMovement import DoubleMotorMovement
+from .base.DoubleMotorBase import DoubleMotorBase
 
-class TwoWheelDrive(DoubleMotorMovement):
+class TwoWheelDrive(DoubleMotorBase):
 
     def __init__(self,
                  leftMotor: Motor = None,
                  rightMotor: Motor = None):
 
-        DoubleMotorMovement.__init__(self, leftMotor, rightMotor)
+        DoubleMotorBase.__init__(self, leftMotor, rightMotor)
 
     def speed(self):
         return (self.leftMotor.speed() + self.rightMotor.speed()) / 2

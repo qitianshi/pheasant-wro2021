@@ -15,9 +15,9 @@ from pybricks.robotics import DriveBase                                     # ty
 
 from .base.PIDLoop import PIDLoop
 from .base.GyroMovement import GyroMovement
-from .base.DoubleMotorMovement import DoubleMotorMovement
+from ev3move import DoubleMotorBase
 
-class GyroTurn(PIDLoop, GyroMovement, DoubleMotorMovement):
+class GyroTurn(PIDLoop, GyroMovement, DoubleMotorBase):
 
     # Different tuning values used depending on the number of wheels being driven for turning.
 
@@ -71,7 +71,7 @@ class GyroTurn(PIDLoop, GyroMovement, DoubleMotorMovement):
 
         # Hardware parameters
         GyroMovement.__init__(self, sensor)
-        DoubleMotorMovement.__init__(self, leftMotor, rightMotor)
+        DoubleMotorBase.__init__(self, leftMotor, rightMotor)
 
         # PID parameters
         super().__init__(angle, kp, ki, kd, integralLimit, outputLimit)
