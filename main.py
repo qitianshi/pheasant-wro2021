@@ -225,97 +225,106 @@ def collectGreenSurplus():
     drive.hold()
     utils.FrontClaw.closeGate()
 
-    # Turns and travels towards green energy blocks.
-    movement.GyroTurn(90, True, False)
-    movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.LEFT, 200, lambda: leftColor.color() == Color.BLACK, rightColor)
-    drive.hold()
-
 def collectGreenBlocks():
-    
-    # Turns to collect right-most green blocks.
-    while leftColor.reflection() < LEFT_THRESHOLD:
-        drive.run(-100)
+
+    # Turns and travels towards green energy blocks.
+    movement.GyroStraight(0, -150, lambda: leftColor.color() == Color.GREEN or rightColor.color() == Color.GREEN)
     drive.hold()
-    movement.GyroTurn(0, True, True)
-    drive.hold()
-
-    # Line-squares to black line.
-    movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor)
-
-    # TODO: Collect green blocks.
-    wait(100)
-
-    # Travels to left-most green blocks.
     movement.GyroTurn(90, True, False)
+    movement.LineTrack(LEFT_THRESHOLD, movement.LineEdge.RIGHT, 200, lambda: rightColor.color() == Color.BLACK, leftColor)
+    drive.hold()
+    wait(10)
+    movement.GyroTurn(180, True, True)
+    drive.hold()
+
+    # Collect left green energy blocks.
+    utils.RearClaw.collect()
     drive.reset_angle()
-    movement.GyroStraight(90, 200, lambda: drive.angle() > 100)
+    movement.GyroStraight(180, -200, lambda: drive.angle() < -155)
     drive.hold()
-    movement.GyroTurn(0, True, True)
-    movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor)
-    drive.run_angle(-100, 60)
+    utils.RearClaw.lift()
 
-    # TODO: Collects green blocks.
-    wait(100)
+    # TODO: Not done.
 
-    # Turns towards right side of playfield.
-    movement.GyroTurn(-90, False, True)
-    drive.hold()
+    # # Line-squares to black line.
+    # movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor)
+
+    # # TODO: Collect green blocks.
+    # wait(100)
+
+    # # Travels to left-most green blocks.
+    # movement.GyroTurn(90, True, False)
+    # drive.reset_angle()
+    # movement.GyroStraight(90, 200, lambda: drive.angle() > 100)
+    # drive.hold()
+    # movement.GyroTurn(0, True, True)
+    # movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor)
+    # drive.run_angle(-100, 60)
+
+    # # TODO: Collects green blocks.
+    # wait(100)
+
+    # # Turns towards right side of playfield.
+    # movement.GyroTurn(-90, False, True)
+    # drive.hold()
 
 def collectBlueSurplus():
     
-    # Travels to blue area.
-    drive.reset_angle()
-    movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.LEFT, 600, lambda: drive.angle() > 1500, rightColor)
-    movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.LEFT, 250, lambda: leftColor.color() == Color.BLACK, rightColor)
-    drive.hold()
-    drive.reset_angle()
-    drive.run_angle(100, 50)
+    pass
 
-    # Drives to surplus blocks.
-    movement.GyroTurn(0, True, True)
-    drive.hold()
-    wait(10)
-    drive.reset_angle()
-    movement.GyroStraight(0, -400, lambda: drive.angle() < -400)
+    # TODO: Update to change to front claw.
+    
+    # # Travels to blue area.
+    # drive.reset_angle()
+    # movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.LEFT, 600, lambda: drive.angle() > 1500, rightColor)
+    # movement.LineTrack(RIGHT_THRESHOLD, movement.LineEdge.LEFT, 250, lambda: leftColor.color() == Color.BLACK, rightColor)
+    # drive.hold()
+    # drive.reset_angle()
+    # drive.run_angle(100, 50)
 
-    # Scans for surplus blocks.
-    drive.run(-200)
-    surplusAtBlue = False
-    while leftColor.color() != Color.BLACK or rightColor.color() != Color.BLACK:
-        detectedColor = sideColor.color()
-        if detectedColor != Color.BLACK and detectedColor != None:
-            surplusAtBlue = True
-    drive.hold()
+    # # Drives to surplus blocks.
+    # movement.GyroTurn(0, True, True)
+    # drive.hold()
+    # wait(10)
+    # drive.reset_angle()
+    # movement.GyroStraight(0, -400, lambda: drive.angle() < -400)
 
-    movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor)
+    # # Scans for surplus blocks.
+    # drive.run(-200)
+    # surplusAtBlue = False
+    # while leftColor.color() != Color.BLACK or rightColor.color() != Color.BLACK:
+    #     detectedColor = sideColor.color()
+    #     if detectedColor != Color.BLACK and detectedColor != None:
+    #         surplusAtBlue = True
+    # drive.hold()
 
-    # Collects blue surplus, if present.
-    if surplusAtBlue:
+    # movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor)
 
-        print("Surplus at blue.")
+    # # Collects blue surplus, if present.
+    # if surplusAtBlue:
 
-        # Aligns to blue surplus.
-        drive.run_angle(100, 65)
-        movement.GyroTurn(90, True, True)
-        drive.reset_angle()
+    #     print("Surplus at blue.")
 
-        # Drives forward to collect blocks.
-        movement.GyroStraight(90, 300, lambda: drive.angle() > 380)
+    #     # Aligns to blue surplus.
+    #     drive.run_angle(100, 65)
+    #     movement.GyroTurn(90, True, True)
+    #     drive.reset_angle()
 
-        # TODO: Lower the claw.
-        wait(100)
+    #     # Drives forward to collect blocks.
+    #     movement.GyroStraight(90, 300, lambda: drive.angle() > 380)
 
-        # Returns to save point.
-        movement.GyroStraight(90, -300, lambda: drive.angle() < 125)
-        movement.GyroTurn(0, True, True)
-        movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor)
+    #     # TODO: Lower the claw.
+    #     wait(100)
 
-# moveForwardTillGreenThenTurn()
-# scanBlocksAtLeftHouse()
-# collectYellowSurplusAndLeftBlocks()
-# rotateSolarPanels()
-utils.FrontClaw.closeGate()
-gyro.reset_angle(0)
+    #     # Returns to save point.
+    #     movement.GyroStraight(90, -300, lambda: drive.angle() < 125)
+    #     movement.GyroTurn(0, True, True)
+    #     movement.LineSquare(LEFT_THRESHOLD, RIGHT_THRESHOLD, movement.LinePosition.BEHIND, leftColor, rightColor)
+
+moveForwardTillGreenThenTurn()
+scanBlocksAtLeftHouse()
+collectYellowSurplusAndLeftBlocks()
+rotateSolarPanels()
 collectYellowRightBlocks()
 collectGreenSurplus()
 collectGreenBlocks()
