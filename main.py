@@ -27,6 +27,7 @@ rightColor = ColorSensor(Port.S3)
 gyro = GyroSensor(Port.S4, Direction.COUNTERCLOCKWISE)
 leftMotor = Motor(Port.B, positive_direction=Direction.COUNTERCLOCKWISE)
 rightMotor = Motor(Port.C, positive_direction=Direction.CLOCKWISE)
+driveBase = ev3move.TwoWheelDrive(leftMotor, rightMotor)
 
 # Initialize ev3pid package settings
 ev3pid.DoubleMotorBase.setDefaultMotors(leftMotor, rightMotor)
@@ -39,7 +40,6 @@ ev3pid.LineSquare.setDefaultTuning(20, 0, 10000000)
 ev3pid.LineSquare.setDefaultOutputLimit(60)
 ev3pid.LineTrack.setDefaultTuning(1.8, 0.0002, 1)
 ev3pid.LineTrack.setDefaultIntegralLimit(50)
-driveBase = ev3move.TwoWheelDrive(leftMotor, rightMotor)
 
 # Initialize pheasant_utils package settings
 utils.FrontClaw.MOTOR = Motor(Port.A)
