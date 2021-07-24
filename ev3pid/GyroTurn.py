@@ -76,7 +76,7 @@ class GyroTurn(PIDLoop, GyroMovement, DoubleMotorBase):
         # PID parameters
         super().__init__(angle, kp, ki, kd, integralLimit, outputLimit)
 
-    def run(self):
+    def runUntil(self):
 
         while not (self.sensor.angle() == self.angle and self.leftMotor.speed() == 0 and self.rightMotor.speed() == 0):
 

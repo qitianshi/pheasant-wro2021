@@ -49,7 +49,7 @@ class LineTrack(PIDLoop, DoubleMotorBase):
         # PID parameters
         super().__init__(threshold, kp, ki, kd, integralLimit, outputLimit)
 
-    def run(self, stopCondition):
+    def runUntil(self, stopCondition):
 
         directionMultiplier = 1 if self.trackingEdge == LineEdge.LEFT else -1
 

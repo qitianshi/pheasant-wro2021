@@ -44,7 +44,7 @@ class GyroStraight(PIDLoop, GyroMovement, DoubleMotorBase):
         # PID parameters
         PIDLoop.__init__(self, angle, kp, ki, kd, integralLimit, outputLimit)
 
-    def run(self, stopCondition):
+    def runUntil(self, stopCondition):
         while not stopCondition():
 
             output = self.update(self.sensor.angle() - self.angle)

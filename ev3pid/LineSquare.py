@@ -62,7 +62,7 @@ class LineSquare(PIDLoop, DoubleMotorBase):
         self.leftPid = PIDLoop(leftThreshold, kp, ki, kd, integralLimit, outputLimit)
         self.rightPid = PIDLoop(rightThreshold, kp, ki, kd, integralLimit, outputLimit)
 
-    def run(self):
+    def runUntil(self):
 
         directionMultiplier = 1 if self.linePosition == LinePosition.AHEAD else -1
 
