@@ -2,7 +2,7 @@
 # Created on 7 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
-# Base clase for PID-based control systems.
+# Base class for ev3pid modules involving PID-based control.
 
 
 class PIDLoop:

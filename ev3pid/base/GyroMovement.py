@@ -2,7 +2,7 @@
 # Created on 19 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
-# Base class for movement modules involving a gyro sensor.
+# Base class for ev3pid modules involving a gyro sensor.
 
 
 # pylint: disable=F0401

@@ -2,7 +2,7 @@
 # Created on 19 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
-# Base class for movement modules involving two motors.
+# Base class for ev3pid modules involving two motors.
 
 
 # pylint: disable=F0401

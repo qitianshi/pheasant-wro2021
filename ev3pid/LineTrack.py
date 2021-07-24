@@ -2,7 +2,7 @@
 # Created on 8 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
-# Implements line-tracking movement using a reflected light intensity sensor.
+# Implements line-tracking using a reflected light intensity sensor.
 
 
 # pylint: disable=F0401
