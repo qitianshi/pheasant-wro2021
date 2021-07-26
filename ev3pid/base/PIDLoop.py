@@ -65,6 +65,10 @@ class PIDLoop:
 
         return output
 
+    def reset(self):
+        self.integral = 0
+        self.prevError = 0
+
     @classmethod
     def setDefaultTuning(cls, kp: float, ki: float, kd: float):
         cls.kp_DEFAULT = kp
