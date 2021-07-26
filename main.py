@@ -31,7 +31,7 @@ driveBase = ev3move.TwoWheelDrive(leftMotor, rightMotor)
 
 # Initialize ev3pid package settings
 ev3pid.DoubleMotorBase.setDefaultMotors(leftMotor, rightMotor)
-ev3pid.GyroMovement.setDefaultGyroSensor(gyro)
+ev3pid.GyroInput.setDefaultGyroSensor(gyro)
 ev3pid.GyroStraight.setDefaultTuning(22, 0.2, 10000000)
 ev3pid.GyroStraight.setDefaultIntegralLimit(100)
 ev3pid.GyroStraight.setDefaultOutputLimit(1000)

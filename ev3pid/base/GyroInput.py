@@ -1,4 +1,4 @@
-# GyroMovement.py
+# GyroInput.py
 # Created on 19 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
@@ -9,7 +9,7 @@
 from pybricks.ev3devices import GyroSensor                                  # type: ignore
 # pylint: enable=F0401
 
-class GyroMovement:
+class GyroInput:
     
     DEFAULT_GYRO = None
 
