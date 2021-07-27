@@ -20,8 +20,8 @@ from ev3move import DoubleMotorBase
 class GyroStraight(PIDLoop, GyroInput, DoubleMotorBase):
 
     def __init__(self,
-                 angle: int,
                  speed: float,
+                 angle: int,
                  sensor: GyroSensor = None,
                  leftMotor: Motor = None,
                  rightMotor: Motor = None,
@@ -31,11 +31,9 @@ class GyroStraight(PIDLoop, GyroInput, DoubleMotorBase):
                  integralLimit: float = None,
                  outputLimit: float = None):
 
-        # Angle parameters
-        self.angle = angle
-
         # Movement parameters
         self.speed = speed
+        self.angle = angle
 
         # Hardware parameters
         GyroInput.__init__(self, sensor)
