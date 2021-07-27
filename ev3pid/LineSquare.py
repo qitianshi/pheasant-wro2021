@@ -14,13 +14,14 @@ from pybricks.robotics import DriveBase                                     # ty
 # pylint: enable=F0401
 
 from .base.PIDLoop import PIDLoop
+from .base.DoubleColorInput import DoubleColorInput
 from ev3move import DoubleMotorBase
 
 class LinePosition:
     AHEAD = 0
     BEHIND = 1
 
-class LineSquare(PIDLoop, DoubleMotorBase):
+class LineSquare(PIDLoop, DoubleColorInput, DoubleMotorBase):
 
     MOVE_TO_LINE_SPEED = 250
     LINE_WAIT_TIME = 75
@@ -28,11 +29,11 @@ class LineSquare(PIDLoop, DoubleMotorBase):
     THRESHOLD_TOLERANCE = 2
 
     def __init__(self,
-                 leftThreshold: int,
-                 rightThreshold: int,
                  linePosition: LinePosition,
-                 leftSensor: ColorSensor,
-                 rightSensor: ColorSensor,
+                 leftSensor: ColorSensor = None,
+                 rightSensor: ColorSensor = None,
+                 leftThreshold: int = None,
+                 rightThreshold: int = None,
                  leftMotor: Motor = None,
                  rightMotor: Motor = None,
                  kp: float = None,
@@ -41,22 +42,19 @@ class LineSquare(PIDLoop, DoubleMotorBase):
                  integralLimit: float = None,
                  outputLimit: float = None):
 
+        # Line parameters
+        self.linePosition = linePosition
+
+        # Hardware parameters
+        DoubleColorInput.__init__(self, leftSensor, rightSensor, leftThreshold, rightThreshold)
+        DoubleMotorBase.__init__(self, leftMotor, rightMotor)
+
         # Resolves optional arguments with default values.
         kp = kp if kp != None else LineSquare.kp_DEFAULT
         ki = ki if ki != None else LineSquare.ki_DEFAULT
         kd = kd if kd != None else LineSquare.kd_DEFAULT
         integralLimit = integralLimit if integralLimit != None else LineSquare.INTEGRAL_LIMIT_DEFAULT
         outputLimit = outputLimit if outputLimit != None else LineSquare.OUTPUT_LIMIT_DEFAULT
-
-        # Line parameters
-        self.leftThreshold = leftThreshold
-        self.rightThreshold = rightThreshold
-        self.linePosition = linePosition
-
-        # Hardware parameters
-        self.leftSensor = leftSensor
-        self.rightSensor = rightSensor
-        DoubleMotorBase.__init__(self, leftMotor, rightMotor)
 
         # PID parameters
         self.leftPid = PIDLoop(leftThreshold, kp, ki, kd, integralLimit, outputLimit)
