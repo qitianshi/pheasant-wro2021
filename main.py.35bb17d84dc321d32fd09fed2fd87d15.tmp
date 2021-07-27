@@ -280,7 +280,7 @@ def collectBlueSurplus():
     # # Travels to blue area.
     # drive.reset_angle()
     # ev3pid.LineTrack(600, ev3pid.LineEdge.LEFT, rightColor).run(lambda: drive.angle() > 1500)
-    # ev3pid.LineTrack(250, ev3pid.LineEdge.LEFT, rightColor).run(lambda: leftColor.color() == Color.BLACK)
+    # ev3pid.LineTrack(250, ev3pid.LineEdge.LEFT, , rightColor).run(lambda: leftColor.color() == Color.BLACK)
     # drive.hold()
     # drive.reset_angle()
     # drive.run_angle(100, 50)
