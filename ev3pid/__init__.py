@@ -12,6 +12,8 @@ from .LineSquare import *
 from .LineTrack import *
 
 # Base classes, for building custom programs
+from .base.ColorInput import *
+from .base.DoubleColorInput import *
 from .base.GyroInput import *
 from .base.PIDLoop import *
 
