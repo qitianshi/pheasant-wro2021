@@ -17,18 +17,18 @@ class ColorInput:
     def __init__(self, sensor, threshold):
 
         self.sensor = sensor if sensor != None else self.__class__.DEFAULT_COLOR
-        self.threshold = threshold if threshold != None else self.__class__.thresholdSearch(sensor)
+        self.threshold = threshold if threshold != None else self.__class__.checkKnownThresholds(sensor)
 
     @classmethod
-    def setDefaultColorSensor(cls, sensor: ColorSensor):
+    def setDefaultSensor(cls, sensor: ColorSensor):
         cls.DEFAULT_COLOR = sensor
 
     @classmethod
-    def setKnownSensorThresholds(cls, sensorThresholds):
+    def setKnownThresholds(cls, sensorThresholds):
         cls.KNOWN_THRESHOLDS.update(sensorThresholds)
 
     @classmethod
-    def thresholdSearch(cls, sensor: ColorSensor):
+    def checkKnownThresholds(cls, sensor: ColorSensor):
         try:
             return cls.KNOWN_THRESHOLDS[sensor]
         except KeyError:

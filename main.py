@@ -35,8 +35,8 @@ driveBase = ev3move.TwoWheelDrive(leftMotor, rightMotor)
 
 # Initialize ev3pid package settings
 ev3pid.DoubleMotorBase.setDefaultMotors(leftMotor, rightMotor)
-ev3pid.GyroInput.setDefaultGyroSensor(gyro)
-ev3pid.ColorInput.setKnownSensorThresholds({leftColor: LEFT_THRESHOLD, rightColor: RIGHT_THRESHOLD})
+ev3pid.GyroInput.setDefaultSensor(gyro)
+ev3pid.ColorInput.setKnownThresholds({leftColor: LEFT_THRESHOLD, rightColor: RIGHT_THRESHOLD})
 ev3pid.DoubleColorInput.setDefaultSensors(leftColor, rightColor)
 ev3pid.GyroStraight.setDefaultTuning(22, 0.2, 10000000)
 ev3pid.GyroStraight.setDefaultIntegralLimit(100)

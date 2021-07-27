@@ -21,8 +21,8 @@ class DoubleColorInput(ColorInput):
         self.leftSensor = leftSensor if leftSensor != None else self.__class__.DEFAULT_LEFT_COLOR
         self.rightSensor = rightSensor if rightSensor != None else self.__class__.DEFAULT_RIGHT_COLOR
 
-        self.leftThreshold = leftThreshold if leftThreshold != None else self.__class__.thresholdSearch(leftSensor)
-        self.rightThreshold = rightThreshold if rightThreshold != None else self.__class__.thresholdSearch(rightSensor)
+        self.leftThreshold = leftThreshold if leftThreshold != None else self.__class__.checkKnownThresholds(leftSensor)
+        self.rightThreshold = rightThreshold if rightThreshold != None else self.__class__.checkKnownThresholds(rightSensor)
 
     @classmethod
     def setDefaultSensors(cls, leftSensor: ColorSensor, rightSensor: ColorSensor):

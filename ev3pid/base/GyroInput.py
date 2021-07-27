@@ -19,5 +19,5 @@ class GyroInput:
         self.sensor = sensor if sensor != None else self.__class__.DEFAULT_GYRO
 
     @classmethod
-    def setDefaultGyroSensor(cls, sensor: GyroSensor):
+    def setDefaultSensor(cls, sensor: GyroSensor):
         cls.DEFAULT_GYRO = sensor
