@@ -11,15 +11,21 @@ from pybricks.ev3devices import ColorSensor                                 # ty
 
 class ColorInput:
 
-    knownThresholds = {}
+    KNOWN_THRESHOLDS = {}
+    DEFAULT_COLOR = None
+
+    def __init__(self, sensor, threshold):
+
+        self.sensor = sensor if sensor != None else self.__class__.DEFAULT_COLOR
+        self.threshold = threshold if threshold != None else self.__class__.thresholdSearch(sensor)
 
     @classmethod
-    def setDefaultSensorThreshold(cls, sensorThresholds):
-        cls.knownThresholds.update(sensorThresholds)
+    def setKnownSensorThresholds(cls, sensorThresholds):
+        cls.KNOWN_THRESHOLDS.update(sensorThresholds)
 
     @classmethod
     def thresholdSearch(cls, sensor: ColorSensor):
         try:
-            return cls.knownThresholds[sensor]
+            return cls.KNOWN_THRESHOLDS[sensor]
         except KeyError:
             return None
