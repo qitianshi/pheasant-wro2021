@@ -9,7 +9,7 @@
 from pybricks.ev3devices import ColorSensor                                 # type: ignore
 # pylint: enable=F0401
 
-from ColorInput import ColorInput
+from .ColorInput import ColorInput
 
 class DoubleColorInput(ColorInput):
 
