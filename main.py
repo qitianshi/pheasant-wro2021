@@ -102,7 +102,8 @@ def scanBlocksAtLeftHouse():
     if len(secondColor) == 0:
         blocks[0].append(None)
     else:
-        # Finds the most frequent color. The sensor sometimes detects a wrong color when it is sensing the edge of the block.
+        # Finds the most frequent color. The sensor sometimes detects a wrong color when it is sensing the edge of the
+        # block.
         blocks[0].append(max(set(secondColor), key=secondColor.count))
 
     print("Left house:", blocks[0])
@@ -120,7 +121,7 @@ def collectYellowSurplusAndLeftBlocks():
 
     # Drives forwards to collect the blocks.
     driveBase.reset_angle()
-    ev3pid.GyroStraight(300, -180).runUntil(lambda: driveBase.angle() > 100)                   # Move forward to get off the black line.
+    ev3pid.GyroStraight(300, -180).runUntil(lambda: driveBase.angle() > 100)   # Move forward to get off the black line.
     ev3pid.GyroStraight(300, -180).runUntil(lambda: rightColor.color() == Color.BLACK)
     driveBase.reset_angle()
     ev3pid.GyroStraight(300, -180).runUntil(lambda: driveBase.angle() > 220)
@@ -165,7 +166,8 @@ def rotateSolarPanels():
     utils.RearClaw.resetRaised()
 
     # Returns to line.
-    ev3pid.GyroStraight(-300, -180).runUntil(lambda: leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK)
+    ev3pid.GyroStraight(-300, -180).runUntil(lambda: leftColor.color() == Color.BLACK or rightColor.color() == \
+        Color.BLACK)
     driveBase.hold()
 
 def collectYellowRightBlocks():

@@ -2,7 +2,8 @@
 # Created on 18 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
-# Drive functions for two-wheel drive robots. Emulates the behavior and functionality of the methods in the built-in ev3devices.Motor class.
+# Drive functions for two-wheel drive robots. Emulates the behavior and functionality of the methods in the built-in 
+# ev3devices.Motor class.
 
 
 # pylint: disable=F0401

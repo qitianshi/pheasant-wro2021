@@ -12,7 +12,7 @@ from pybricks.tools import wait                                             # ty
 
 class Claw:
 
-    ANGLE_RANGE = None                          # Use resetRaised() then resetLowered() and measure the difference in motor angle.
+    ANGLE_RANGE = None                # Use resetRaised() then resetLowered() and measure the difference in motor angle.
     LOAD_MULTIPLIER = None
     LIFTING_THRESHOLD = None
 
@@ -23,7 +23,8 @@ class Claw:
 
     @classmethod
     def goTo(cls, amount: float):
-        cls.MOTOR.run_target(cls.SPEED, cls.ANGLE_RANGE * amount * (1 if amount <= cls.LIFTING_THRESHOLD else cls.LOAD_MULTIPLIER ** cls.loads))
+        cls.MOTOR.run_target(cls.SPEED, cls.ANGLE_RANGE * amount * (1 if amount <= cls.LIFTING_THRESHOLD else \
+            cls.LOAD_MULTIPLIER ** cls.loads))
 
     @classmethod
     def drop(cls):

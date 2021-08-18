@@ -18,7 +18,8 @@ def blockPlacement(surplusColor, houses):
     :type surplusColor: Color
     :param houses: The energy requirement of each house, arranged from left to right.
     :type houses: ((Color, Color), (Color, Color), (Color, Color))
-    :return: The placement of energy blocks for each house and the storage battery, arranged from the left house to the right house, then the storage battery.
+    :return: The placement of energy blocks for each house and the storage battery, arranged from the left house to the 
+             right house, then the storage battery.
     :rtype: [(Color, Color), (Color, Color), (Color, Color), (Color, Color)]
     """
 
@@ -28,7 +29,8 @@ def blockPlacement(surplusColor, houses):
         if len(i) == 2:
             result.append(i)
         else:
-            result.append((i, surplusColor))        # For the house that only has one requirement block, the other energy type will be the surplus.
+            # For the house that only has one requirement block, the other energy type will be the surplus.
+            result.append((i, surplusColor))
 
     # To find the energy type that is only requested once.
     flattenedHouses = (item for sublist in houses for item in sublist)

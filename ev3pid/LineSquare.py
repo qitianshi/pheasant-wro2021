@@ -65,17 +65,23 @@ class LineSquare(PIDLoop, DoubleColorInput, DoubleMotorBase):
         directionMultiplier = 1 if self.linePosition == LinePosition.AHEAD else -1
 
         # Before running PID loop, the robot drives forward until it reaches the line.
-        while not (self.leftSensor.color() == LineSquare.LINE_COLOR and self.rightSensor.color() == LineSquare.LINE_COLOR):
+        while not (self.leftSensor.color() == LineSquare.LINE_COLOR \
+                   and self.rightSensor.color() == LineSquare.LINE_COLOR):
             self.leftMotor.run(LineSquare.MOVE_TO_LINE_SPEED * directionMultiplier)
             self.rightMotor.run(LineSquare.MOVE_TO_LINE_SPEED * directionMultiplier)
         self.leftMotor.hold()
         self.rightMotor.hold()
         wait(LineSquare.LINE_WAIT_TIME)        # Stops for a short time to allow the motors to settle.
 
-        while not (self.leftSensor.reflection() in range(self.leftThreshold - LineSquare.THRESHOLD_TOLERANCE, self.leftThreshold + LineSquare.THRESHOLD_TOLERANCE + 1) and self.rightSensor.reflection() in range(self.rightThreshold - LineSquare.THRESHOLD_TOLERANCE, self.rightThreshold + LineSquare.THRESHOLD_TOLERANCE + 1)):
+        while not (self.leftSensor.reflection() in range(self.leftThreshold - LineSquare.THRESHOLD_TOLERANCE, \
+                   self.leftThreshold + LineSquare.THRESHOLD_TOLERANCE + 1) \
+                   and self.rightSensor.reflection() in range(self.rightThreshold - LineSquare.THRESHOLD_TOLERANCE, \
+                   self.rightThreshold + LineSquare.THRESHOLD_TOLERANCE + 1)):
 
-            self.leftMotor.run(self.leftPid.update(self.leftSensor.reflection() - self.leftThreshold) * directionMultiplier)
-            self.rightMotor.run(self.rightPid.update(self.rightSensor.reflection() - self.rightThreshold) * directionMultiplier)
+            self.leftMotor.run(self.leftPid.update(self.leftSensor.reflection() - self.leftThreshold) \
+                * directionMultiplier)
+            self.rightMotor.run(self.rightPid.update(self.rightSensor.reflection() - self.rightThreshold) \
+                * directionMultiplier)
 
         self.leftMotor.hold()
         self.rightMotor.hold()
