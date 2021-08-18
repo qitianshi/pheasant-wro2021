@@ -11,7 +11,7 @@ from pybricks.ev3devices import Motor                                       # ty
 from pybricks.parameters import Stop                                        # type: ignore
 # pylint: enable=F0401
 
-from .base.DoubleMotorBase import DoubleMotorBase
+from .utils.DoubleMotorBase import DoubleMotorBase
 
 class TwoWheelDrive(DoubleMotorBase):
 

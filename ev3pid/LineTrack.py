@@ -9,8 +9,8 @@
 from pybricks.ev3devices import Motor, ColorSensor                          # type: ignore
 # pylint: enable=F0401
 
-from .base.PIDLoop import PIDLoop
-from .base.ColorInput import ColorInput
+from .utils.PIDLoop import PIDLoop
+from .utils.ColorInput import ColorInput
 from ev3move import DoubleMotorBase
 
 class LineEdge:           # Enum workaround (MicroPython does not support enums)

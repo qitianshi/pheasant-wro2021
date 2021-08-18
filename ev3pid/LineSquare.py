@@ -11,8 +11,8 @@ from pybricks.parameters import Color                                       # ty
 from pybricks.tools import wait                                             # type: ignore
 # pylint: enable=F0401
 
-from .base.PIDLoop import PIDLoop
-from .base.DoubleColorInput import DoubleColorInput
+from .utils.PIDLoop import PIDLoop
+from .utils.DoubleColorInput import DoubleColorInput
 from ev3move import DoubleMotorBase
 
 class LinePosition:

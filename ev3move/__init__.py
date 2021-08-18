@@ -9,4 +9,4 @@
 from .TwoWheelDrive import *
 
 # Base classes, for building custom programs
-from .base.DoubleMotorBase import *
+from .utils.DoubleMotorBase import *

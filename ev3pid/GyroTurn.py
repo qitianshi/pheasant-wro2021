@@ -9,8 +9,8 @@
 from pybricks.ev3devices import Motor, GyroSensor                           # type: ignore
 # pylint: enable=F0401
 
-from .base.PIDLoop import PIDLoop
-from .base.GyroInput import GyroInput
+from .utils.PIDLoop import PIDLoop
+from .utils.GyroInput import GyroInput
 from ev3move import DoubleMotorBase
 
 class GyroTurn(PIDLoop, GyroInput, DoubleMotorBase):

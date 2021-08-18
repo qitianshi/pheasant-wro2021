@@ -12,10 +12,10 @@ from .LineSquare import *
 from .LineTrack import *
 
 # Base classes, for building custom programs
-from .base.ColorInput import *
-from .base.DoubleColorInput import *
-from .base.GyroInput import *
-from .base.PIDLoop import *
+from .utils.ColorInput import *
+from .utils.DoubleColorInput import *
+from .utils.GyroInput import *
+from .utils.PIDLoop import *
 
 # Dependencies
 from ev3move import DoubleMotorBase
