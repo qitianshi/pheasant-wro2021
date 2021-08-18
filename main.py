@@ -19,6 +19,8 @@ import ev3move
 import ev3pid
 import pheasant_utils as utils
 
+#region Initializations
+
 # Constants
 LEFT_THRESHOLD = 47
 RIGHT_THRESHOLD = 48
@@ -63,6 +65,8 @@ if brick.battery.voltage() < 7500:      # In millivolts.
 
     from sys import exit
     exit()
+
+#endregion
 
 def moveForwardTillGreenThenTurn():
 
