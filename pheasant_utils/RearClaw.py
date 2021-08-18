@@ -5,12 +5,6 @@
 # Programs for controlling the rear claw.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import Motor                                       # type: ignore
-from pybricks.parameters import Port, Direction                             # type: ignore
-from pybricks.tools import wait                                             # type: ignore
-# pylint: enable=F0401
-
 from .Claw import Claw
 
 class RearClaw(Claw):

@@ -6,11 +6,9 @@
 
 
 # pylint: disable=F0401
-from pybricks.hubs import EV3Brick                                          # type: ignore
-from pybricks.ev3devices import Motor, ColorSensor, GyroSensor              # type: ignore
-from pybricks.parameters import Port, Stop, Direction, Button, Color        # type: ignore
-from pybricks.tools import wait, StopWatch, DataLog                         # type: ignore
-from pybricks.robotics import DriveBase                                     # type: ignore
+from pybricks.ev3devices import Motor, ColorSensor                          # type: ignore
+from pybricks.parameters import Color                                       # type: ignore
+from pybricks.tools import wait                                             # type: ignore
 # pylint: enable=F0401
 
 from .base.PIDLoop import PIDLoop
