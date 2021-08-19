@@ -7,10 +7,12 @@
 # Main program.
 
 
+#region Start-up
+
 # pylint: disable=F0401
 from pybricks.hubs import EV3Brick                                          # type: ignore
 from pybricks.ev3devices import Motor, ColorSensor, GyroSensor              # type: ignore
-from pybricks.nxtdevices import ColorSensor as NxtColorSensor               # type: ignore
+from pybricks.iodevices import Ev3devSensor                                 # type: ignore
 from pybricks.parameters import Port, Stop, Direction, Color                # type: ignore
 from pybricks.tools import wait                                             # type: ignore
 # pylint: enable=F0401
@@ -19,15 +21,13 @@ import ev3move
 import ev3pid
 import pheasant_utils as utils
 
-#region Initializations
-
 # Constants
 LEFT_THRESHOLD = 47
 RIGHT_THRESHOLD = 48
 
 # Initialize hardware
 brick = EV3Brick()
-sideColor = NxtColorSensor(Port.S1)
+sideColor = Ev3devSensor(Port.S1)
 leftColor = ColorSensor(Port.S2)
 rightColor = ColorSensor(Port.S3)
 gyro = GyroSensor(Port.S4, Direction.COUNTERCLOCKWISE)
@@ -59,7 +59,7 @@ utils.RearClaw.MOTOR.reset_angle(utils.RearClaw.ANGLE_RANGE)
 blocks = []
 
 # Preflight checks
-if brick.battery.voltage() < 7500:      # In millivolts.
+if brick.battery.voltage() < 7750:      # In millivolts.
 
     print("Low battery.")
 
@@ -84,13 +84,13 @@ def scanBlocksAtLeftHouse():
 
     # Scans the first block
     wait(50)
-    firstColor = sideColor.color()
+    firstColor = utils.sideScanColor(sideColor)
     firstColor = firstColor if firstColor != Color.BLACK else None
     blocks.append([firstColor])
 
     # Drives forward until it goes past the first block. If no block is present, this step is skipped.
     driveBase.reset_angle()
-    while sideColor.color() != Color.BLACK:
+    while not utils.sideScanPresence(sideColor):
         driveBase.run(200)
 
     # Drives forward to scan the second block.
@@ -98,7 +98,7 @@ def scanBlocksAtLeftHouse():
     secondColor = []
     while not (leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK):
 
-        measuredColor = sideColor.color()
+        measuredColor = utils.sideScanColor(sideColor)
 
         if measuredColor != None and measuredColor != Color.BLACK:
             secondColor.append(measuredColor)
@@ -149,7 +149,7 @@ def rotateSolarPanels():
     # Travels to solar panels.
     ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, leftColor).runUntil(lambda: rightColor.color() == Color.BLACK)
     driveBase.reset_angle()
-    ev3pid.LineTrack(75, ev3pid.LineEdge.RIGHT, leftColor).runUntil(lambda: driveBase.angle() > 100)
+    ev3pid.LineTrack(75, ev3pid.LineEdge.RIGHT, leftColor).runUntil(lambda: driveBase.angle() > 90)
     driveBase.hold()
     wait(20)
 
@@ -220,7 +220,7 @@ def collectGreenSurplus():
     surplusAtGreen = False
     wait(10)                            # Waits before running loop to allow motors to start moving.
     while driveBase.angle() < 340:
-        if sideColor.color() != None and sideColor.color() != Color.BLACK:
+        if (not surplusAtGreen) and utils.sideScanPresence(sideColor):
             surplusAtGreen = True
     if surplusAtGreen:
         print("Surplus at green.")
@@ -302,7 +302,7 @@ def collectBlueSurplus():
     # drive.run(-200)
     # surplusAtBlue = False
     # while leftColor.color() != Color.BLACK or rightColor.color() != Color.BLACK:
-    #     detectedColor = sideColor.color()
+    #     detectedColor = utils.sideScanColor(sideColor)
     #     if detectedColor != Color.BLACK and detectedColor != None:
     #         surplusAtBlue = True
     # drive.hold()
