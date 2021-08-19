@@ -30,7 +30,7 @@ class ColorInput:
     def __init__(self, sensor, threshold):
 
         self.sensor = sensor if sensor != None else self.__class__.DEFAULT_COLOR
-        self.threshold = threshold if threshold != None else self.__class__.checkKnownThresholds(sensor)
+        self.threshold = threshold if threshold != None else self.__class__.checkKnownThresholds(self.sensor)
 
     @classmethod
     def setDefaultSensor(cls, sensor: ColorSensor):
