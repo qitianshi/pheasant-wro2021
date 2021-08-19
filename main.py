@@ -236,46 +236,47 @@ def collectGreenSurplus():
 
 def collectGreenBlocks():
 
+    def driveBackAndCollectGreenBlocks():
+        # Collect left-most green energy blocks.
+        utils.RearClaw.collect()
+        driveBase.reset_angle()
+        ev3pid.GyroStraight(-200, 180).runUntil(lambda: driveBase.angle() < -155)
+        driveBase.hold()
+        utils.RearClaw.lift()
+        wait(100)
+
     # Turns and travels towards green energy blocks.
     ev3pid.GyroStraight(-150, 0).runUntil(lambda: leftColor.color() == Color.GREEN or rightColor.color() == Color.GREEN)
     driveBase.hold()
     ev3pid.GyroTurn(90, True, False).run()
     ev3pid.LineTrack(200, ev3pid.LineEdge.RIGHT, leftColor).runUntil(lambda: rightColor.color() == Color.BLACK)
+    driveBase.run_angle(100, 10)
     driveBase.hold()
     wait(10)
     ev3pid.GyroTurn(180, True, True).run()
     driveBase.hold()
 
-    # Collect left green energy blocks.
-    utils.RearClaw.collect()
+    driveBackAndCollectGreenBlocks()
+
+    # Travels to right-most green blocks.
+    ev3pid.GyroTurn(-90, True, False).run()
     driveBase.reset_angle()
-    ev3pid.GyroStraight(-200, 180).runUntil(lambda: driveBase.angle() < -155)
+    ev3pid.LineTrack(200, ev3pid.LineEdge.LEFT, rightColor).runUntil(lambda: driveBase.angle() > 100)
     driveBase.hold()
-    utils.RearClaw.lift()
-
-    wait(50000)
-
-    # Line-squares to black line.
-    ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
-
-    # TODO: Collect green blocks.
-    wait(100)
-
-    # Travels to left-most green blocks.
-    ev3pid.GyroTurn(90, True, False).run()
-    driveBase.reset_angle()
-    ev3pid.GyroStraight(200, 90).runUntil(lambda: driveBase.angle() > 100)
+    ev3pid.GyroTurn(-180, True, True).run()
     driveBase.hold()
-    ev3pid.GyroTurn(0, True, True).run()
-    ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
-    driveBase.run_angle(-100, 60)
 
-    # TODO: Collects green blocks.
-    wait(100)
+    driveBackAndCollectGreenBlocks()
 
-    # Turns towards right side of playfield.
-    ev3pid.GyroTurn(-90, False, True).run()
-    driveBase.hold()
+    wait(30000)
+
+    # TODO: Add this.
+
+    # ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
+
+    # # Turns towards right side of playfield.
+    # ev3pid.GyroTurn(-90, False, True).run()
+    # driveBase.hold()
 
 def collectBlueSurplus():
     
