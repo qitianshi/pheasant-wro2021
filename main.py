@@ -253,29 +253,29 @@ def collectGreenBlocks():
     driveBase.hold()
     utils.RearClaw.lift()
 
-    # TODO: Not done.
+    wait(50000)
 
-    # # Line-squares to black line.
-    # ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
+    # Line-squares to black line.
+    ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
 
-    # # TODO: Collect green blocks.
-    # wait(100)
+    # TODO: Collect green blocks.
+    wait(100)
 
-    # # Travels to left-most green blocks.
-    # ev3pid.GyroTurn(90, True, False).run()
-    # drive.reset_angle()
-    # ev3pid.GyroStraight(200, 90).run(lambda: drive.angle() > 100)
-    # drive.hold()
-    # ev3pid.GyroTurn(0, True, True).run()
-    # ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
-    # drive.run_angle(-100, 60)
+    # Travels to left-most green blocks.
+    ev3pid.GyroTurn(90, True, False).run()
+    driveBase.reset_angle()
+    ev3pid.GyroStraight(200, 90).runUntil(lambda: driveBase.angle() > 100)
+    driveBase.hold()
+    ev3pid.GyroTurn(0, True, True).run()
+    ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
+    driveBase.run_angle(-100, 60)
 
-    # # TODO: Collects green blocks.
-    # wait(100)
+    # TODO: Collects green blocks.
+    wait(100)
 
-    # # Turns towards right side of playfield.
-    # ev3pid.GyroTurn(-90, False, True).run()
-    # drive.hold()
+    # Turns towards right side of playfield.
+    ev3pid.GyroTurn(-90, False, True).run()
+    driveBase.hold()
 
 def collectBlueSurplus():
     
@@ -284,28 +284,28 @@ def collectBlueSurplus():
     # TODO: Update to change to front claw.
     
     # # Travels to blue area.
-    # drive.reset_angle()
-    # ev3pid.LineTrack(600, ev3pid.LineEdge.LEFT, rightColor).run(lambda: drive.angle() > 1500)
+    # driveBase.reset_angle()
+    # ev3pid.LineTrack(600, ev3pid.LineEdge.LEFT, rightColor).run(lambda: driveBase.angle() > 1500)
     # ev3pid.LineTrack(250, ev3pid.LineEdge.LEFT, rightColor).run(lambda: leftColor.color() == Color.BLACK)
-    # drive.hold()
-    # drive.reset_angle()
-    # drive.run_angle(100, 50)
+    # driveBase.hold()
+    # driveBase.reset_angle()
+    # driveBase.run_angle(100, 50)
 
     # # Drives to surplus blocks.
     # ev3pid.GyroTurn(0, True, True).run()
-    # drive.hold()
+    # driveBase.hold()
     # wait(10)
-    # drive.reset_angle()
-    # ev3pid.GyroStraight(-400, 0).run(lambda: drive.angle() < -400)
+    # driveBase.reset_angle()
+    # ev3pid.GyroStraight(-400, 0).run(lambda: driveBase.angle() < -400)
 
     # # Scans for surplus blocks.
-    # drive.run(-200)
+    # driveBase.run(-200)
     # surplusAtBlue = False
     # while leftColor.color() != Color.BLACK or rightColor.color() != Color.BLACK:
     #     detectedColor = utils.sideScanColor(sideColor)
     #     if detectedColor != Color.BLACK and detectedColor != None:
     #         surplusAtBlue = True
-    # drive.hold()
+    # driveBase.hold()
 
     # ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
 
@@ -315,18 +315,18 @@ def collectBlueSurplus():
     #     print("Surplus at blue.")
 
     #     # Aligns to blue surplus.
-    #     drive.run_angle(100, 65)
+    #     driveBase.run_angle(100, 65)
     #     ev3pid.GyroTurn(90, True, True).run()
-    #     drive.reset_angle()
+    #     driveBase.reset_angle()
 
     #     # Drives forward to collect blocks.
-    #     ev3pid.GyroStraight(300, 90).run(lambda: drive.angle() > 380)
+    #     ev3pid.GyroStraight(300, 90).run(lambda: driveBase.angle() > 380)
 
     #     # TODO: Lower the claw.
     #     wait(100)
 
     #     # Returns to save point.
-    #     ev3pid.GyroStraight(-300, 90).run(lambda: drive.angle() < 125)
+    #     ev3pid.GyroStraight(-300, 90).run(lambda: driveBase.angle() < 125)
     #     ev3pid.GyroTurn(0, True, True).run()
     #     ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
 
