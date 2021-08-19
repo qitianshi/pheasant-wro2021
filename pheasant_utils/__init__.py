@@ -8,3 +8,4 @@
 from .FrontClaw import *
 from .Logic import *
 from .RearClaw import *
+from .SideScan import *
