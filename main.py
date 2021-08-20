@@ -40,11 +40,11 @@ ev3pid.DoubleMotorBase.setDefaultMotors(leftMotor, rightMotor)
 ev3pid.GyroInput.setDefaultSensor(gyro)
 ev3pid.ColorInput.setKnownThresholds(([leftColor, LEFT_THRESHOLD], [rightColor, RIGHT_THRESHOLD]))
 ev3pid.DoubleColorInput.setDefaultSensors(leftColor, rightColor)
-ev3pid.GyroStraight.setDefaultTuning(22, 0.2, 10000)
+ev3pid.GyroStraight.setDefaultTuning(22, 0.2, 100000)
 ev3pid.GyroStraight.setDefaultIntegralLimit(100)
 ev3pid.GyroStraight.setDefaultOutputLimit(1000)
-ev3pid.GyroTurn.setDefaultTuning(23, 0, 10000, 12, 0, 10000)
-ev3pid.LineSquare.setDefaultTuning(20, 0, 10000)
+ev3pid.GyroTurn.setDefaultTuning(23, 0, 100000, 12, 0, 100000)
+ev3pid.LineSquare.setDefaultTuning(20, 0, 100000)
 ev3pid.LineSquare.setDefaultOutputLimit(60)
 ev3pid.LineTrack.setDefaultTuning(1.8, 0.0002, 1)
 ev3pid.LineTrack.setDefaultIntegralLimit(50)
@@ -59,7 +59,7 @@ utils.RearClaw.MOTOR.reset_angle(utils.RearClaw.ANGLE_RANGE)
 blocks = []
 
 # Preflight checks
-if brick.battery.voltage() < 7750:      # In millivolts.
+if brick.battery.voltage() < 7600:      # In millivolts.
 
     print("Low battery.")
 
@@ -236,13 +236,18 @@ def collectGreenSurplus():
 
 def collectGreenBlocks():
 
-    def driveBackAndCollectGreenBlocks():
+    def driveBackAndCollectGreenBlocks(moveBackDegrees):
+
         # Collect left-most green energy blocks.
         utils.RearClaw.collect()
+
         driveBase.reset_angle()
-        ev3pid.GyroStraight(-200, 180).runUntil(lambda: driveBase.angle() < -155)
+        ev3pid.GyroStraight(-150, 180).runUntil(lambda: driveBase.angle() < -1 * moveBackDegrees)
         driveBase.hold()
+
+        utils.RearClaw.loads += 1
         utils.RearClaw.lift()
+
         wait(100)
 
     # Turns and travels towards green energy blocks.
@@ -250,33 +255,29 @@ def collectGreenBlocks():
     driveBase.hold()
     ev3pid.GyroTurn(90, True, False).run()
     ev3pid.LineTrack(200, ev3pid.LineEdge.RIGHT, leftColor).runUntil(lambda: rightColor.color() == Color.BLACK)
-    driveBase.run_angle(100, 10)
+    # driveBase.run_angle(100, 10)
     driveBase.hold()
     wait(10)
     ev3pid.GyroTurn(180, True, True).run()
     driveBase.hold()
 
-    driveBackAndCollectGreenBlocks()
+    driveBackAndCollectGreenBlocks(150)
 
     # Travels to right-most green blocks.
-    ev3pid.GyroTurn(-90, True, False).run()
+    ev3pid.GyroTurn(270, True, False).run()
     driveBase.reset_angle()
-    ev3pid.LineTrack(200, ev3pid.LineEdge.LEFT, rightColor).runUntil(lambda: driveBase.angle() > 100)
+    ev3pid.LineTrack(200, ev3pid.LineEdge.LEFT, rightColor).runUntil(lambda: driveBase.angle() > 125)
     driveBase.hold()
-    ev3pid.GyroTurn(-180, True, True).run()
+    ev3pid.GyroTurn(180, True, True).run()
     driveBase.hold()
 
-    driveBackAndCollectGreenBlocks()
+    driveBackAndCollectGreenBlocks(115)
 
-    wait(30000)
-
-    # TODO: Add this.
-
-    # ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
-
-    # # Turns towards right side of playfield.
-    # ev3pid.GyroTurn(-90, False, True).run()
-    # driveBase.hold()
+    # Turns towards right side of playfield.
+    driveBase.reset_angle()
+    driveBase.run_angle(100, -35)
+    wait(100)
+    ev3pid.GyroTurn(270, True, False).run()
 
 def collectBlueSurplus():
     
