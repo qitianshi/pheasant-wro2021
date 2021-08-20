@@ -283,25 +283,23 @@ def collectBlueSurplus():
     
     # Travels to blue area.
     driveBase.reset_angle()
-    ev3pid.LineTrack(600, ev3pid.LineEdge.LEFT, rightColor).runUntil(lambda: driveBase.angle() > 1500)
-    ev3pid.LineTrack(250, ev3pid.LineEdge.LEFT, rightColor).runUntil(lambda: leftColor.color() == Color.BLACK)
+    lineTrackGreenZoneToBlue = ev3pid.LineTrack(600, ev3pid.LineEdge.LEFT, rightColor)
+    lineTrackGreenZoneToBlue.runUntil(lambda: driveBase.angle() > 1080)
+    lineTrackGreenZoneToBlue.speed = 250
+    lineTrackGreenZoneToBlue.runUntil(lambda: leftColor.color() == Color.BLACK)
     driveBase.hold()
-    driveBase.reset_angle()
-    driveBase.run_angle(100, 50)
 
     # Drives to surplus blocks.
-    ev3pid.GyroTurn(0, True, True).run()
-    driveBase.hold()
     wait(10)
+    ev3pid.GyroTurn(360, True, True).run()
     driveBase.reset_angle()
-    ev3pid.GyroStraight(-400, 0).runUntil(lambda: driveBase.angle() < -400)
+    ev3pid.GyroStraight(-400, 360).runUntil(lambda: driveBase.angle() < -400)
 
     # Scans for surplus blocks.
     driveBase.run(-200)
     surplusAtBlue = False
     while leftColor.color() != Color.BLACK or rightColor.color() != Color.BLACK:
-        detectedColor = utils.sideScanColor(sideColor)
-        if detectedColor != Color.BLACK and detectedColor != None:
+        if utils.sideScanPresence(sideColor):
             surplusAtBlue = True
     driveBase.hold()
 
@@ -314,18 +312,19 @@ def collectBlueSurplus():
 
         # Aligns to blue surplus.
         driveBase.run_angle(100, 65)
-        ev3pid.GyroTurn(90, True, True).run()
+        utils.FrontClaw.resetRaised()
+        ev3pid.GyroTurn(450, True, True).run()
         driveBase.reset_angle()
 
         # Drives forward to collect blocks.
-        ev3pid.GyroStraight(300, 90).runUntil(lambda: driveBase.angle() > 380)
+        ev3pid.GyroStraight(300, 450).runUntil(lambda: driveBase.angle() > 380)
 
-        # TODO: Lower the claw.
-        wait(100)
+        # Lowers the claw.
+        utils.FrontClaw.closeGate()
 
         # Returns to save point.
-        ev3pid.GyroStraight(-300, 90).runUntil(lambda: driveBase.angle() < 125)
-        ev3pid.GyroTurn(0, True, True).run()
+        ev3pid.GyroStraight(-300, 450).runUntil(lambda: driveBase.angle() < 125)
+        ev3pid.GyroTurn(360, True, True).run()
         ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
 
 moveForwardTillGreenThenTurn()
