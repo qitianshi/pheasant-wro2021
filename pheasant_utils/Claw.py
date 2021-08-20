@@ -17,14 +17,15 @@ class Claw:
     LIFTING_THRESHOLD = None
 
     MOTOR = None
-    SPEED = 400
+    LIGHT_LOAD_SPEED = 400
+    DOUBLE_LOAD_SPEED = 300
 
     loads = 0
 
     @classmethod
     def goTo(cls, amount: float):
-        cls.MOTOR.run_target(cls.SPEED, cls.ANGLE_RANGE * amount * (1 if amount <= cls.LIFTING_THRESHOLD else \
-            cls.LOAD_MULTIPLIER ** cls.loads))
+        cls.MOTOR.run_target((cls.LIGHT_LOAD_SPEED if cls.loads < 2 else cls.DOUBLE_LOAD_SPEED), \
+            cls.ANGLE_RANGE * amount * (1 if amount <= cls.LIFTING_THRESHOLD else cls.LOAD_MULTIPLIER ** cls.loads))
 
     @classmethod
     def drop(cls):
