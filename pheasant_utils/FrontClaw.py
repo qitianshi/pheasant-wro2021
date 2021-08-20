@@ -11,15 +11,15 @@ class FrontClaw(Claw):
 
     ANGLE_RANGE = 1224                          
     LOAD_MULTIPLIER = 1.05
-    LIFTING_THRESHOLD = 0.72
+    LIFTING_THRESHOLD = 0.81
     
     @classmethod
     def lift(cls):
-        cls.goTo(0.86)
+        cls.goTo(0.88)
 
     @classmethod
     def collect(cls):
-        cls.goTo(0.82)
+        cls.goTo(0.8)
 
     @classmethod
     def openGate(cls):
