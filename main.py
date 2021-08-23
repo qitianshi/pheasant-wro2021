@@ -112,7 +112,7 @@ def scanBlocksAtLeftHouse():
 
     print("Left house:", blocks[0])
 
-def collectYellowSurplusAndLeftBlocks():
+def collectYellowSurplusAndLeftEnergy():
 
     # Drives forward to align with blocks.
     driveBase.reset_angle()
@@ -174,7 +174,7 @@ def rotateSolarPanels():
         Color.BLACK)
     driveBase.hold()
 
-def collectYellowRightBlocks():
+def collectYellowRightEnergy():
 
     # Turns to align to black line for line tracking.
     driveBase.reset_angle()
@@ -234,7 +234,7 @@ def collectGreenSurplus():
     driveBase.hold()
     utils.FrontClaw.closeGate()
 
-def collectGreenBlocks():
+def collectGreenEnergy():
 
     def driveBackAndCollectGreenBlocks(moveBackDegrees):
 
@@ -330,11 +330,11 @@ def collectBlueSurplus():
 
 moveForwardTillGreenThenTurn()
 scanBlocksAtLeftHouse()
-collectYellowSurplusAndLeftBlocks()
+collectYellowSurplusAndLeftEnergy()
 rotateSolarPanels()
-collectYellowRightBlocks()
+collectYellowRightEnergy()
 collectGreenSurplus()
-collectGreenBlocks()
+collectGreenEnergy()
 collectBlueSurplus()
 
 wait(1000)
