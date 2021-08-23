@@ -328,6 +328,22 @@ def collectBlueSurplus():
         ev3pid.GyroTurn(360, True, True).run()
         ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
 
+def collectBlueEnergy():
+    
+    # Turns towards top blue energy
+    driveBase.reset_angle()
+    ev3pid.GyroStraight(200, 360).runUntil(lambda: driveBase.angle() > 100)
+    driveBase.hold()
+    wait(10)
+    ev3pid.GyroTurn(270, True, False).run()
+
+    # Drives forwards and lift claw
+    driveBase.reset_angle()
+    ev3pid.GyroStraight(200, 270).runUntil(lambda: driveBase.angle() > 100)
+    driveBase.hold()
+    utils.FrontClaw.loads += 1
+    utils.FrontClaw.lift()
+
 moveForwardTillGreenThenTurn()
 scanBlocksAtLeftHouse()
 collectYellowSurplusAndLeftEnergy()
@@ -336,5 +352,6 @@ collectYellowRightEnergy()
 collectGreenSurplus()
 collectGreenEnergy()
 collectBlueSurplus()
+collectBlueEnergy()
 
 wait(1000)
