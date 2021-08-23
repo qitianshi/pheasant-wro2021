@@ -317,13 +317,14 @@ def collectBlueSurplus():
         driveBase.reset_angle()
 
         # Drives forward to collect blocks.
-        ev3pid.GyroStraight(300, 450).runUntil(lambda: driveBase.angle() > 380)
+        ev3pid.GyroStraight(350, 450).runUntil(lambda: driveBase.angle() > 250)
 
         # Lowers the claw.
         utils.FrontClaw.closeGate()
 
         # Returns to save point.
-        ev3pid.GyroStraight(-300, 450).runUntil(lambda: driveBase.angle() < 125)
+        ev3pid.GyroStraight(-200, 450).runUntil(lambda: driveBase.angle() < -120)
+        ev3pid.GyroStraight(100, 450).runUntil(lambda: driveBase.angle() > -90)
         ev3pid.GyroTurn(360, True, True).run()
         ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
 
