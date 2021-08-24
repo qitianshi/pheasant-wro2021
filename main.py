@@ -27,7 +27,6 @@ RIGHT_THRESHOLD = 48
 
 # Initialize hardware
 brick = EV3Brick()
-sideColor = Ev3devSensor(Port.S1)
 leftColor = ColorSensor(Port.S2)
 rightColor = ColorSensor(Port.S3)
 gyro = GyroSensor(Port.S4, Direction.COUNTERCLOCKWISE)
@@ -54,6 +53,7 @@ utils.FrontClaw.MOTOR = Motor(Port.A)
 utils.FrontClaw.MOTOR.reset_angle(utils.FrontClaw.ANGLE_RANGE)
 utils.RearClaw.MOTOR = Motor(Port.D, positive_direction=Direction.COUNTERCLOCKWISE)
 utils.RearClaw.MOTOR.reset_angle(utils.RearClaw.ANGLE_RANGE)
+utils.SideScan.sensor = Ev3devSensor(Port.S1)
 
 # Variables
 blocks = []
@@ -84,13 +84,13 @@ def scanBlocksAtLeftHouse():
 
     # Scans the first block
     wait(50)
-    firstColor = utils.sideScanColor(sideColor)
+    firstColor = utils.SideScan.color()
     firstColor = firstColor if firstColor != Color.BLACK else None
     blocks.append([firstColor])
 
     # Drives forward until it goes past the first block. If no block is present, this step is skipped.
     driveBase.reset_angle()
-    while not utils.sideScanPresence(sideColor):
+    while not utils.SideScan.presence():
         driveBase.run(200)
 
     # Drives forward to scan the second block.
@@ -98,7 +98,7 @@ def scanBlocksAtLeftHouse():
     secondColor = []
     while not (leftColor.color() == Color.BLACK or rightColor.color() == Color.BLACK):
 
-        measuredColor = utils.sideScanColor(sideColor)
+        measuredColor = utils.SideScan.color()
 
         if measuredColor != None and measuredColor != Color.BLACK:
             secondColor.append(measuredColor)
@@ -220,7 +220,7 @@ def collectGreenSurplus():
     surplusAtGreen = False
     wait(10)                            # Waits before running loop to allow motors to start moving.
     while driveBase.angle() < 340:
-        if (not surplusAtGreen) and utils.sideScanPresence(sideColor):
+        if (not surplusAtGreen) and utils.SideScan.presence():
             surplusAtGreen = True
     if surplusAtGreen:
         print("Surplus at green.")
@@ -299,7 +299,7 @@ def collectBlueSurplus():
     driveBase.run(-200)
     surplusAtBlue = False
     while leftColor.color() != Color.BLACK or rightColor.color() != Color.BLACK:
-        if utils.sideScanPresence(sideColor):
+        if utils.SideScan.presence():
             surplusAtBlue = True
     driveBase.hold()
 

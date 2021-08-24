@@ -6,22 +6,27 @@
 
 
 # pylint: disable=F0401
-import ev3move
 from pybricks.iodevices import Ev3devSensor                                 # type: ignore
 from pybricks.parameters import Color                                       # type: ignore
 # pylint: enable=F0401
 
-def sideScanColor(sensor: Ev3devSensor):
-    
-    r, g, b = sensor.read('RGB-RAW')
+class SideScan:
 
-    if r - b >= 3 and r - g >= 3:
-        return Color.YELLOW
-    elif b - r >= 3 and b - g >= 3:
-        return Color.BLUE
-    elif g - r >= 3 and g - b >= 3:
-        return Color.GREEN
+    sensor = None
 
-def sideScanPresence(sensor: Ev3devSensor):
-    r, g, b = sensor.read('RGB-RAW')
-    return r + g + b > 15
+    @classmethod
+    def color(cls):
+        
+        r, g, b = cls.sensor.read('RGB-RAW')
+
+        if r - b >= 3 and r - g >= 3:
+            return Color.YELLOW
+        elif b - r >= 3 and b - g >= 3:
+            return Color.BLUE
+        elif g - r >= 3 and g - b >= 3:
+            return Color.GREEN
+
+    @classmethod
+    def presence(cls):
+        r, g, b = cls.sensor.read('RGB-RAW')
+        return r + g + b > 15
