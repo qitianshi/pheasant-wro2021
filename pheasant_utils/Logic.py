@@ -9,6 +9,14 @@
 from pybricks.parameters import Color                                       # type: ignore
 # pylint: enable=F0401
 
+# Positions where energy blocks can be deposited (enum workaround).
+class DepositPoint:
+
+    LEFT_HOUSE = 0
+    TOP_HOUSE = 1
+    RIGHT_HOUSE = 2
+    STORAGE = 3
+
 class Logic:
 
     # Robot storage
@@ -16,45 +24,33 @@ class Logic:
 
     # Run randomization
     surplus = None
-    houses = {}
-
-    # Positions where energy blocks can be deposited (enum workaround).
-    class DepositPoint:
-
-        LEFT_HOUSE = 0
-        TOP_HOUSE = 1
-        RIGHT_HOUSE = 2
-        STORAGE = 3
+    houses = {DepositPoint.LEFT_HOUSE: [], DepositPoint.TOP_HOUSE: [], DepositPoint.RIGHT_HOUSE: []}
 
     @classmethod
     def blockDeposit(cls, point: DepositPoint):
-        
-        """
-        Gives the correct placement of blocks for each house and the storage battery.
 
-        :param depositPoint: The requested deposit point.
-        :return: The placement of energy blocks for the requested deposit point.
-        :rtype: (Color, Color)
-        """
+        # TODO: Rewrite logic to only return requested deposition point.
 
-        result = []
+        pass
 
-        for i in cls.houses:
-            if len(i) == 2:
-                result.append(i)
-            else:
-                # For the house that only has one requirement block, the other energy type will be the surplus.
-                result.append((i, cls.surplus))
+        # result = []
 
-        # To find the energy type that is only requested once.
-        flattenedHouses = (item for sublist in cls.houses for item in sublist)
-        missingColor = None
-        for i in (Color.BLUE, Color.YELLOW, Color.GREEN):
-            if flattenedHouses.count(i) == 1:
-                missingColor = i
-                break
+        # for i in cls.houses:
+        #     if len(i) == 2:
+        #         result.append(i)
+        #     else:
+        #         # For the house that only has one requirement block, the other energy type will be the surplus.
+        #         result.append((i, cls.surplus))
 
-        # For the battery.
-        result.append((cls.surplus, missingColor))
+        # # To find the energy type that is only requested once.
+        # flattenedHouses = (item for sublist in cls.houses for item in sublist)
+        # missingColor = None
+        # for i in (Color.BLUE, Color.YELLOW, Color.GREEN):
+        #     if flattenedHouses.count(i) == 1:
+        #         missingColor = i
+        #         break
 
-        return result
+        # # For the battery.
+        # result.append((cls.surplus, missingColor))
+
+        # return result
