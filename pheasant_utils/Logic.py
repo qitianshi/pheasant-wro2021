@@ -12,7 +12,7 @@ from pybricks.parameters import Color                                       # ty
 class Logic:
 
     # Robot storage
-    blocks = []
+    storage = []
 
     # Run randomization
     surplus = None
