@@ -73,7 +73,7 @@ def partialRunStartupProcedure():
 
     # Claws
     utils.RearClaw.loads = 2
-    utils.RearClaw.lift
+    utils.RearClaw.lift()
     utils.FrontClaw.closeGate()
 
 #endregion
