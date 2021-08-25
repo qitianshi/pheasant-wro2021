@@ -19,11 +19,13 @@ class DepositPoint:
 
 class Logic:
 
+    # For representing the surplus color. The actual color of the surplus does not need to be known.
+    SURPLUS = hash("surplus")       # Enum workaround. Uses the hash function to avoid collisions.
+
     # Robot storage
-    robotStorage = []
+    robotStorage = [Color.YELLOW, Color.YELLOW, SURPLUS, SURPLUS]
 
     # Run randomization
-    surplus = None
     houses = {DepositPoint.LEFT_HOUSE: [], DepositPoint.TOP_HOUSE: [], DepositPoint.RIGHT_HOUSE: []}
 
     @classmethod
@@ -38,9 +40,9 @@ class Logic:
                     missingColor = i
                     break
 
-            return [cls.surplus, missingColor]
+            return [cls.SURPLUS, missingColor]
 
         elif len(cls.houses[point]) == 2:
             return cls.houses[point]
         else:
-            return cls.houses[point].append(cls.surplus)
+            return cls.houses[point].append(cls.SURPLUS)
