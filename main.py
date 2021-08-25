@@ -56,7 +56,7 @@ utils.RearClaw.MOTOR.reset_angle(utils.RearClaw.ANGLE_RANGE)
 utils.SideScan.sensor = Ev3devSensor(Port.S1)
 
 # Preflight checks
-if BRICK.battery.voltage() < 7600:      # In millivolts.
+if BRICK.battery.voltage() < 7750:      # In millivolts.
 
     print("Low battery.")
 
@@ -70,12 +70,20 @@ def partialRunStartupProcedure():
     print("-" * 10, "Begin partialRunStartupProcedure", sep='\n')
 
     # Gyro
-    GYRO.reset_angle(360)
+    GYRO.reset_angle(0)
 
     # Claws
-    utils.RearClaw.loads = 2
-    utils.RearClaw.lift()
+    # utils.RearClaw.loads = 2
+    # utils.RearClaw.lift()
+    # utils.FrontClaw.loads = 0
     utils.FrontClaw.closeGate()
+
+    # Run variables
+    # utils.Logic.robotStorage = []
+    # utils.Logic.surplus = Color.YELLOW
+    # utils.Logic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
+    #                       utils.DepositPoint.TOP_HOUSE: [],
+    #                       utils.DepositPoint.RIGHT_HOUSE: []}
 
 #endregion
 
