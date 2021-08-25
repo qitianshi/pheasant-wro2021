@@ -15,8 +15,8 @@ class RearClaw(Claw):
     
     @classmethod
     def lift(cls):
-        cls.goTo(0.55)
+        cls.goTo(0.52)
 
     @classmethod
     def collect(cls):
-        cls.goTo(0.33)
+        cls.goTo(0.31)
