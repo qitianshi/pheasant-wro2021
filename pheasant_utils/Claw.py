@@ -12,13 +12,14 @@ from pybricks.tools import wait                                             # ty
 
 class Claw:
 
-    ANGLE_RANGE = None                # Use resetRaised() then resetLowered() and measure the difference in motor angle.
+    ANGLE_RANGE = None              # Use resetRaised() then resetLowered() and measure the difference in motor angle.
     LOAD_MULTIPLIER = None
     LIFTING_THRESHOLD = None
 
+    LIGHT_LOAD_SPEED = None         # Speeds defined in subclasses.
+    DOUBLE_LOAD_SPEED = None
+
     MOTOR = None
-    LIGHT_LOAD_SPEED = 400
-    DOUBLE_LOAD_SPEED = 300
 
     loads = 0
 
