@@ -27,30 +27,20 @@ class Logic:
     houses = {DepositPoint.LEFT_HOUSE: [], DepositPoint.TOP_HOUSE: [], DepositPoint.RIGHT_HOUSE: []}
 
     @classmethod
-    def blockDeposit(cls, point: DepositPoint):
+    def blocksAtPoint(cls, point: DepositPoint):
 
-        # TODO: Rewrite logic to only return requested deposition point.
+        if point == DepositPoint.STORAGE:
+            
+            flattenedHouses = (color for house in cls.houses.values() for color in house)
+            missingColor = None
+            for i in (Color.BLUE, Color.YELLOW, Color.GREEN):
+                if flattenedHouses.count(i) == 1:
+                    missingColor = i
+                    break
 
-        pass
+            return [cls.surplus, missingColor]
 
-        # result = []
-
-        # for i in cls.houses:
-        #     if len(i) == 2:
-        #         result.append(i)
-        #     else:
-        #         # For the house that only has one requirement block, the other energy type will be the surplus.
-        #         result.append((i, cls.surplus))
-
-        # # To find the energy type that is only requested once.
-        # flattenedHouses = (item for sublist in cls.houses for item in sublist)
-        # missingColor = None
-        # for i in (Color.BLUE, Color.YELLOW, Color.GREEN):
-        #     if flattenedHouses.count(i) == 1:
-        #         missingColor = i
-        #         break
-
-        # # For the battery.
-        # result.append((cls.surplus, missingColor))
-
-        # return result
+        elif len(cls.houses[point]) == 2:
+            return cls.houses[point]
+        else:
+            return cls.houses[point].append(cls.surplus)
