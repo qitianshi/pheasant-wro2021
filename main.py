@@ -70,11 +70,11 @@ def partialRunStartupProcedure():
     print("-" * 10, "Begin partialRunStartupProcedure", sep='\n')
 
     # Gyro
-    GYRO.reset_angle(0)
+    GYRO.reset_angle(270)
 
     # Claws
-    # utils.RearClaw.loads = 2
-    # utils.RearClaw.lift()
+    utils.RearClaw.loads = 2
+    utils.RearClaw.lift()
     # utils.FrontClaw.loads = 0
     utils.FrontClaw.closeGate()
 
@@ -156,8 +156,6 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Lowers the front claw.
     utils.FrontClaw.closeGate()
-    utils.Logic.robotStorage.append(Color.YELLOW)
-    print("Robot storage:", utils.Logic.robotStorage)
 
     # Returns to the line.
     ev3pid.GyroStraight(-300, -180).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
@@ -227,8 +225,6 @@ def collectYellowRightEnergy():
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(300, -180).runUntil(lambda: DRIVE_BASE.angle() > 220)
     DRIVE_BASE.hold()
-    utils.Logic.robotStorage.append(Color.YELLOW)
-    print("Robot storage:", utils.Logic.robotStorage)
     utils.FrontClaw.closeGate()
 
     # Returns to the line.
@@ -249,17 +245,7 @@ def collectGreenSurplus():
 
     # Drives forward while sensing if the surplus energy blocks are present.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(200, 340, then=Stop.HOLD, wait=False)
-    surplusAtGreen = False
-    wait(10)                            # Waits before running loop to allow motors to start moving.
-    while DRIVE_BASE.angle() < 340:
-        if (not surplusAtGreen) and utils.SideScan.presence():
-            surplusAtGreen = True
-    if surplusAtGreen:
-        utils.Logic.surplus = Color.GREEN
-        utils.Logic.robotStorage.extend([Color.GREEN, Color.GREEN])
-        print("Surplus at green.")
-        print("Robot storage:", utils.Logic.robotStorage)
+    DRIVE_BASE.run_angle(200, 340, then=Stop.HOLD, wait=True)
 
     # Turns to face the blocks
     ev3pid.GyroTurn(0, False, True).run()
@@ -313,8 +299,8 @@ def collectGreenEnergy():
 
     # Turns towards right side of playfield.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(100, -35)
-    wait(100)
+    DRIVE_BASE.run_angle(100, -85)
+    wait(50)
     ev3pid.GyroTurn(270, True, False).run()
 
 def collectBlueSurplus():
@@ -323,77 +309,42 @@ def collectBlueSurplus():
 
     # Travels to blue area.
     DRIVE_BASE.reset_angle()
-    lineTrackGreenZoneToBlue = ev3pid.LineTrack(600, ev3pid.LineEdge.LEFT, RIGHT_COLOR)
-    lineTrackGreenZoneToBlue.runUntil(lambda: DRIVE_BASE.angle() > 1080)
+    lineTrackGreenZoneToBlue = ev3pid.LineTrack(600, ev3pid.LineEdge.RIGHT, LEFT_COLOR)
+    lineTrackGreenZoneToBlue.runUntil(lambda: DRIVE_BASE.angle() > 810)
     lineTrackGreenZoneToBlue.speed = 250
-    lineTrackGreenZoneToBlue.runUntil(lambda: LEFT_COLOR.color() == Color.BLACK)
+    lineTrackGreenZoneToBlue.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
 
-    # Drives to surplus blocks.
+    # Aligns with blue surplus blocks.
     wait(10)
-    ev3pid.GyroTurn(360, True, True).run()
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(-400, 360).runUntil(lambda: DRIVE_BASE.angle() < -400)
+    DRIVE_BASE.run_angle(200, 60)
+    ev3pid.GyroTurn(180, True, False).run()
 
-    # Scans for surplus blocks.
-    DRIVE_BASE.run(-200)
-    while LEFT_COLOR.color() != Color.BLACK or RIGHT_COLOR.color() != Color.BLACK:
-        if utils.Logic.surplus != Color.BLUE and utils.SideScan.presence():
-            utils.Logic.surplus = Color.BLUE
+    # Collects blue surplus.
+    utils.FrontClaw.openGate()
+    gyroStraightCollectBlueSurplus = ev3pid.GyroStraight(200, 180)
+    gyroStraightCollectBlueSurplus.runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or \
+        RIGHT_COLOR.color() == Color.BLACK)
+    DRIVE_BASE.reset_angle()
+    gyroStraightCollectBlueSurplus.speed = 450
+    gyroStraightCollectBlueSurplus.runUntil(lambda: DRIVE_BASE.angle() > 580)
     DRIVE_BASE.hold()
+    utils.FrontClaw.closeGate()
 
-    ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
-
-    # Collects blue surplus, if present.
-    if utils.Logic.surplus == Color.BLUE:
-
-        print("Surplus at blue.")
-
-        # Aligns to blue surplus.
-        DRIVE_BASE.run_angle(100, 65)
-        utils.FrontClaw.resetRaised()
-        ev3pid.GyroTurn(450, True, True).run()
-        DRIVE_BASE.reset_angle()
-
-        # Drives forward to collect blocks.
-        ev3pid.GyroStraight(350, 450).runUntil(lambda: DRIVE_BASE.angle() > 250)
-
-        # Lowers the claw.
-        utils.FrontClaw.closeGate()
-        utils.Logic.robotStorage.extend([Color.BLUE, Color.BLUE])
-        print("Robot storage:", utils.Logic.robotStorage)
-
-        # Returns to save point.
-        ev3pid.GyroStraight(-200, 450).runUntil(lambda: DRIVE_BASE.angle() < -120)
-        ev3pid.GyroStraight(100, 450).runUntil(lambda: DRIVE_BASE.angle() > -90)
-        ev3pid.GyroTurn(360, True, True).run()
-        ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
-
-    # If surplus color is still not set, the surplus color is yellow. Performs logic operations to store run variables.
-    if utils.Logic.surplus == None:
-
-        utils.Logic.surplus = Color.YELLOW
-        utils.Logic.robotStorage.insert(0, Color.YELLOW)
-        utils.Logic.robotStorage.insert(0, Color.YELLOW)    # Insertion is performed twice.
-
-        print("Surplus at yellow.")
-        print("Robot storage:", utils.Logic.robotStorage)
+    # Turns and drives to blue energy block.
+    ev3pid.GyroTurn(270, True, False, kp=15).run()
+    ev3pid.GyroStraight(250, 270).runUntil(lambda: LEFT_COLOR.color() == Color.WHITE \
+        or RIGHT_COLOR.color() == Color.WHITE)
+    DRIVE_BASE.reset_angle()
+    DRIVE_BASE.run_angle(100, 30)
+    DRIVE_BASE.hold()
 
 def collectBlueEnergy():
 
     print("-" * 10, "Begin collectBlueEnergy", sep='\n')
 
-    # Turns towards top blue energy
-    DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(200, 360).runUntil(lambda: DRIVE_BASE.angle() > 100)
-    DRIVE_BASE.hold()
-    wait(10)
-    ev3pid.GyroTurn(270, True, False).run()
-
-    # Drives forwards and lift claw
-    DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(200, 270).runUntil(lambda: DRIVE_BASE.angle() > 100)
-    DRIVE_BASE.hold()
+    # Liftd claw to collect blue energy block.
     utils.FrontClaw.loads += 1
     utils.FrontClaw.lift()
 
@@ -408,7 +359,7 @@ partialRunStartupProcedure()
 # collectYellowRightEnergy()
 # collectGreenSurplus()
 # collectGreenEnergy()
-# collectBlueSurplus()
+collectBlueSurplus()
 collectBlueEnergy()
 
 wait(1000)
