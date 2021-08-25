@@ -20,7 +20,7 @@ class DepositPoint:
 class Logic:
 
     # Robot storage
-    storage = []
+    robotStorage = []
 
     # Run randomization
     surplus = None

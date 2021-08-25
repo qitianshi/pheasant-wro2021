@@ -55,9 +55,6 @@ utils.RearClaw.MOTOR = Motor(Port.D, positive_direction=Direction.COUNTERCLOCKWI
 utils.RearClaw.MOTOR.reset_angle(utils.RearClaw.ANGLE_RANGE)
 utils.SideScan.sensor = Ev3devSensor(Port.S1)
 
-# Variables
-blocks = []
-
 # Preflight checks
 if BRICK.battery.voltage() < 7600:      # In millivolts.
 
@@ -66,6 +63,8 @@ if BRICK.battery.voltage() < 7600:      # In millivolts.
     from sys import exit
     exit()
 
+# To initialize hardware and run variables when the robot starts from a save point on the field instead of the start
+# box. Comment out the call to this function if running from the start box.
 def partialRunStartupProcedure():
 
     # Gyro
@@ -94,9 +93,11 @@ def scanBlocksAtLeftHouse():
 
     # Scans the first block
     wait(50)
-    firstColor = utils.SideScan.color()
-    firstColor = firstColor if firstColor != Color.BLACK else None
-    blocks.append([firstColor])
+    if utils.SideScan.presence():
+        utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE].append(utils.SideScan.color())
+        print("Left house color 1:", utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE][0])
+    else:
+        print("Left house color 1: None")
 
     # Drives forward until it goes past the first block. If no block is present, this step is skipped.
     DRIVE_BASE.reset_angle()
@@ -107,20 +108,16 @@ def scanBlocksAtLeftHouse():
     DRIVE_BASE.run(200)
     secondColor = []
     while not (LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK):
+        if utils.SideScan.presence():
+            secondColor.append(utils.SideScan.color())
 
-        measuredColor = utils.SideScan.color()
-
-        if measuredColor != None and measuredColor != Color.BLACK:
-            secondColor.append(measuredColor)
-
-    if len(secondColor) == 0:
-        blocks[0].append(None)
+    if len(secondColor) != 0:
+        # Finds the most frequent color in secondColor. The sensor sometimes scans erroneously, for example when it's
+        # halfway over the block.
+        utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE].append(max(set(secondColor), key=secondColor.count))
+        print("Left house color 2:", utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE][1])
     else:
-        # Finds the most frequent color. The sensor sometimes detects a wrong color when it is sensing the edge of the
-        # block.
-        blocks[0].append(max(set(secondColor), key=secondColor.count))
-
-    print("Left house:", blocks[0])
+        print("Left house color 2: None")
 
 def collectYellowSurplusAndLeftEnergy():
 
@@ -143,6 +140,8 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Lowers the front claw.
     utils.FrontClaw.closeGate()
+    utils.Logic.robotStorage.append(Color.YELLOW)
+    print("Robot storage:", utils.Logic.robotStorage)
 
     # Returns to the line.
     ev3pid.GyroStraight(-300, -180).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
@@ -208,6 +207,8 @@ def collectYellowRightEnergy():
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(300, -180).runUntil(lambda: DRIVE_BASE.angle() > 220)
     DRIVE_BASE.hold()
+    utils.Logic.robotStorage.append(Color.YELLOW)
+    print("Robot storage:", utils.Logic.robotStorage)
     utils.FrontClaw.closeGate()
 
     # Returns to the line.
@@ -233,7 +234,10 @@ def collectGreenSurplus():
         if (not surplusAtGreen) and utils.SideScan.presence():
             surplusAtGreen = True
     if surplusAtGreen:
+        utils.Logic.surplus = Color.GREEN
+        utils.Logic.robotStorage.extend([Color.GREEN, Color.GREEN])
         print("Surplus at green.")
+        print("Robot storage:", utils.Logic.robotStorage)
 
     # Turns to face the blocks
     ev3pid.GyroTurn(0, False, True).run()
@@ -307,16 +311,15 @@ def collectBlueSurplus():
 
     # Scans for surplus blocks.
     DRIVE_BASE.run(-200)
-    surplusAtBlue = False
     while LEFT_COLOR.color() != Color.BLACK or RIGHT_COLOR.color() != Color.BLACK:
-        if utils.SideScan.presence():
-            surplusAtBlue = True
+        if utils.Logic.surplus != Color.BLUE and utils.SideScan.presence():
+            utils.Logic.surplus = Color.BLUE
     DRIVE_BASE.hold()
 
     ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
 
     # Collects blue surplus, if present.
-    if surplusAtBlue:
+    if utils.Logic.surplus == Color.BLUE:
 
         print("Surplus at blue.")
 
@@ -331,12 +334,24 @@ def collectBlueSurplus():
 
         # Lowers the claw.
         utils.FrontClaw.closeGate()
+        utils.Logic.robotStorage.extend([Color.BLUE, Color.BLUE])
+        print("Robot storage:", utils.Logic.robotStorage)
 
         # Returns to save point.
         ev3pid.GyroStraight(-200, 450).runUntil(lambda: DRIVE_BASE.angle() < -120)
         ev3pid.GyroStraight(100, 450).runUntil(lambda: DRIVE_BASE.angle() > -90)
         ev3pid.GyroTurn(360, True, True).run()
         ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
+
+    # If surplus color is still not set, the surplus color is yellow. Performs logic operations to store run variables.
+    if utils.Logic.surplus == None:
+
+        utils.Logic.surplus = Color.YELLOW
+        utils.Logic.robotStorage.insert(0, Color.YELLOW)
+        utils.Logic.robotStorage.insert(0, Color.YELLOW)    # Insertion is performed twice.
+
+        print("Surplus at yellow.")
+        print("Robot storage:", utils.Logic.robotStorage)
 
 def collectBlueEnergy():
 
