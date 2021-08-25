@@ -66,6 +66,16 @@ if BRICK.battery.voltage() < 7600:      # In millivolts.
     from sys import exit
     exit()
 
+def partialRunStartupProcedure():
+
+    # Gyro
+    GYRO.reset_angle(360)
+
+    # Claws
+    utils.RearClaw.loads = 2
+    utils.RearClaw.lift
+    utils.FrontClaw.closeGate()
+
 #endregion
 
 def moveForwardTillGreenThenTurn():
@@ -186,7 +196,7 @@ def collectYellowRightEnergy():
 
     # Travels to yellow blocks.
     DRIVE_BASE.reset_angle()
-    ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: DRIVE_BASE.angle() > 430)    
+    ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: DRIVE_BASE.angle() > 430)
     ev3pid.GyroStraight(100, -90).runUntil(lambda: DRIVE_BASE.angle() > 560)
     DRIVE_BASE.hold()
 
@@ -206,7 +216,7 @@ def collectYellowRightEnergy():
     wait(50)
 
 def collectGreenSurplus():
-    
+
     # Turns to point side sensor at surplus green blocks.
     for _ in range(2):      # Performs turn twice to ensure accuracy.
         ev3pid.GyroTurn(-90, False, True).run()
@@ -280,7 +290,7 @@ def collectGreenEnergy():
     ev3pid.GyroTurn(270, True, False).run()
 
 def collectBlueSurplus():
-    
+
     # Travels to blue area.
     DRIVE_BASE.reset_angle()
     lineTrackGreenZoneToBlue = ev3pid.LineTrack(600, ev3pid.LineEdge.LEFT, RIGHT_COLOR)
@@ -329,7 +339,7 @@ def collectBlueSurplus():
         ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
 
 def collectBlueEnergy():
-    
+
     # Turns towards top blue energy
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(200, 360).runUntil(lambda: DRIVE_BASE.angle() > 100)
@@ -344,14 +354,18 @@ def collectBlueEnergy():
     utils.FrontClaw.loads += 1
     utils.FrontClaw.lift()
 
-moveForwardTillGreenThenTurn()
-scanBlocksAtLeftHouse()
-collectYellowSurplusAndLeftEnergy()
-rotateSolarPanels()
-collectYellowRightEnergy()
-collectGreenSurplus()
-collectGreenEnergy()
-collectBlueSurplus()
+    # TODO: Finish blue energy collection
+
+partialRunStartupProcedure()
+
+# moveForwardTillGreenThenTurn()
+# scanBlocksAtLeftHouse()
+# collectYellowSurplusAndLeftEnergy()
+# rotateSolarPanels()
+# collectYellowRightEnergy()
+# collectGreenSurplus()
+# collectGreenEnergy()
+# collectBlueSurplus()
 collectBlueEnergy()
 
 wait(1000)
