@@ -67,6 +67,8 @@ if BRICK.battery.voltage() < 7600:      # In millivolts.
 # box. Comment out the call to this function if running from the start box.
 def partialRunStartupProcedure():
 
+    print("-" * 10, "Begin partialRunStartupProcedure", sep='\n')
+
     # Gyro
     GYRO.reset_angle(360)
 
@@ -79,6 +81,8 @@ def partialRunStartupProcedure():
 
 def moveForwardTillGreenThenTurn():
 
+    print("-" * 10, "Begin moveForwardTillGreenThenTurn", sep='\n')
+
     # Moves forward until robot reaches the green area.
     ev3pid.GyroStraight(800, 0).runUntil(lambda: DRIVE_BASE.angle() > 360)
     ev3pid.LineTrack(400, ev3pid.LineEdge.RIGHT, RIGHT_COLOR).runUntil(lambda: LEFT_COLOR.color() == Color.GREEN)
@@ -90,6 +94,8 @@ def moveForwardTillGreenThenTurn():
     DRIVE_BASE.run_time(-400, 1000, wait=True)
 
 def scanBlocksAtLeftHouse():
+
+    print("-" * 10, "Begin scanBlocksAtLeftHouse", sep='\n')
 
     # Scans the first block
     wait(50)
@@ -121,6 +127,8 @@ def scanBlocksAtLeftHouse():
 
 def collectYellowSurplusAndLeftEnergy():
 
+    print("-" * 10, "Begin collectYellowSurplusAndLeftEnergy", sep='\n')
+
     # Drives forward to align with blocks.
     DRIVE_BASE.reset_angle()
     DRIVE_BASE.run_target(100, 170)
@@ -149,6 +157,8 @@ def collectYellowSurplusAndLeftEnergy():
     wait(50)
 
 def rotateSolarPanels():
+
+    print("-" * 10, "Begin rotateSolarPanels", sep='\n')
 
     # Turns to align to black line for line tracking.
     DRIVE_BASE.reset_angle()
@@ -185,6 +195,8 @@ def rotateSolarPanels():
 
 def collectYellowRightEnergy():
 
+    print("-" * 10, "Begin collectYellowRightEnergy", sep='\n')
+
     # Turns to align to black line for line tracking.
     DRIVE_BASE.reset_angle()
     DRIVE_BASE.run_angle(200, 60)
@@ -218,6 +230,8 @@ def collectYellowRightEnergy():
 
 def collectGreenSurplus():
 
+    print("-" * 10, "Begin collectGreenSurplus", sep='\n')
+
     # Turns to point side sensor at surplus green blocks.
     for _ in range(2):      # Performs turn twice to ensure accuracy.
         ev3pid.GyroTurn(-90, False, True).run()
@@ -249,6 +263,8 @@ def collectGreenSurplus():
     utils.FrontClaw.closeGate()
 
 def collectGreenEnergy():
+
+    print("-" * 10, "Begin collectGreenEnergy", sep='\n')
 
     def driveBackAndCollectGreenBlocks(moveBackDegrees):
 
@@ -294,6 +310,8 @@ def collectGreenEnergy():
     ev3pid.GyroTurn(270, True, False).run()
 
 def collectBlueSurplus():
+
+    print("-" * 10, "Begin collectBlueSurplus", sep='\n')
 
     # Travels to blue area.
     DRIVE_BASE.reset_angle()
@@ -354,6 +372,8 @@ def collectBlueSurplus():
         print("Robot storage:", utils.Logic.robotStorage)
 
 def collectBlueEnergy():
+
+    print("-" * 10, "Begin collectBlueEnergy", sep='\n')
 
     # Turns towards top blue energy
     DRIVE_BASE.reset_angle()
