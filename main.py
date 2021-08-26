@@ -75,7 +75,7 @@ def partialRunStartupProcedure():
     utils.FrontClaw.loads = 1
     utils.FrontClaw.closeGate()
 
-    wait(10000)
+    wait(15000)
 
     # Gyro
     GYRO.reset_angle(270)
@@ -110,9 +110,6 @@ def scanBlocksAtLeftHouse():
     wait(50)
     if utils.SideScan.presence():
         utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE].append(utils.SideScan.color())
-        print("Left house color 1:", utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE][0])
-    else:
-        print("Left house color 1: None")
 
     # Drives forward until it goes past the first block. If no block is present, this step is skipped.
     DRIVE_BASE.reset_angle()
@@ -130,9 +127,8 @@ def scanBlocksAtLeftHouse():
         # Finds the most frequent color in secondColor. The sensor sometimes scans erroneously, for example when it's
         # halfway over the block.
         utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE].append(max(set(secondColor), key=secondColor.count))
-        print("Left house color 2:", utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE][1])
-    else:
-        print("Left house color 2: None")
+
+    print("Left house:", utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE])
 
 def collectYellowSurplusAndLeftEnergy():
 
@@ -371,6 +367,30 @@ def scanBlocksAtTopHouse():
     utils.FrontClaw.loads += 1
     utils.FrontClaw.lift()
 
+    # Turns to top house.
+    ev3pid.GyroTurn(450, False, True).run()
+
+    # Drives to top house while scanning.
+    gyroStraightToTopHousePID = ev3pid.GyroStraight(None, 450)
+    previouslyNextToHouseBlock = False
+    while LEFT_COLOR.color() != Color.BLACK and RIGHT_COLOR.color() != Color.BLACK:
+
+        gyroStraightControllerOutput = gyroStraightToTopHousePID.rawControllerOutput()
+        LEFT_MOTOR.run(400 - gyroStraightControllerOutput)
+        RIGHT_MOTOR.run(400 + gyroStraightControllerOutput)
+
+        currentlyNextToHouseBlock = utils.SideScan.presence()
+
+        if (not previouslyNextToHouseBlock) and currentlyNextToHouseBlock:
+            utils.Logic.houses[utils.DepositPoint.TOP_HOUSE].append(utils.SideScan.color())
+            previouslyNextToHouseBlock = True
+
+        if previouslyNextToHouseBlock and not currentlyNextToHouseBlock:
+            previouslyNextToHouseBlock = False
+
+    DRIVE_BASE.hold()
+    print("Top house:", utils.Logic.houses[utils.DepositPoint.TOP_HOUSE])
+
 partialRunStartupProcedure()
 
 # moveToLeftHouse()
@@ -382,6 +402,6 @@ partialRunStartupProcedure()
 # collectGreenEnergy()
 # collectBlueSurplus()
 # collectBlueEnergy()
-scanBlocksAtLeftHouse()
+scanBlocksAtTopHouse()
 
 wait(1000)
