@@ -87,7 +87,7 @@ def partialRunStartupProcedure():
 
 #endregion
 
-def moveForwardTillGreenThenTurn():
+def moveToLeftHouse():
 
     print("-" * 10, "Begin moveForwardTillGreenThenTurn", sep='\n')
 
@@ -352,7 +352,7 @@ def collectBlueEnergy():
 
 partialRunStartupProcedure()
 
-# moveForwardTillGreenThenTurn()
+# moveToLeftHouse()
 # scanBlocksAtLeftHouse()
 # collectYellowSurplusAndLeftEnergy()
 # rotateSolarPanels()
