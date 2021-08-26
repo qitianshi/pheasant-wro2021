@@ -16,7 +16,7 @@ class Claw:
     LOAD_MULTIPLIER = None
     LIFTING_THRESHOLD = None
 
-    LIGHT_LOAD_SPEED = None         # Speeds defined in subclasses.
+    SINGLE_LOAD_SPEED = None         # Speeds defined in subclasses.
     DOUBLE_LOAD_SPEED = None
 
     MOTOR = None
@@ -25,7 +25,7 @@ class Claw:
 
     @classmethod
     def goTo(cls, amount: float):
-        cls.MOTOR.run_target((cls.LIGHT_LOAD_SPEED if cls.loads < 2 else cls.DOUBLE_LOAD_SPEED), \
+        cls.MOTOR.run_target((cls.SINGLE_LOAD_SPEED if cls.loads < 2 else cls.DOUBLE_LOAD_SPEED), \
             cls.ANGLE_RANGE * amount * (1 if amount <= cls.LIFTING_THRESHOLD else cls.LOAD_MULTIPLIER ** cls.loads))
 
     @classmethod

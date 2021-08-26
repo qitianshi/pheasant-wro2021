@@ -13,7 +13,7 @@ class RearClaw(Claw):
     LOAD_MULTIPLIER = 1.1
     LIFTING_THRESHOLD = 0.25
 
-    LIGHT_LOAD_SPEED = 400
+    SINGLE_LOAD_SPEED = 400
     DOUBLE_LOAD_SPEED = 300
     
     @classmethod
