@@ -42,7 +42,7 @@ ev3pid.DoubleColorInput.setDefaultSensors(LEFT_COLOR, RIGHT_COLOR)
 ev3pid.GyroStraight.setDefaultTuning(22, 0.2, 100000)
 ev3pid.GyroStraight.setDefaultIntegralLimit(100)
 ev3pid.GyroStraight.setDefaultOutputLimit(1000)
-ev3pid.GyroTurn.setDefaultTuning(23, 0, 100000, 12, 0, 100000)
+ev3pid.GyroTurn.setDefaultTuning(22, 0, 100000, 12, 0, 100000)
 ev3pid.LineSquare.setDefaultTuning(20, 0, 100000)
 ev3pid.LineSquare.setDefaultOutputLimit(60)
 ev3pid.LineTrack.setDefaultTuning(1.8, 0.0002, 1)
@@ -69,18 +69,19 @@ def partialRunStartupProcedure():
 
     print("-" * 10, "Begin partialRunStartupProcedure", sep='\n')
 
-    # Gyro
-    GYRO.reset_angle(270)
-
     # Claws
     utils.RearClaw.loads = 2
     utils.RearClaw.lift()
-    # utils.FrontClaw.loads = 0
+    utils.FrontClaw.loads = 1
     utils.FrontClaw.closeGate()
+
+    wait(10000)
+
+    # Gyro
+    GYRO.reset_angle(270)
 
     # Run variables
     # utils.Logic.robotStorage = []
-    # utils.Logic.surplus = Color.YELLOW
     # utils.Logic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
     #                       utils.DepositPoint.TOP_HOUSE: [],
     #                       utils.DepositPoint.RIGHT_HOUSE: []}
@@ -332,7 +333,7 @@ def collectBlueSurplus():
     DRIVE_BASE.hold()
     utils.FrontClaw.closeGate()
 
-    # Turns and drives to blue energy block.
+    # Turns and aligns to upper blue energy blocks.
     ev3pid.GyroTurn(270, True, False, kp=15).run()
     ev3pid.GyroStraight(250, 270).runUntil(lambda: LEFT_COLOR.color() == Color.WHITE \
         or RIGHT_COLOR.color() == Color.WHITE)
@@ -344,11 +345,31 @@ def collectBlueEnergy():
 
     print("-" * 10, "Begin collectBlueEnergy", sep='\n')
 
-    # Liftd claw to collect blue energy block.
+    # Lifts claw to collect upper blue energy blocks.
     utils.FrontClaw.loads += 1
     utils.FrontClaw.lift()
 
-    # TODO: Finish blue energy collection
+    # Drives to lower blue energy blocks.
+    DRIVE_BASE.reset_angle()
+    ev3pid.GyroStraight(-200, 270).runUntil(lambda: DRIVE_BASE.angle() < -175)
+    DRIVE_BASE.hold()
+    ev3pid.GyroTurn(360, True, False).run()
+    DRIVE_BASE.reset_angle()
+    ev3pid.GyroStraight(200, 360).runUntil(lambda: DRIVE_BASE.angle() > 210)
+    DRIVE_BASE.hold()
+    ev3pid.GyroTurn(270, True, False).run()
+
+    # Turns and aligns to lower blue energy blocks.
+    utils.FrontClaw.collect()
+    DRIVE_BASE.reset_angle()
+    ev3pid.GyroStraight(250, 270).runUntil(lambda: DRIVE_BASE.angle() > 90)
+    DRIVE_BASE.hold()
+
+def scanBlocksAtTopHouse():
+
+    # Lifts claw to collect lower blue energy blocks.
+    utils.FrontClaw.loads += 1
+    utils.FrontClaw.lift()
 
 partialRunStartupProcedure()
 
@@ -359,7 +380,8 @@ partialRunStartupProcedure()
 # collectYellowRightEnergy()
 # collectGreenSurplus()
 # collectGreenEnergy()
-collectBlueSurplus()
-collectBlueEnergy()
+# collectBlueSurplus()
+# collectBlueEnergy()
+scanBlocksAtLeftHouse()
 
 wait(1000)
