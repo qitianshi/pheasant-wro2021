@@ -371,11 +371,11 @@ def scanBlocksAtTopHouse():
     ev3pid.GyroTurn(450, False, True).run()
 
     # Drives to top house while scanning.
-    gyroStraightToTopHousePID = ev3pid.GyroStraight(None, 450)
+    gyroStraightToTopHouseController = ev3pid.GyroStraight(None, 450)
     previouslyNextToHouseBlock = False
     while LEFT_COLOR.color() != Color.BLACK and RIGHT_COLOR.color() != Color.BLACK:
 
-        gyroStraightControllerOutput = gyroStraightToTopHousePID.rawControllerOutput()
+        gyroStraightControllerOutput = gyroStraightToTopHouseController.rawControllerOutput()
         LEFT_MOTOR.run(400 - gyroStraightControllerOutput)
         RIGHT_MOTOR.run(400 + gyroStraightControllerOutput)
 
