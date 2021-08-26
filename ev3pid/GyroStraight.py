@@ -45,3 +45,6 @@ class GyroStraight(PIDController, GyroInput, DoubleMotorBase):
 
             self.leftMotor.run(self.speed - output)
             self.rightMotor.run(self.speed + output)
+
+    def rawControllerOutput(self):
+        return self.update(self.sensor.angle() - self.angle)

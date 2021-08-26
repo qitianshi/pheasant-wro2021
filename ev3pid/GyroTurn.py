@@ -84,6 +84,9 @@ class GyroTurn(PIDController, GyroInput, DoubleMotorBase):
         self.leftMotor.hold()
         self.rightMotor.hold()
 
+    def rawControllerOutput(self):
+        return self.update(self.sensor.angle() - self.angle)
+
     @classmethod
     def setDefaultTuning(cls,
                          kpSingle: float,
