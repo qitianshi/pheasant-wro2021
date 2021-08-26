@@ -9,11 +9,11 @@
 from pybricks.ev3devices import Motor, GyroSensor                           # type: ignore
 # pylint: enable=F0401
 
-from .utils.PIDLoop import PIDLoop
+from .utils.PIDController import PIDController
 from .utils.GyroInput import GyroInput
 from ev3move import DoubleMotorBase
 
-class GyroTurn(PIDLoop, GyroInput, DoubleMotorBase):
+class GyroTurn(PIDController, GyroInput, DoubleMotorBase):
 
     # Different tuning values used depending on the number of wheels being driven for turning.
 

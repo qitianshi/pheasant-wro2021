@@ -15,7 +15,7 @@ from .LineTrack import *
 from .utils.ColorInput import *
 from .utils.DoubleColorInput import *
 from .utils.GyroInput import *
-from .utils.PIDLoop import *
+from .utils.PIDController import *
 
 # Dependencies
 from ev3move import DoubleMotorBase

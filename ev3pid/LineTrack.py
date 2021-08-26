@@ -9,7 +9,7 @@
 from pybricks.ev3devices import Motor, ColorSensor                          # type: ignore
 # pylint: enable=F0401
 
-from .utils.PIDLoop import PIDLoop
+from .utils.PIDController import PIDController
 from .utils.ColorInput import ColorInput
 from ev3move import DoubleMotorBase
 
@@ -17,7 +17,7 @@ class LineEdge:           # Enum workaround (MicroPython does not support enums)
     LEFT = 0
     RIGHT = 1
 
-class LineTrack(PIDLoop, ColorInput, DoubleMotorBase):
+class LineTrack(PIDController, ColorInput, DoubleMotorBase):
 
     def __init__(self,
                  speed: float,
@@ -41,7 +41,7 @@ class LineTrack(PIDLoop, ColorInput, DoubleMotorBase):
         DoubleMotorBase.__init__(self, leftMotor, rightMotor)
 
         # PID parameters
-        PIDLoop.__init__(self, threshold, kp, ki, kd, integralLimit, outputLimit)
+        PIDController.__init__(self, threshold, kp, ki, kd, integralLimit, outputLimit)
 
     def runUntil(self, stopCondition):
 

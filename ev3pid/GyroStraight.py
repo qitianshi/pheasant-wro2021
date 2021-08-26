@@ -9,11 +9,11 @@
 from pybricks.ev3devices import Motor, GyroSensor                           # type: ignore
 # pylint: enable=F0401
 
-from .utils.PIDLoop import PIDLoop
+from .utils.PIDController import PIDController
 from .utils.GyroInput import GyroInput
 from ev3move import DoubleMotorBase
 
-class GyroStraight(PIDLoop, GyroInput, DoubleMotorBase):
+class GyroStraight(PIDController, GyroInput, DoubleMotorBase):
 
     def __init__(self,
                  speed: float,
@@ -36,7 +36,7 @@ class GyroStraight(PIDLoop, GyroInput, DoubleMotorBase):
         DoubleMotorBase.__init__(self, leftMotor, rightMotor)
 
         # PID parameters
-        PIDLoop.__init__(self, angle, kp, ki, kd, integralLimit, outputLimit)
+        PIDController.__init__(self, angle, kp, ki, kd, integralLimit, outputLimit)
 
     def runUntil(self, stopCondition):
         while not stopCondition():

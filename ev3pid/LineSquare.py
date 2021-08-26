@@ -11,7 +11,7 @@ from pybricks.parameters import Color                                       # ty
 from pybricks.tools import wait                                             # type: ignore
 # pylint: enable=F0401
 
-from .utils.PIDLoop import PIDLoop
+from .utils.PIDController import PIDController
 from .utils.DoubleColorInput import DoubleColorInput
 from ev3move import DoubleMotorBase
 
@@ -19,7 +19,7 @@ class LinePosition:
     AHEAD = 0
     BEHIND = 1
 
-class LineSquare(PIDLoop, DoubleColorInput, DoubleMotorBase):
+class LineSquare(PIDController, DoubleColorInput, DoubleMotorBase):
 
     MOVE_TO_LINE_SPEED = 250
     LINE_WAIT_TIME = 75
@@ -55,8 +55,8 @@ class LineSquare(PIDLoop, DoubleColorInput, DoubleMotorBase):
         outputLimit = outputLimit if outputLimit != None else LineSquare.OUTPUT_LIMIT_DEFAULT
 
         # PID parameters
-        self.leftPid = PIDLoop(leftThreshold, kp, ki, kd, integralLimit, outputLimit)
-        self.rightPid = PIDLoop(rightThreshold, kp, ki, kd, integralLimit, outputLimit)
+        self.leftPid = PIDController(leftThreshold, kp, ki, kd, integralLimit, outputLimit)
+        self.rightPid = PIDController(rightThreshold, kp, ki, kd, integralLimit, outputLimit)
 
     def run(self):
 

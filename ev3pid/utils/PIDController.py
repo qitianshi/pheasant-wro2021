@@ -1,11 +1,11 @@
-# PIDLoop.py
+# PIDController.py
 # Created on 7 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
 # Base class for ev3pid modules involving PID-based control.
 
 
-class PIDLoop:
+class PIDController:
 
     # Class attributes to be implemented in subclasses
     kp_DEFAULT = None
