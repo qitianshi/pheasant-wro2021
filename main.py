@@ -63,8 +63,12 @@ if BRICK.battery.voltage() < 7750:      # In millivolts.
     from sys import exit
     exit()
 
+#endregion
+
+#region Procedures
+
 # To initialize hardware and run variables when the robot starts from a save point on the field instead of the start
-# box. Comment out the call to this function if running from the start box.
+# zone. Comment out the call to this function if running from the start zone.
 def partialRunStartupProcedure():
 
     print("-" * 10, "Begin partialRunStartupProcedure", sep='\n')
@@ -85,6 +89,39 @@ def partialRunStartupProcedure():
     # utils.Logic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
     #                       utils.DepositPoint.TOP_HOUSE: [],
     #                       utils.DepositPoint.RIGHT_HOUSE: []}
+
+def scanHouseBlocksProcedure(house: utils.DepositPoint, gyroAngle, stopCondition):
+
+    MOVE_SPEED = 400
+
+    # Drives to top house while scanning.
+    gyroStraightController = ev3pid.GyroStraight(None, gyroAngle)
+
+    previouslyNextToHouseBlock = False
+    while not stopCondition():
+
+        # Control gyro straight
+        gyroStraightControllerOutput = gyroStraightController.rawControllerOutput()
+        LEFT_MOTOR.run(MOVE_SPEED - gyroStraightControllerOutput)
+        RIGHT_MOTOR.run(MOVE_SPEED + gyroStraightControllerOutput)
+
+        # Scans house blocks.
+        currentlyNextToHouseBlock = utils.SideScan.presence()
+        if (not previouslyNextToHouseBlock) and currentlyNextToHouseBlock:
+            utils.Logic.houses[house].append(utils.SideScan.color())
+            previouslyNextToHouseBlock = True
+        elif previouslyNextToHouseBlock and not currentlyNextToHouseBlock:
+            previouslyNextToHouseBlock = False
+
+    DRIVE_BASE.hold()
+
+    # To handle the case where there are more than two blocks detected. If this happenes, it's likely that .presence()
+    # returned False erroneously. Keeping the first and last two colors is the best simple approach.
+    if len(utils.Logic.houses[house]) > 2:
+        print("Error while scanning: unexpected number of blocks;", utils.Logic.houses[house])
+        utils.Logic.houses[house] = [utils.Logic.houses[house][0], utils.Logic.houses[house][-1]]
+
+    print("House colors:", utils.Logic.houses[house])
 
 #endregion
 
@@ -370,26 +407,8 @@ def scanBlocksAtTopHouse():
     # Turns to top house.
     ev3pid.GyroTurn(450, False, True).run()
 
-    # Drives to top house while scanning.
-    gyroStraightToTopHouseController = ev3pid.GyroStraight(None, 450)
-    previouslyNextToHouseBlock = False
-    while LEFT_COLOR.color() != Color.BLACK and RIGHT_COLOR.color() != Color.BLACK:
-
-        gyroStraightControllerOutput = gyroStraightToTopHouseController.rawControllerOutput()
-        LEFT_MOTOR.run(400 - gyroStraightControllerOutput)
-        RIGHT_MOTOR.run(400 + gyroStraightControllerOutput)
-
-        currentlyNextToHouseBlock = utils.SideScan.presence()
-
-        if (not previouslyNextToHouseBlock) and currentlyNextToHouseBlock:
-            utils.Logic.houses[utils.DepositPoint.TOP_HOUSE].append(utils.SideScan.color())
-            previouslyNextToHouseBlock = True
-
-        if previouslyNextToHouseBlock and not currentlyNextToHouseBlock:
-            previouslyNextToHouseBlock = False
-
-    DRIVE_BASE.hold()
-    print("Top house:", utils.Logic.houses[utils.DepositPoint.TOP_HOUSE])
+    scanHouseBlocksProcedure(utils.DepositPoint.TOP_HOUSE, 450, \
+                             lambda: LEFT_COLOR.color() != Color.BLACK and RIGHT_COLOR.color() != Color.BLACK)
 
 partialRunStartupProcedure()
 
