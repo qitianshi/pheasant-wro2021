@@ -90,7 +90,7 @@ def partialRunStartupProcedure():
     #                       utils.DepositPoint.TOP_HOUSE: [],
     #                       utils.DepositPoint.RIGHT_HOUSE: []}
 
-def scanHouseBlocksProcedure(house: utils.DepositPoint, gyroAngle, stopCondition):
+def scanHouseBlocksProcedure(house: utils.DepositPoint, gyroAngle: int, stopCondition, thenHoldMotors: bool):
 
     MOVE_SPEED = 400
 
@@ -113,7 +113,8 @@ def scanHouseBlocksProcedure(house: utils.DepositPoint, gyroAngle, stopCondition
         elif previouslyNextToHouseBlock and not currentlyNextToHouseBlock:
             previouslyNextToHouseBlock = False
 
-    DRIVE_BASE.hold()
+    if thenHoldMotors:
+        DRIVE_BASE.hold()
 
     # To handle the case where there are more than two blocks detected. If this happenes, it's likely that .presence()
     # returned False erroneously. Keeping the first and last two colors is the best simple approach.
@@ -135,37 +136,16 @@ def moveToLeftHouse():
 
     # Turns around to align with blocks at left house.
     DRIVE_BASE.reset_angle(0)
-    DRIVE_BASE.run_angle(100, 30, wait=True)
+    DRIVE_BASE.run_angle(100, 30)
     ev3pid.GyroTurn(-90, False, True).run()
-    DRIVE_BASE.run_time(-400, 1000, wait=True)
+    DRIVE_BASE.run_time(-400, 1000)
 
 def scanBlocksAtLeftHouse():
 
     print("-" * 10, "Begin scanBlocksAtLeftHouse", sep='\n')
 
-    # Scans the first block
-    wait(50)
-    if utils.SideScan.presence():
-        utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE].append(utils.SideScan.color())
-
-    # Drives forward until it goes past the first block. If no block is present, this step is skipped.
-    DRIVE_BASE.reset_angle()
-    while not utils.SideScan.presence():
-        DRIVE_BASE.run(200)
-
-    # Drives forward to scan the second block.
-    DRIVE_BASE.run(200)
-    secondColor = []
-    while not (LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK):
-        if utils.SideScan.presence():
-            secondColor.append(utils.SideScan.color())
-
-    if len(secondColor) != 0:
-        # Finds the most frequent color in secondColor. The sensor sometimes scans erroneously, for example when it's
-        # halfway over the block.
-        utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE].append(max(set(secondColor), key=secondColor.count))
-
-    print("Left house:", utils.Logic.houses[utils.DepositPoint.LEFT_HOUSE])
+    scanHouseBlocksProcedure(utils.DepositPoint.LEFT_HOUSE, 90, \
+                             lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, False)
 
 def collectYellowSurplusAndLeftEnergy():
 
@@ -408,7 +388,7 @@ def scanBlocksAtTopHouse():
     ev3pid.GyroTurn(450, False, True).run()
 
     scanHouseBlocksProcedure(utils.DepositPoint.TOP_HOUSE, 450, \
-                             lambda: LEFT_COLOR.color() != Color.BLACK and RIGHT_COLOR.color() != Color.BLACK)
+                             lambda: LEFT_COLOR.color() != Color.BLACK and RIGHT_COLOR.color() != Color.BLACK, True)
 
 partialRunStartupProcedure()
 
