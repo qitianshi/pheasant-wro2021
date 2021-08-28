@@ -6,6 +6,6 @@
 
 
 from .FrontClaw import *
-from .Logic import *
+from .RunLogic import *
 from .RearClaw import *
 from .SideScan import *

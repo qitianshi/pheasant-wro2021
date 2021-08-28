@@ -1,4 +1,4 @@
-# Logic.py
+# RunLogic.py
 # Created on 9 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
@@ -17,7 +17,7 @@ class DepositPoint:
     RIGHT_HOUSE = 2
     STORAGE = 3
 
-class Logic:
+class RunLogic:
 
     # For representing the surplus color. The actual color of the surplus does not need to be known.
     SURPLUS = hash("surplus")       # Enum workaround. Uses the hash function to avoid collisions.

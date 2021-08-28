@@ -108,7 +108,7 @@ def scanHouseBlocksProcedure(house: utils.DepositPoint, gyroAngle: int, stopCond
         # Scans house blocks.
         currentlyNextToHouseBlock = utils.SideScan.presence()
         if (not previouslyNextToHouseBlock) and currentlyNextToHouseBlock:
-            utils.Logic.houses[house].append(utils.SideScan.color())
+            utils.RunLogic.houses[house].append(utils.SideScan.color())
             previouslyNextToHouseBlock = True
         elif previouslyNextToHouseBlock and not currentlyNextToHouseBlock:
             previouslyNextToHouseBlock = False
@@ -118,11 +118,11 @@ def scanHouseBlocksProcedure(house: utils.DepositPoint, gyroAngle: int, stopCond
 
     # To handle the case where there are more than two blocks detected. If this happenes, it's likely that .presence()
     # returned False erroneously. Keeping the first and last two colors is the best simple approach.
-    if len(utils.Logic.houses[house]) > 2:
-        print("Error while scanning: unexpected number of blocks;", utils.Logic.houses[house])
-        utils.Logic.houses[house] = [utils.Logic.houses[house][0], utils.Logic.houses[house][-1]]
+    if len(utils.RunLogic.houses[house]) > 2:
+        print("Error while scanning: unexpected number of blocks;", utils.RunLogic.houses[house])
+        utils.RunLogic.houses[house] = [utils.RunLogic.houses[house][0], utils.RunLogic.houses[house][-1]]
 
-    print("House colors:", utils.Logic.houses[house])
+    print("House colors:", utils.RunLogic.houses[house])
 
 #endregion
 
