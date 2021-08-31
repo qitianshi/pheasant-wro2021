@@ -124,6 +124,69 @@ def scanHouseBlocksProcedure(house: utils.DepositPoint, gyroAngle: int, stopCond
 
     print("House colors:", utils.RunLogic.houses[house])
 
+class DepositEnergy:
+
+    @staticmethod
+    def getGreenClaw(count: int):
+        pass
+
+    @staticmethod
+    def getBlueClaw(count: int):
+        pass
+
+    @staticmethod
+    def getFront(count: int):
+        pass
+
+    @staticmethod
+    def getRear(count: int):
+        pass
+
+    @staticmethod
+    def deposit(location: utils.DepositPoint):
+
+        requirements = utils.RunLogic.blocksAtPoint(location)
+
+        # BF
+        # getBlueClaw
+        # getFront
+
+        # GR
+        # getGreenClaw
+        # getRear
+
+        # FR
+        # getFront
+        # turn
+        # getRear
+
+        # BG
+        # getBlueClaw
+        # turn
+        # getGreenClaw
+
+        # BR
+        # getBlueClaw
+        # turn
+        # getRear
+
+        # GF
+        # getGreenClaw
+        # turn
+        # getFront
+
+        # BB
+        # getBlueClaw
+
+        # GG
+        # getGreenClaw
+
+        # FF
+        # getFront
+
+        # RR
+        # getRear
+
 #endregion
 
 def moveToLeftHouse():
