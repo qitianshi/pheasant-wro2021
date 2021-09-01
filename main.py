@@ -143,7 +143,11 @@ class DepositEnergy:
     @staticmethod
     def deposit(point: utils.DepositPoint):
 
+        mustDumpTree = False
         requirements = utils.RunLogic.blocksAtPoint(point)
+        if utils.FrontClaw.loads == 2 and requirements[0] == utils.BlockColor.FRONT:
+            requirements = requirements.reverse()
+            mustDumpTree = True
 
         # BF
         # getBlueClaw
