@@ -20,14 +20,14 @@ class DepositPoint:
 class BlockColor:
 
     # Colors
-    GREEN = 0
-    BLUE = 1
-    YELLOW = 2
+    BLUE = 0
+    GREEN = 2
+    YELLOW = 3
 
     # Symbols
-    SURPLUS = 3
-    FRONT = 4
-    REAR = 5
+    FRONT = 1           # FRONT and REAR are aliases for the colors they represent. Their values can be flipped when the
+    REAR = 3            # robot realigns itself.
+    SURPLUS = 1
 
 class RunLogic:
 
@@ -49,12 +49,12 @@ class RunLogic:
                     missingColor = i
                     break
 
-            return [BlockColor.SURPLUS, missingColor]
+            return sorted([BlockColor.SURPLUS, missingColor])
 
         elif len(cls.houses[point]) == 2:
-            return cls.houses[point]
+            return sorted(cls.houses[point])
         else:
-            return cls.houses[point].append(BlockColor.SURPLUS)
+            return sorted(cls.houses[point].append(BlockColor.SURPLUS))
 
     @staticmethod
     def convertEv3ColorToBlockColor(color: Color) -> BlockColor:

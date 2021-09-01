@@ -168,7 +168,7 @@ class DepositEnergy:
         # turn
         # getRear
 
-        # GF
+        # FG
         # getGreenClaw
         # turn
         # getFront
