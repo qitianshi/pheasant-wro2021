@@ -76,17 +76,15 @@ def partialRunStartupProcedure():
     # Claws
     utils.RearClaw.loads = 2
     utils.RearClaw.lift()
-    utils.FrontClaw.loads = 1
-    utils.FrontClaw.closeGate()
-
-    wait(15000)
+    utils.FrontClaw.loads = 2
+    utils.FrontClaw.lift()
 
     # Gyro
-    GYRO.reset_angle(270)
+    # GYRO.reset_angle(0)
 
     # Run variables
-    # utils.Logic.robotStorage = []
-    # utils.Logic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
+    # utils.RunLogic.robotStorage = []
+    # utils.RunLogic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
     #                       utils.DepositPoint.TOP_HOUSE: [],
     #                       utils.DepositPoint.RIGHT_HOUSE: []}
 
@@ -143,9 +141,9 @@ class DepositEnergy:
         pass
 
     @staticmethod
-    def deposit(location: utils.DepositPoint):
+    def deposit(point: utils.DepositPoint):
 
-        requirements = utils.RunLogic.blocksAtPoint(location)
+        requirements = utils.RunLogic.blocksAtPoint(point)
 
         # BF
         # getBlueClaw
@@ -188,6 +186,8 @@ class DepositEnergy:
         # getRear
 
 #endregion
+
+#region Mission run
 
 def moveToLeftHouse():
 
@@ -453,6 +453,8 @@ def scanBlocksAtTopHouse():
     scanHouseBlocksProcedure(utils.DepositPoint.TOP_HOUSE, 450, \
                              lambda: LEFT_COLOR.color() != Color.BLACK and RIGHT_COLOR.color() != Color.BLACK, True)
 
+#endregion
+
 partialRunStartupProcedure()
 
 # moveToLeftHouse()
@@ -464,6 +466,6 @@ partialRunStartupProcedure()
 # collectGreenEnergy()
 # collectBlueSurplus()
 # collectBlueEnergy()
-scanBlocksAtTopHouse()
+# scanBlocksAtTopHouse()
 
 wait(1000)
