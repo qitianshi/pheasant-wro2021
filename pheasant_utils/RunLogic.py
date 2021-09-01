@@ -11,19 +11,28 @@ from pybricks.parameters import Color                                       # ty
 
 # Positions where energy blocks can be deposited (enum workaround).
 class DepositPoint:
-
     LEFT_HOUSE = 0
     TOP_HOUSE = 1
     RIGHT_HOUSE = 2
     STORAGE = 3
 
+# Block colors and symbolic representations (enum workaround).
+class BlockColor:
+
+    # Colors
+    GREEN = 0
+    BLUE = 1
+    YELLOW = 2
+
+    # Symbols
+    SURPLUS = 3
+    FRONT = 4
+    REAR = 5
+
 class RunLogic:
 
-    # For representing the surplus color. The actual color of the surplus does not need to be known.
-    SURPLUS = hash("surplus")       # Enum workaround. Uses the hash function to avoid collisions.
-
     # Robot storage
-    robotStorage = [Color.YELLOW, Color.YELLOW, SURPLUS, SURPLUS]
+    robotStorage = [BlockColor.YELLOW, BlockColor.YELLOW, BlockColor.SURPLUS, BlockColor.SURPLUS]
 
     # Run randomization
     houses = {DepositPoint.LEFT_HOUSE: [], DepositPoint.TOP_HOUSE: [], DepositPoint.RIGHT_HOUSE: []}
@@ -35,14 +44,26 @@ class RunLogic:
             
             flattenedHouses = (color for house in cls.houses.values() for color in house)
             missingColor = None
-            for i in (Color.BLUE, Color.YELLOW, Color.GREEN):
+            for i in (BlockColor.BLUE, BlockColor.YELLOW, BlockColor.GREEN):
                 if flattenedHouses.count(i) == 1:
                     missingColor = i
                     break
 
-            return [cls.SURPLUS, missingColor]
+            return [BlockColor.SURPLUS, missingColor]
 
         elif len(cls.houses[point]) == 2:
             return cls.houses[point]
         else:
-            return cls.houses[point].append(cls.SURPLUS)
+            return cls.houses[point].append(BlockColor.SURPLUS)
+
+    @staticmethod
+    def convertEv3ColorToBlockColor(color: Color) -> BlockColor:
+
+        if color == Color.GREEN:
+            return BlockColor.GREEN
+        elif color == Color.BLUE:
+            return BlockColor.BLUE
+        elif color == Color.YELLOW:
+            return BlockColor.YELLOW
+        else:
+            return None

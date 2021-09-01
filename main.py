@@ -88,7 +88,7 @@ def partialRunStartupProcedure():
     #                       utils.DepositPoint.TOP_HOUSE: [],
     #                       utils.DepositPoint.RIGHT_HOUSE: []}
 
-def scanHouseBlocksProcedure(house: utils.DepositPoint, gyroAngle: int, stopCondition, thenHoldMotors: bool):
+def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stopCondition, thenHoldMotors: bool):
 
     MOVE_SPEED = 400
 
@@ -106,7 +106,7 @@ def scanHouseBlocksProcedure(house: utils.DepositPoint, gyroAngle: int, stopCond
         # Scans house blocks.
         currentlyNextToHouseBlock = utils.SideScan.presence()
         if (not previouslyNextToHouseBlock) and currentlyNextToHouseBlock:
-            utils.RunLogic.houses[house].append(utils.SideScan.color())
+            utils.RunLogic.houses[thisHouse].append(utils.RunLogic.convertEv3ColorToBlockColor(utils.SideScan.color()))
             previouslyNextToHouseBlock = True
         elif previouslyNextToHouseBlock and not currentlyNextToHouseBlock:
             previouslyNextToHouseBlock = False
@@ -116,11 +116,11 @@ def scanHouseBlocksProcedure(house: utils.DepositPoint, gyroAngle: int, stopCond
 
     # To handle the case where there are more than two blocks detected. If this happenes, it's likely that .presence()
     # returned False erroneously. Keeping the first and last two colors is the best simple approach.
-    if len(utils.RunLogic.houses[house]) > 2:
-        print("Error while scanning: unexpected number of blocks;", utils.RunLogic.houses[house])
-        utils.RunLogic.houses[house] = [utils.RunLogic.houses[house][0], utils.RunLogic.houses[house][-1]]
+    if len(utils.RunLogic.houses[thisHouse]) > 2:
+        print("Error while scanning: unexpected number of blocks;", utils.RunLogic.houses[thisHouse])
+        utils.RunLogic.houses[thisHouse] = [utils.RunLogic.houses[thisHouse][0], utils.RunLogic.houses[thisHouse][-1]]
 
-    print("House colors:", utils.RunLogic.houses[house])
+    print("House colors:", utils.RunLogic.houses[thisHouse])      # FIXME: Prints numbers; implement str representation.
 
 class DepositEnergy:
 
