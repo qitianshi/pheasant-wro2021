@@ -83,7 +83,7 @@ def partialRunStartupProcedure():
     # GYRO.reset_angle(0)
 
     # Run variables
-    # utils.RunLogic.robotStorage = []
+    # utils.RunLogic.undercarriageStorage = []
     # utils.RunLogic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
     #                       utils.DepositPoint.TOP_HOUSE: [],
     #                       utils.DepositPoint.RIGHT_HOUSE: []}
@@ -148,6 +148,11 @@ class DepositEnergy:
         if utils.FrontClaw.loads == 2 and requirements[0] == utils.BlockColor.FRONT:
             requirements = requirements.reverse()
             mustDumpTree = True
+
+        # TODO: Implement deposition.
+
+        if mustDumpTree:
+            pass
 
         # BF
         # getBlueClaw

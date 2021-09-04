@@ -19,20 +19,26 @@ class DepositPoint:
 # Block colors and symbolic representations.
 class BlockColor:
 
+    # Values are used to sort preferred deposit order.
+
     # Colors
     BLUE = 0
     GREEN = 2
     YELLOW = 3
 
     # Symbols
-    FRONT = 1           # FRONT and REAR are aliases for the colors they represent. Their values can be flipped when the
-    REAR = 3            # robot realigns itself.
     SURPLUS = 1
+    FRONT = SURPLUS                        # FRONT and REAR are aliases for the colors they represent. Their values
+    REAR = YELLOW                          # can be flipped when the robot realigns its undercarriage storage.
+
+    @classmethod
+    def flipUndercarriageStorage(cls):
+        cls.FRONT, cls.REAR = cls.REAR, cls.FRONT
 
 class RunLogic:
 
-    # Robot storage
-    robotStorage = [BlockColor.YELLOW, BlockColor.YELLOW, BlockColor.SURPLUS, BlockColor.SURPLUS]
+    # Robot undercarriage storage
+    undercarriageStorage = [BlockColor.YELLOW, BlockColor.YELLOW, BlockColor.SURPLUS, BlockColor.SURPLUS]
 
     # Run randomization
     houses = {DepositPoint.LEFT_HOUSE: [], DepositPoint.TOP_HOUSE: [], DepositPoint.RIGHT_HOUSE: []}
