@@ -9,14 +9,14 @@
 from pybricks.parameters import Color                                       # type: ignore
 # pylint: enable=F0401
 
-# Positions where energy blocks can be deposited (enum workaround).
+# Positions where energy blocks can be deposited.
 class DepositPoint:
-    LEFT_HOUSE = 0
-    TOP_HOUSE = 1
-    RIGHT_HOUSE = 2
-    STORAGE = 3
+    LEFT_HOUSE = hash("DepositPoint.LEFT_HOUSE")        # FIXME: Enum workaround
+    TOP_HOUSE = hash("DepositPoint.TOP_HOUSE")
+    RIGHT_HOUSE = hash("DepositPoint.RIGHT_HOUSE")
+    STORAGE = hash("DepositPoint.STORAGE")
 
-# Block colors and symbolic representations (enum workaround).
+# Block colors and symbolic representations.
 class BlockColor:
 
     # Colors

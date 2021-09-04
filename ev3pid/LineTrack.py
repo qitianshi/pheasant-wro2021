@@ -13,9 +13,10 @@ from .utils.PIDController import PIDController
 from .utils.ColorInput import ColorInput
 from ev3move import DoubleMotorBase
 
-class LineEdge:           # Enum workaround (MicroPython does not support enums)
-    LEFT = 0
-    RIGHT = 1
+# The edge of the line that the sensor will follow.
+class LineEdge:
+    LEFT = hash("LineEdge.LEFT")        # FIXME: Enum workaround
+    RIGHT = hash("LineEdge.RIGHT")
 
 class LineTrack(PIDController, ColorInput, DoubleMotorBase):
 
