@@ -143,17 +143,17 @@ class DepositEnergy:
     @staticmethod
     def deposit(point: utils.DepositPoint):
 
-        mustDumpTree = False
+        mustDumpBlue = False
         requirements = utils.RunLogic.blocksAtPoint(point)
 
         # The robot must dump its front claw first.
         if utils.FrontClaw.loads == 2 and requirements[0] == utils.BlockColor.FRONT:
             requirements = requirements.reverse()
-            mustDumpTree = True
+            mustDumpBlue = True
 
         # TODO: Implement deposition.
 
-        if mustDumpTree:
+        if mustDumpBlue:
             pass
 
         # BF
