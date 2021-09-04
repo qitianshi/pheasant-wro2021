@@ -22,8 +22,8 @@ class BlockColor:
     # Values are used to sort preferred deposit order.
 
     # Colors
-    BLUE = 0
-    GREEN = 2
+    BLUE = 0            # On front claw
+    GREEN = 2           # On rear claw
     YELLOW = 3
 
     # Symbols

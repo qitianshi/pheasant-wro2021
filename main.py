@@ -145,6 +145,8 @@ class DepositEnergy:
 
         mustDumpTree = False
         requirements = utils.RunLogic.blocksAtPoint(point)
+
+        # The robot must dump its front claw first.
         if utils.FrontClaw.loads == 2 and requirements[0] == utils.BlockColor.FRONT:
             requirements = requirements.reverse()
             mustDumpTree = True
