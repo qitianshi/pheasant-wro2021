@@ -14,7 +14,7 @@ class DepositPoint:
     LEFT_HOUSE = hash("DepositPoint.LEFT_HOUSE")        # FIXME: Enum workaround
     TOP_HOUSE = hash("DepositPoint.TOP_HOUSE")
     RIGHT_HOUSE = hash("DepositPoint.RIGHT_HOUSE")
-    STORAGE = hash("DepositPoint.STORAGE")
+    STORAGE_BATTERY = hash("DepositPoint.STORAGE_BATTERY")
 
 # Block colors and symbolic representations.
 class BlockColor:
@@ -46,7 +46,7 @@ class RunLogic:
     @classmethod
     def blocksAtPoint(cls, point: DepositPoint):
 
-        if point == DepositPoint.STORAGE:
+        if point == DepositPoint.STORAGE_BATTERY:
             
             flattenedHouses = (color for house in cls.houses.values() for color in house)
             missingColor = None
