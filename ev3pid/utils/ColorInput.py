@@ -45,8 +45,7 @@ class ColorInput:
     @classmethod
     def checkKnownThresholds(cls, sensor: ColorSensor):
 
-        # HACK: Current implementation is inelegant and inefficient. See commented block below and todo markers above
-        #       for originally intended implementation.
+        # FIXME: Inelegant implementation.
 
         knownSensors = [i[0] for i in cls.KNOWN_THRESHOLDS]
 
