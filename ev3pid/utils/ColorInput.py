@@ -18,7 +18,7 @@ from pybricks.ev3devices import ColorSensor
 
 class ColorInput:
 
-    # TODO: This is a workaround. It should ideally be a dictionary with ColorSensor instances as the key and threshold
+    # HACK: This is a workaround. It should ideally be a dictionary with ColorSensor instances as the key and threshold
     #       being the value.
     # A 2D array containing length-2 subarrays, the first element being a ColorSensor instance and the second being the
     # threshold.
@@ -45,8 +45,8 @@ class ColorInput:
     @classmethod
     def checkKnownThresholds(cls, sensor: ColorSensor):
 
-        # FIXME: Current implementation is inelegant and inefficient. See commented block below and todo markers above
-        #        for originally intended implementation.
+        # HACK: Current implementation is inelegant and inefficient. See commented block below and todo markers above
+        #       for originally intended implementation.
 
         knownSensors = [i[0] for i in cls.KNOWN_THRESHOLDS]
 
