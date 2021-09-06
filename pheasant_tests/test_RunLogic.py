@@ -6,12 +6,10 @@
 
 
 import unittest
-# from pheasant_utils import RunLogic                                         # pylint: disable=F0401
-
-# FIXME: Importing pheasant_utils fails because pybricks is not available in the default environment.
+from pheasant_utils import RunLogic                                     # pylint: disable=F0401
 
 class test_RunLogic(unittest.TestCase):
-    pass        # TODO: Add unit tests.
+    pass
 
 if __name__ == '__main__':
     unittest.main()
