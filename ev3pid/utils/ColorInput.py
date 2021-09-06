@@ -45,7 +45,7 @@ class ColorInput:
     @classmethod
     def checkKnownThresholds(cls, sensor: ColorSensor):
 
-        # FIXME: Inelegant implementation.
+        # HACK: Inelegant implementation.
 
         knownSensors = [i[0] for i in cls.KNOWN_THRESHOLDS]
 

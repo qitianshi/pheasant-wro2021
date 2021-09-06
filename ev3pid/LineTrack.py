@@ -13,7 +13,7 @@ from ev3move import DoubleMotorBase
 
 # The edge of the black line that the sensor follows.
 class LineEdge:
-    LEFT = hash("LineEdge.LEFT")        # FIXME: Enum workaround.
+    LEFT = hash("LineEdge.LEFT")        # HACK: Enum workaround.
     RIGHT = hash("LineEdge.RIGHT")
 
 class LineTrack(PIDController, ColorInput, DoubleMotorBase):
