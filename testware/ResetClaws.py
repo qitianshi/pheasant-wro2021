@@ -7,11 +7,9 @@
 # Resets both claws in the upwards position for mission run.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import Motor                                       # type: ignore
-from pybricks.parameters import Port, Direction                             # type: ignore
-from pybricks.tools import wait                                             # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import Motor
+from pybricks.parameters import Port, Direction
+from pybricks.tools import wait
 
 Motor(Port.A).dc(40)
 Motor(Port.D, positive_direction=Direction.COUNTERCLOCKWISE).dc(40)

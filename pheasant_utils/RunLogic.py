@@ -5,9 +5,7 @@
 # For handling run logic.
 
 
-# pylint: disable=F0401
-from pybricks.parameters import Color                                       # type: ignore
-# pylint: enable=F0401
+from pybricks.parameters import Color
 
 # Positions where energy blocks can be deposited.
 class DepositPoint:
@@ -47,7 +45,7 @@ class RunLogic:
     def blocksAtPoint(cls, point: DepositPoint):
 
         if point == DepositPoint.STORAGE_BATTERY:
-            
+
             flattenedHouses = (color for house in cls.houses.values() for color in house)
             missingColor = None
             for i in (BlockColor.BLUE, BlockColor.YELLOW, BlockColor.GREEN):

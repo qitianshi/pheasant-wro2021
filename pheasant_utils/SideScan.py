@@ -5,10 +5,8 @@
 # Programs for scanning block color and presence using the side color sensor.
 
 
-# pylint: disable=F0401
-from pybricks.iodevices import Ev3devSensor                                 # type: ignore
-from pybricks.parameters import Color                                       # type: ignore
-# pylint: enable=F0401
+from pybricks.iodevices import Ev3devSensor
+from pybricks.parameters import Color
 
 class SideScan:
 
@@ -16,7 +14,7 @@ class SideScan:
 
     @classmethod
     def color(cls):
-        
+
         r, g, b = cls.sensor.read('RGB-RAW')
 
         if r - b >= 3 and r - g >= 3:

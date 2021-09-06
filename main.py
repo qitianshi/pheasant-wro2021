@@ -9,13 +9,11 @@
 
 #region Start-up
 
-# pylint: disable=F0401
-from pybricks.hubs import EV3Brick                                          # type: ignore
-from pybricks.ev3devices import Motor, ColorSensor, GyroSensor              # type: ignore
-from pybricks.iodevices import Ev3devSensor                                 # type: ignore
-from pybricks.parameters import Port, Stop, Direction, Color                # type: ignore
-from pybricks.tools import wait                                             # type: ignore
-# pylint: enable=F0401
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
+from pybricks.iodevices import Ev3devSensor
+from pybricks.parameters import Port, Stop, Direction, Color
+from pybricks.tools import wait
 
 import ev3move
 import ev3pid

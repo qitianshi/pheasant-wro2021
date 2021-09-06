@@ -5,9 +5,7 @@
 # Base class for ev3move modules involving two motors.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import Motor                                       # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import Motor
 
 class DoubleMotorBase:
 

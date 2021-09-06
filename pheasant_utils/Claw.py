@@ -5,10 +5,8 @@
 # Base clase for claws.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import Motor                                       # type: ignore
-from pybricks.tools import wait                                             # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import Motor
+from pybricks.tools import wait
 
 class Claw:
 
@@ -48,7 +46,7 @@ class Claw:
 
     @classmethod
     def resetLowered(cls):
-        
+
         # Quickly goes near the minimum position.
         cls.MOTOR.run_target(600, 100)
 

@@ -5,9 +5,7 @@
 # Implements straight-line movement using a gyroscopic sensor.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import Motor, GyroSensor                           # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import Motor, GyroSensor
 
 from .utils.PIDController import PIDController
 from .utils.GyroInput import GyroInput

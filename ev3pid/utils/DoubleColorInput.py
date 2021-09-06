@@ -5,11 +5,9 @@
 # Base class for ev3pid modules involving double color sensors.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import ColorSensor                                 # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import ColorSensor
 
-from .ColorInput import ColorInput                                          # pylint: disable=E0402
+from .ColorInput import ColorInput                                                               # pylint: disable=E0402
 
 class DoubleColorInput(ColorInput):
 

@@ -7,12 +7,10 @@
 # Displays the color detected by the NXT color sensor.
 
 
-# pylint: disable=F0401
-from pybricks.hubs import EV3Brick                                          # type: ignore
-from pybricks.nxtdevices import ColorSensor as NxtColorSensor               # type: ignore
-from pybricks.parameters import Port                                        # type: ignore
-from pybricks.tools import wait                                             # type: ignore
-# pylint: enable=F0401
+from pybricks.hubs import EV3Brick
+from pybricks.nxtdevices import ColorSensor as NxtColorSensor
+from pybricks.parameters import Port
+from pybricks.tools import wait
 
 brick = EV3Brick()
 sensor = NxtColorSensor(Port.S1)

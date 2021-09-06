@@ -7,12 +7,10 @@
 # Controls the motors using brick buttons.
 
 
-# pylint: disable=F0401
-from pybricks.hubs import EV3Brick                                          # type: ignore
-from pybricks.ev3devices import Motor                                       # type: ignore
-from pybricks.parameters import Port, Button                                # type: ignore
-from pybricks.tools import wait                                             # type: ignore
-# pylint: enable=F0401
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import Motor
+from pybricks.parameters import Port, Button
+from pybricks.tools import wait
 
 SPEED = 400
 brick = EV3Brick()

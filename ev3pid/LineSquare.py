@@ -5,11 +5,9 @@
 # Implements line alignment using two reflected light intensity sensors.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import Motor, ColorSensor                          # type: ignore
-from pybricks.parameters import Color                                       # type: ignore
-from pybricks.tools import wait                                             # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import Motor, ColorSensor
+from pybricks.parameters import Color
+from pybricks.tools import wait
 
 from .utils.PIDController import PIDController
 from .utils.DoubleColorInput import DoubleColorInput

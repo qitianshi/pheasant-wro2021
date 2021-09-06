@@ -5,12 +5,10 @@
 # Base class for ev3pid modules involving a gyro sensor.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import GyroSensor                                  # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import GyroSensor
 
 class GyroInput:
-    
+
     DEFAULT_GYRO = None
 
     def __init__(self, sensor: GyroSensor):

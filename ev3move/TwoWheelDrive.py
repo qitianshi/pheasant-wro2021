@@ -2,14 +2,12 @@
 # Created on 18 Jul 2021 for Team Pheasant.
 # Copyright © 2021 Qi Tianshi. All rights reserved.
 
-# Drive functions for two-wheel drive robots. Emulates the behavior and functionality of the methods in the built-in 
+# Drive functions for two-wheel drive robots. Emulates the behavior and functionality of the methods in the built-in
 # ev3devices.Motor class.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import Motor                                       # type: ignore
-from pybricks.parameters import Stop                                        # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import Motor
+from pybricks.parameters import Stop
 
 from .utils.DoubleMotorBase import DoubleMotorBase
 

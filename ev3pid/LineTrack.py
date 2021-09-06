@@ -5,9 +5,7 @@
 # Implements line-tracking using a reflected light intensity sensor.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import Motor, ColorSensor                          # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import Motor, ColorSensor
 
 from .utils.PIDController import PIDController
 from .utils.ColorInput import ColorInput

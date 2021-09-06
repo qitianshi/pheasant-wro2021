@@ -5,9 +5,7 @@
 # Implements turning by angle using a gyroscopic sensor.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import Motor, GyroSensor                           # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import Motor, GyroSensor
 
 from .utils.PIDController import PIDController
 from .utils.GyroInput import GyroInput
@@ -99,7 +97,7 @@ class GyroTurn(PIDController, GyroInput, DoubleMotorBase):
         cls.kp_SINGLE_DEFAULT = kpSingle
         cls.ki_SINGLE_DEFAULT = kiSingle
         cls.kd_SINGLE_DEFAULT = kdSingle
-        
+
         cls.kp_DOUBLE_DEFAULT = kpDouble
         cls.ki_DOUBLE_DEFAULT = kiDouble
         cls.kd_DOUBLE_DEFAULT = kdDouble

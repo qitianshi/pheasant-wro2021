@@ -6,7 +6,7 @@
 
 
 import unittest
-from pheasant_utils import RunLogic                                     # pylint: disable=F0401
+from pheasant_utils import RunLogic                                                              # pylint: disable=F0401
 
 class test_RunLogic(unittest.TestCase):
     pass

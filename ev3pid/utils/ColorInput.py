@@ -5,23 +5,22 @@
 # Base class for ev3pid modules involving a color sensor.
 
 
-# pylint: disable=F0401
-from pybricks.ev3devices import ColorSensor                                 # type: ignore
-# pylint: enable=F0401
+from pybricks.ev3devices import ColorSensor
 
-# TODO: Implement this. It's proposed that the port ID of the sensor be used to create the hash, but it's not 
+
+# TODO: Implement this. It's proposed that the port ID of the sensor be used to create the hash, but it's not
 #       immediately obvious how to accesss it.
 # Extends pybricks.ev3devices.ColorSensor class with __hash__ method to enable its use as a dictionary key.
 # class ev3ColorSensorHashabilityExtension(ColorSensor):
-    
+
 #     def __hash__(self):
 #         pass
 
 class ColorInput:
 
-    # TODO: This is a workaround. It should ideally be a dictionary with ColorSensor instances as the key and threshold 
+    # TODO: This is a workaround. It should ideally be a dictionary with ColorSensor instances as the key and threshold
     #       being the value.
-    # A 2D array containing length-2 subarrays, the first element being a ColorSensor instance and the second being the 
+    # A 2D array containing length-2 subarrays, the first element being a ColorSensor instance and the second being the
     # threshold.
     KNOWN_THRESHOLDS = []
 
@@ -46,7 +45,7 @@ class ColorInput:
     @classmethod
     def checkKnownThresholds(cls, sensor: ColorSensor):
 
-        # FIXME: Current implementation is inelegant and inefficient. See commented block below and todo markers above 
+        # FIXME: Current implementation is inelegant and inefficient. See commented block below and todo markers above
         #        for originally intended implementation.
 
         knownSensors = [i[0] for i in cls.KNOWN_THRESHOLDS]
