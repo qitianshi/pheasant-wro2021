@@ -9,12 +9,12 @@ from pybricks.ev3devices import Motor, ColorSensor
 from pybricks.parameters import Color
 from pybricks.tools import wait
 
+from ev3move import DoubleMotorBase
 from .utils.PIDController import PIDController
 from .utils.DoubleColorInput import DoubleColorInput
-from ev3move import DoubleMotorBase
 
 class LinePosition:
-    AHEAD = 0
+    AHEAD = 0               # HACK: enum workaround
     BEHIND = 1
 
 class LineSquare(PIDController, DoubleColorInput, DoubleMotorBase):
@@ -46,11 +46,11 @@ class LineSquare(PIDController, DoubleColorInput, DoubleMotorBase):
         DoubleMotorBase.__init__(self, leftMotor, rightMotor)
 
         # Resolves optional arguments with default values.
-        kp = kp if kp != None else LineSquare.kp_DEFAULT
-        ki = ki if ki != None else LineSquare.ki_DEFAULT
-        kd = kd if kd != None else LineSquare.kd_DEFAULT
-        integralLimit = integralLimit if integralLimit != None else LineSquare.INTEGRAL_LIMIT_DEFAULT
-        outputLimit = outputLimit if outputLimit != None else LineSquare.OUTPUT_LIMIT_DEFAULT
+        kp = kp if kp is not None else LineSquare.kp_DEFAULT
+        ki = ki if ki is not None else LineSquare.ki_DEFAULT
+        kd = kd if kd is not None else LineSquare.kd_DEFAULT
+        integralLimit = integralLimit if integralLimit is not None else LineSquare.INTEGRAL_LIMIT_DEFAULT
+        outputLimit = outputLimit if outputLimit is not None else LineSquare.OUTPUT_LIMIT_DEFAULT
 
         # PID parameters
         self.leftPid = PIDController(leftThreshold, kp, ki, kd, integralLimit, outputLimit)

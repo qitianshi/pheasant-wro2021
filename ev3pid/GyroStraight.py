@@ -7,9 +7,9 @@
 
 from pybricks.ev3devices import Motor, GyroSensor
 
+from ev3move import DoubleMotorBase
 from .utils.PIDController import PIDController
 from .utils.GyroInput import GyroInput
-from ev3move import DoubleMotorBase
 
 class GyroStraight(PIDController, GyroInput, DoubleMotorBase):
 

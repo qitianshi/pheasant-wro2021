@@ -5,7 +5,7 @@
 # Base clase for claws.
 
 
-from pybricks.ev3devices import Motor
+from pybricks.ev3devices import Motor                                                    # pylint: disable=unused-import
 from pybricks.tools import wait
 
 class Claw:

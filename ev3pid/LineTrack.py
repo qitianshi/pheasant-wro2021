@@ -7,9 +7,9 @@
 
 from pybricks.ev3devices import Motor, ColorSensor
 
+from ev3move import DoubleMotorBase
 from .utils.PIDController import PIDController
 from .utils.ColorInput import ColorInput
-from ev3move import DoubleMotorBase
 
 # The edge of the black line that the sensor follows.
 class LineEdge:

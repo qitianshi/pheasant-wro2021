@@ -7,7 +7,7 @@
 
 from pybricks.ev3devices import ColorSensor
 
-from .ColorInput import ColorInput                                                               # pylint: disable=E0402
+from ColorInput import ColorInput
 
 class DoubleColorInput(ColorInput):
 
@@ -16,12 +16,12 @@ class DoubleColorInput(ColorInput):
 
     def __init__(self, leftSensor: ColorSensor, rightSensor: ColorSensor, leftThreshold: int, rightThreshold: int):
 
-        self.leftSensor = leftSensor if leftSensor != None else self.__class__.DEFAULT_LEFT_COLOR
-        self.rightSensor = rightSensor if rightSensor != None else self.__class__.DEFAULT_RIGHT_COLOR
+        self.leftSensor = leftSensor if leftSensor is not None else self.__class__.DEFAULT_LEFT_COLOR
+        self.rightSensor = rightSensor if rightSensor is not None else self.__class__.DEFAULT_RIGHT_COLOR
 
-        self.leftThreshold = leftThreshold if leftThreshold != None else \
+        self.leftThreshold = leftThreshold if leftThreshold is not None else \
             self.__class__.checkKnownThresholds(self.leftSensor)
-        self.rightThreshold = rightThreshold if rightThreshold != None else \
+        self.rightThreshold = rightThreshold if rightThreshold is not None else \
             self.__class__.checkKnownThresholds(self.rightSensor)
 
     @classmethod

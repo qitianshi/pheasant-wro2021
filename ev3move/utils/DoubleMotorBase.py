@@ -15,8 +15,8 @@ class DoubleMotorBase:
     def __init__(self, leftMotor: Motor, rightMotor: Motor):
 
         # Resolves optional arguments with default values.
-        self.leftMotor = leftMotor if leftMotor != None else self.__class__.LEFT_MOTOR_DEFAULT
-        self.rightMotor = rightMotor if rightMotor != None else self.__class__.RIGHT_MOTOR_DEFAULT
+        self.leftMotor = leftMotor if leftMotor is not None else self.__class__.LEFT_MOTOR_DEFAULT
+        self.rightMotor = rightMotor if rightMotor is not None else self.__class__.RIGHT_MOTOR_DEFAULT
 
     @classmethod
     def setDefaultMotors(cls, leftMotor: Motor, rightMotor: Motor):

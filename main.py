@@ -234,7 +234,7 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Drives forwards to collect the blocks.
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(300, -180).runUntil(lambda: DRIVE_BASE.angle() > 100)   # Move forward to get off the black line.
+    ev3pid.GyroStraight(300, -180).runUntil(lambda: DRIVE_BASE.angle() > 100)  # Move forward to get off the black line.
     ev3pid.GyroStraight(300, -180).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(300, -180).runUntil(lambda: DRIVE_BASE.angle() > 220)
@@ -338,7 +338,8 @@ def collectGreenSurplus():
 
     # Drives forwards to collect.
     utils.FrontClaw.openGate()
-    ev3pid.GyroStraight(300, 0).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK)
+    ev3pid.GyroStraight(300, 0).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK \
+        or RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
     utils.FrontClaw.closeGate()
 
@@ -361,7 +362,8 @@ def collectGreenEnergy():
         wait(100)
 
     # Turns and travels towards green energy blocks.
-    ev3pid.GyroStraight(-150, 0).runUntil(lambda: LEFT_COLOR.color() == Color.GREEN or RIGHT_COLOR.color() == Color.GREEN)
+    ev3pid.GyroStraight(-150, 0).runUntil(lambda: LEFT_COLOR.color() == Color.GREEN \
+        or RIGHT_COLOR.color() == Color.GREEN)
     DRIVE_BASE.hold()
     ev3pid.GyroTurn(90, True, False).run()
     ev3pid.LineTrack(200, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)

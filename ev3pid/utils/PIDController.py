@@ -23,11 +23,11 @@ class PIDController:
                  outputLimit: float):
 
         # Resolves optional arguments with default values.
-        kp = kp if kp != None else self.__class__.kp_DEFAULT
-        ki = ki if ki != None else self.__class__.ki_DEFAULT
-        kd = kd if kd != None else self.__class__.kd_DEFAULT
-        integralLimit = integralLimit if integralLimit != None else self.__class__.INTEGRAL_LIMIT_DEFAULT
-        integralLimit = outputLimit if outputLimit != None else self.__class__.OUTPUT_LIMIT_DEFAULT
+        kp = kp if kp is not None else self.__class__.kp_DEFAULT
+        ki = ki if ki is not None else self.__class__.ki_DEFAULT
+        kd = kd if kd is not None else self.__class__.kd_DEFAULT
+        integralLimit = integralLimit if integralLimit is not None else self.__class__.INTEGRAL_LIMIT_DEFAULT
+        integralLimit = outputLimit if outputLimit is not None else self.__class__.OUTPUT_LIMIT_DEFAULT
 
         # PID parameters
         self.setpoint = setpoint
@@ -49,7 +49,7 @@ class PIDController:
         # Integral term
         self.integral += error
         iTerm = self.integral * self.ki
-        if self.integralLimit != None:          # Applies integral limit, if set.
+        if self.integralLimit is not None:          # Applies integral limit, if set.
             self.integral = min(self.integral, self.integralLimit)
             self.integral = max(self.integral, self.integralLimit * -1)
 
@@ -59,7 +59,7 @@ class PIDController:
         self.prevError = error
 
         output = pTerm + iTerm + dTerm
-        if self.outputLimit != None:            # Applies output limit, if set.
+        if self.outputLimit is not None:            # Applies output limit, if set.
             output = min(output, self.outputLimit)
             output = max(output, self.outputLimit * -1)
 

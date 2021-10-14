@@ -7,9 +7,9 @@
 
 from pybricks.ev3devices import Motor, GyroSensor
 
+from ev3move import DoubleMotorBase
 from .utils.PIDController import PIDController
 from .utils.GyroInput import GyroInput
-from ev3move import DoubleMotorBase
 
 class GyroTurn(PIDController, GyroInput, DoubleMotorBase):
 
@@ -44,17 +44,17 @@ class GyroTurn(PIDController, GyroInput, DoubleMotorBase):
 
         # Resolves optional arguments with default values.
         if leftDriven and rightDriven:
-            kp = kp if kp != None else GyroTurn.kp_DOUBLE_DEFAULT
-            ki = ki if ki != None else GyroTurn.ki_DOUBLE_DEFAULT
-            kd = kd if kd != None else GyroTurn.kd_DOUBLE_DEFAULT
-            integralLimit = integralLimit if integralLimit != None else GyroTurn.INTEGRAL_LIMIT_DOUBLE_DEFAULT
-            outputLimit = outputLimit if outputLimit != None else GyroTurn.OUTPUT_LIMIT_DOUBLE_DEFAULT
+            kp = kp if kp is not None else GyroTurn.kp_DOUBLE_DEFAULT
+            ki = ki if ki is not None else GyroTurn.ki_DOUBLE_DEFAULT
+            kd = kd if kd is not None else GyroTurn.kd_DOUBLE_DEFAULT
+            integralLimit = integralLimit if integralLimit is not None else GyroTurn.INTEGRAL_LIMIT_DOUBLE_DEFAULT
+            outputLimit = outputLimit if outputLimit is not None else GyroTurn.OUTPUT_LIMIT_DOUBLE_DEFAULT
         else:
-            kp = kp if kp != None else GyroTurn.kp_SINGLE_DEFAULT
-            ki = ki if ki != None else GyroTurn.ki_SINGLE_DEFAULT
-            kd = kd if kd != None else GyroTurn.kd_SINGLE_DEFAULT
-            integralLimit = integralLimit if integralLimit != None else GyroTurn.INTEGRAL_LIMIT_SINGLE_DEFAULT
-            outputLimit = outputLimit if outputLimit != None else GyroTurn.OUTPUT_LIMIT_SINGLE_DEFAULT
+            kp = kp if kp is not None else GyroTurn.kp_SINGLE_DEFAULT
+            ki = ki if ki is not None else GyroTurn.ki_SINGLE_DEFAULT
+            kd = kd if kd is not None else GyroTurn.kd_SINGLE_DEFAULT
+            integralLimit = integralLimit if integralLimit is not None else GyroTurn.INTEGRAL_LIMIT_SINGLE_DEFAULT
+            outputLimit = outputLimit if outputLimit is not None else GyroTurn.OUTPUT_LIMIT_SINGLE_DEFAULT
 
         # Angle parameters
         self.angle = angle

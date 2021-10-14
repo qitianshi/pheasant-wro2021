@@ -14,7 +14,7 @@ class GyroInput:
     def __init__(self, sensor: GyroSensor):
 
         # Resolves optional arguments with default values.
-        self.sensor = sensor if sensor != None else self.__class__.DEFAULT_GYRO
+        self.sensor = sensor if sensor is not None else self.__class__.DEFAULT_GYRO
 
     @classmethod
     def setDefaultSensor(cls, sensor: GyroSensor):

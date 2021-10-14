@@ -28,8 +28,8 @@ class ColorInput:
 
     def __init__(self, sensor, threshold):
 
-        self.sensor = sensor if sensor != None else self.__class__.DEFAULT_COLOR
-        self.threshold = threshold if threshold != None else self.__class__.checkKnownThresholds(self.sensor)
+        self.sensor = sensor if sensor is not None else self.__class__.DEFAULT_COLOR
+        self.threshold = threshold if threshold is not None else self.__class__.checkKnownThresholds(self.sensor)
 
     @classmethod
     def setDefaultSensor(cls, sensor: ColorSensor):
@@ -38,7 +38,7 @@ class ColorInput:
     @classmethod
     def setKnownThresholds(cls, sensorThresholds):
 
-        #TODO: Add functionality to allow overwriting known thresholds.
+        # TODO: Add functionality to allow overwriting known thresholds.
 
         cls.KNOWN_THRESHOLDS.extend(sensorThresholds)
 
