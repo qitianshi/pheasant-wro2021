@@ -127,19 +127,19 @@ class DepositEnergy:
         AWAY = hash("AWAY")
 
     @staticmethod
-    def getGreenClaw(count: int):
+    def __getGreenClaw(count: int):
         pass
 
     @staticmethod
-    def getBlueClaw(count: int):
+    def __getBlueClaw(count: int):
         pass
 
     @staticmethod
-    def getFront(count: int):
+    def __getFront(count: int):
         pass
 
     @staticmethod
-    def getRear(count: int):
+    def __getRear(count: int):
         pass
 
     @staticmethod
