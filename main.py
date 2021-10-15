@@ -122,6 +122,10 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
 class DepositEnergy:
 
+    class RobotCurrentlyFacing:
+        TOWARDS = hash("TOWARDS")                 # HACK: enum workaround
+        AWAY = hash("AWAY")
+
     @staticmethod
     def getGreenClaw(count: int):
         pass
@@ -154,45 +158,85 @@ class DepositEnergy:
         if mustDumpBlue:
             pass
 
-        # BF
-        # getBlueClaw
-        # getFront
+        if requirements == [utils.BlockColor.BLUE, utils.BlockColor.FRONT]:
 
-        # GR
-        # getGreenClaw
-        # getRear
+            # BF
+            # getBlueClaw
+            # getFront
 
-        # FR
-        # getFront
-        # turn
-        # getRear
+            pass
 
-        # BG
-        # getBlueClaw
-        # turn
-        # getGreenClaw
+        elif requirements == [utils.BlockColor.GREEN, utils.BlockColor.REAR]:
 
-        # BR
-        # getBlueClaw
-        # turn
-        # getRear
+            # GR
+            # getGreenClaw
+            # getRear
 
-        # FG
-        # getGreenClaw
-        # turn
-        # getFront
+            pass
 
-        # BB
-        # getBlueClaw
+        elif requirements == [utils.BlockColor.FRONT, utils.BlockColor.REAR]:
 
-        # GG
-        # getGreenClaw
+            # FR
+            # getFront
+            # turn
+            # getRear
 
-        # FF
-        # getFront
+            pass
 
-        # RR
-        # getRear
+        elif requirements == [utils.BlockColor.BLUE, utils.BlockColor.GREEN]:
+
+            # BG
+            # getBlueClaw
+            # turn
+            # getGreenClaw
+
+            pass
+
+        elif requirements == [utils.BlockColor.BLUE, utils.BlockColor.REAR]:
+
+            # BR
+            # getBlueClaw
+            # turn
+            # getRear
+
+            pass
+
+        elif requirements == [utils.BlockColor.FRONT, utils.BlockColor.GREEN]:
+
+            # FG
+            # getGreenClaw
+            # turn
+            # getFront
+
+            pass
+
+        elif requirements == [utils.BlockColor.BLUE, utils.BlockColor.BLUE]:
+
+            # BB
+            # getBlueClaw
+
+            pass
+
+        elif requirements == [utils.BlockColor.GREEN, utils.BlockColor.GREEN]:
+
+            # GG
+            # getGreenClaw
+
+            pass
+
+        elif requirements == [utils.BlockColor.FRONT, utils.BlockColor.FRONT]:
+
+            # FF
+            # getFront
+
+            pass
+
+        elif requirements == [utils.BlockColor.REAR, utils.BlockColor.REAR]:
+
+            # RR
+            # getRear
+
+            pass
 
 #endregion
 
