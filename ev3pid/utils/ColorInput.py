@@ -8,8 +8,8 @@
 from pybricks.ev3devices import ColorSensor
 
 
-# TODO: Implement this. It's proposed that the port ID of the sensor be used to create the hash, but it's not
-#       immediately obvious how to accesss it.
+#TODO: Implement this. It's proposed that the port ID of the sensor be used to create the hash, but it's not
+#      immediately obvious how to accesss it.
 # Extends pybricks.ev3devices.ColorSensor class with __hash__ method to enable its use as a dictionary key.
 # class ev3ColorSensorHashabilityExtension(ColorSensor):
 
@@ -18,8 +18,8 @@ from pybricks.ev3devices import ColorSensor
 
 class ColorInput:
 
-    # HACK: This is a workaround. It should ideally be a dictionary with ColorSensor instances as the key and threshold
-    #       being the value.
+    #HACK: This is a workaround. It should ideally be a dictionary with ColorSensor instances as the key and threshold
+    #      being the value.
     # A 2D array containing length-2 subarrays, the first element being a ColorSensor instance and the second being the
     # threshold.
     KNOWN_THRESHOLDS = []
@@ -38,14 +38,14 @@ class ColorInput:
     @classmethod
     def setKnownThresholds(cls, sensorThresholds):
 
-        # TODO: Add functionality to allow overwriting known thresholds.
+        #TODO: Add functionality to allow overwriting known thresholds.
 
         cls.KNOWN_THRESHOLDS.extend(sensorThresholds)
 
     @classmethod
     def checkKnownThresholds(cls, sensor: ColorSensor):
 
-        # HACK: Inelegant implementation.
+        #HACK: Inelegant implementation.
 
         knownSensors = [i[0] for i in cls.KNOWN_THRESHOLDS]
 

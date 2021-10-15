@@ -18,4 +18,4 @@ from .utils.GyroInput import *
 from .utils.PIDController import *
 
 # Dependencies
-from ev3move import DoubleMotorBase                                                 # pylint: disable=wrong-import-order
+from ev3move import DoubleMotorBase                                                  #pylint: disable=wrong-import-order

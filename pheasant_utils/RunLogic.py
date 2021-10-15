@@ -9,7 +9,7 @@ from pybricks.parameters import Color
 
 # Positions where energy blocks can be deposited.
 class DepositPoint:
-    LEFT_HOUSE = hash("LEFT_HOUSE")        # HACK: enum workaround.
+    LEFT_HOUSE = hash("LEFT_HOUSE")        #HACK: enum workaround.
     TOP_HOUSE = hash("TOP_HOUSE")
     RIGHT_HOUSE = hash("RIGHT_HOUSE")
     STORAGE_BATTERY = hash("STORAGE_BATTERY")

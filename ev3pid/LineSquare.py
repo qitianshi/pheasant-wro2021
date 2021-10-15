@@ -14,7 +14,7 @@ from .utils.PIDController import PIDController
 from .utils.DoubleColorInput import DoubleColorInput
 
 class LinePosition:
-    AHEAD = hash("AHEAD")               # HACK: enum workaround
+    AHEAD = hash("AHEAD")               #HACK: enum workaround
     BEHIND = hash("BEHIND")
 
 class LineSquare(PIDController, DoubleColorInput, DoubleMotorBase):

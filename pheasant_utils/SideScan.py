@@ -5,7 +5,7 @@
 # Programs for scanning block color and presence using the side color sensor.
 
 
-from pybricks.iodevices import Ev3devSensor                                              # pylint: disable=unused-import
+from pybricks.iodevices import Ev3devSensor                                               #pylint: disable=unused-import
 from pybricks.parameters import Color
 
 class SideScan:

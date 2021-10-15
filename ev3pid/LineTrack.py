@@ -13,7 +13,7 @@ from .utils.ColorInput import ColorInput
 
 # The edge of the black line that the sensor follows.
 class LineEdge:
-    LEFT = hash("LEFT")        # HACK: enum workaround.
+    LEFT = hash("LEFT")        #HACK: enum workaround.
     RIGHT = hash("RIGHT")
 
 class LineTrack(PIDController, ColorInput, DoubleMotorBase):

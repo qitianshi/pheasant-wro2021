@@ -118,12 +118,12 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
         print("Error while scanning: unexpected number of blocks;", utils.RunLogic.houses[thisHouse])
         utils.RunLogic.houses[thisHouse] = [utils.RunLogic.houses[thisHouse][0], utils.RunLogic.houses[thisHouse][-1]]
 
-    print("House colors:", utils.RunLogic.houses[thisHouse])      # FIXME: Prints numbers; implement str representation.
+    print("House colors:", utils.RunLogic.houses[thisHouse])       #FIXME: Prints numbers; implement str representation.
 
 class DepositEnergy:
 
     class FacingDirection:
-        TOWARDS = hash("TOWARDS")                 # HACK: enum workaround
+        TOWARDS = hash("TOWARDS")                 #HACK: enum workaround
         AWAY = hash("AWAY")
 
     currentlyFacing = FacingDirection.TOWARDS
@@ -160,7 +160,7 @@ class DepositEnergy:
             requirements = requirements.reverse()
             dumpedBlue = True
 
-            # TODO: Turn robot and dump claw
+            #TODO: Turn robot and dump claw
             # ...
             cls.currentlyFacing = DepositEnergy.FacingDirection.AWAY
 
@@ -172,7 +172,7 @@ class DepositEnergy:
 
         elif requirements == [utils.BlockColor.GREEN, utils.BlockColor.REAR]:
 
-            # TODO: Turn robot
+            #TODO: Turn robot
             cls.__getGreenClaw(1)
             cls.__returnToNeutralPoint()
             cls.__getRearStore(1)
@@ -180,28 +180,28 @@ class DepositEnergy:
         elif requirements == [utils.BlockColor.FRONT, utils.BlockColor.REAR]:
 
             cls.__getFrontStore(1)
-            # TODO: Turn robot
+            #TODO: Turn robot
             cls.__returnToNeutralPoint()
             cls.__getRearStore(1)
 
         elif requirements == [utils.BlockColor.BLUE, utils.BlockColor.GREEN]:
 
             cls.__getBlueClaw(1)
-            # TODO: Turn robot
+            #TODO: Turn robot
             cls.__returnToNeutralPoint()
             cls.__getGreenClaw(1)
 
         elif requirements == [utils.BlockColor.BLUE, utils.BlockColor.REAR]:
 
             cls.__getBlueClaw(1)
-            # TODO: Turn robot
+            #TODO: Turn robot
             cls.__returnToNeutralPoint()
             cls.__getRearStore(1)
 
         elif requirements == [utils.BlockColor.FRONT, utils.BlockColor.GREEN]:
 
             cls.__getGreenClaw(1)
-            # TODO: Turn robot
+            #TODO: Turn robot
             cls.__returnToNeutralPoint()
             cls.__getFrontStore(1)
 
@@ -211,7 +211,7 @@ class DepositEnergy:
 
         elif requirements == [utils.BlockColor.GREEN, utils.BlockColor.GREEN]:
 
-            # TODO: Turn robot
+            #TODO: Turn robot
             cls.__getGreenClaw(2)
 
         elif requirements == [utils.BlockColor.FRONT, utils.BlockColor.FRONT]:
@@ -220,13 +220,13 @@ class DepositEnergy:
 
         elif requirements == [utils.BlockColor.REAR, utils.BlockColor.REAR]:
 
-            # TODO: Turn robot
+            #TODO: Turn robot
             cls.__getRearStore(2)
 
         cls.__returnToNeutralPoint()
 
         if dumpedBlue:
-            # TODO: Recollect dumped blue.
+            #TODO: Recollect dumped blue.
             pass
 
 #endregion
