@@ -122,9 +122,16 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
 class DepositEnergy:
 
-    class RobotCurrentlyFacing:
+    class FacingDirection:
         TOWARDS = hash("TOWARDS")                 # HACK: enum workaround
         AWAY = hash("AWAY")
+
+    currentlyFacing = FacingDirection.TOWARDS
+    dumpedBlue = False
+
+    @classmethod
+    def __returnToNeutralPoint(cls):
+        pass
 
     @staticmethod
     def __getGreenClaw(count: int):
@@ -135,107 +142,91 @@ class DepositEnergy:
         pass
 
     @staticmethod
-    def __getFront(count: int):
+    def __getFrontStore(count: int):
         pass
 
     @staticmethod
-    def __getRear(count: int):
+    def __getRearStore(count: int):
         pass
 
-    @staticmethod
-    def deposit(point: utils.DepositPoint):
+    @classmethod
+    def deposit(cls, point: utils.DepositPoint):
 
-        mustDumpBlue = False
         requirements = utils.RunLogic.blocksAtPoint(point)
 
         # The robot must dump its front claw first.
         if utils.FrontClaw.loads == 2 and requirements[0] == utils.BlockColor.FRONT:
+
             requirements = requirements.reverse()
-            mustDumpBlue = True
+            dumpedBlue = True
 
-        # TODO: Implement deposition.
-
-        if mustDumpBlue:
-            pass
+            # TODO: Turn robot and dump claw
+            # ...
+            cls.currentlyFacing = DepositEnergy.FacingDirection.AWAY
 
         if requirements == [utils.BlockColor.BLUE, utils.BlockColor.FRONT]:
 
-            # BF
-            # getBlueClaw
-            # getFront
-
-            pass
+            cls.__getBlueClaw(1)
+            cls.__returnToNeutralPoint()
+            cls.__getFrontStore(1)
 
         elif requirements == [utils.BlockColor.GREEN, utils.BlockColor.REAR]:
 
-            # GR
-            # getGreenClaw
-            # getRear
-
-            pass
+            # TODO: Turn robot
+            cls.__getGreenClaw(1)
+            cls.__returnToNeutralPoint()
+            cls.__getRearStore(1)
 
         elif requirements == [utils.BlockColor.FRONT, utils.BlockColor.REAR]:
 
-            # FR
-            # getFront
-            # turn
-            # getRear
-
-            pass
+            cls.__getFrontStore(1)
+            # TODO: Turn robot
+            cls.__returnToNeutralPoint()
+            cls.__getRearStore(1)
 
         elif requirements == [utils.BlockColor.BLUE, utils.BlockColor.GREEN]:
 
-            # BG
-            # getBlueClaw
-            # turn
-            # getGreenClaw
-
-            pass
+            cls.__getBlueClaw(1)
+            # TODO: Turn robot
+            cls.__returnToNeutralPoint()
+            cls.__getGreenClaw(1)
 
         elif requirements == [utils.BlockColor.BLUE, utils.BlockColor.REAR]:
 
-            # BR
-            # getBlueClaw
-            # turn
-            # getRear
-
-            pass
+            cls.__getBlueClaw(1)
+            # TODO: Turn robot
+            cls.__returnToNeutralPoint()
+            cls.__getRearStore(1)
 
         elif requirements == [utils.BlockColor.FRONT, utils.BlockColor.GREEN]:
 
-            # FG
-            # getGreenClaw
-            # turn
-            # getFront
-
-            pass
+            cls.__getGreenClaw(1)
+            # TODO: Turn robot
+            cls.__returnToNeutralPoint()
+            cls.__getFrontStore(1)
 
         elif requirements == [utils.BlockColor.BLUE, utils.BlockColor.BLUE]:
 
-            # BB
-            # getBlueClaw
-
-            pass
+            cls.__getBlueClaw(2)
 
         elif requirements == [utils.BlockColor.GREEN, utils.BlockColor.GREEN]:
 
-            # GG
-            # getGreenClaw
-
-            pass
+            # TODO: Turn robot
+            cls.__getGreenClaw(2)
 
         elif requirements == [utils.BlockColor.FRONT, utils.BlockColor.FRONT]:
 
-            # FF
-            # getFront
-
-            pass
+            cls.__getFrontStore(2)
 
         elif requirements == [utils.BlockColor.REAR, utils.BlockColor.REAR]:
 
-            # RR
-            # getRear
+            # TODO: Turn robot
+            cls.__getRearStore(2)
 
+        cls.__returnToNeutralPoint()
+
+        if dumpedBlue:
+            # TODO: Recollect dumped blue.
             pass
 
 #endregion
