@@ -87,9 +87,9 @@ def partialRunStartupProcedure():
 
     # Run variables
     # utils.RunLogic.undercarriageStorage = []
-    # utils.RunLogic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
-    #                       utils.DepositPoint.TOP_HOUSE: [],
-    #                       utils.DepositPoint.RIGHT_HOUSE: []}
+    utils.RunLogic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
+                             utils.DepositPoint.TOP_HOUSE: [utils.BlockColor.BLUE, utils.BlockColor.BLUE],
+                             utils.DepositPoint.RIGHT_HOUSE: []}
 
 def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stopCondition, thenHoldMotors: bool):
 
@@ -146,26 +146,39 @@ class DepositEnergy:
         self.mustDumpBlue = (utils.FrontClaw.loads == 2 and self.requirements[0] == utils.BlockColor.FRONT)
 
     def __returnToNeutralPoint(self):
-        #TODO: Return to neutral point.
-        pass
 
-    @staticmethod
-    def __getGreenClaw(count: int):
+        if self.currentlyFacing == self.__class__.FacingDirection.TOWARDS:
+
+            ev3pid.GyroStraight(-200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() < 0)
+            DRIVE_BASE.hold()
+
+        else:
+
+            #TODO: Implement this case.
+            pass
+
+    def __getGreenClaw(self, count: int):
         #TODO: Get green claw
         pass
 
-    @staticmethod
-    def __getBlueClaw(count: int):
-        #TODO: Get blue claw
-        pass
+    def __getBlueClaw(self, count: int):
 
-    @staticmethod
-    def __getFrontStore(count: int):
+        ev3pid.GyroStraight(200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 200)
+        DRIVE_BASE.hold()
+        utils.FrontClaw.drop()
+
+        if count == 1 and utils.FrontClaw.loads == 2:
+            DRIVE_BASE.run_angle(-100, 40)
+            utils.FrontClaw.lift()
+
+        self.__returnToNeutralPoint()
+        utils.FrontClaw.lift()
+
+    def __getFrontStore(self, count: int):
         #TODO: Get front storage
         pass
 
-    @staticmethod
-    def __getRearStore(count: int):
+    def __getRearStore(self, count: int):
         #TODO: Get rear storage
         pass
 
@@ -227,9 +240,6 @@ class DepositEnergy:
             self.__getFrontStore(1)
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.BLUE]:
-
-            #TODO: Not tested
-
             self.__getBlueClaw(2)
 
         elif self.requirements == [utils.BlockColor.GREEN, utils.BlockColor.GREEN]:
@@ -543,4 +553,7 @@ partialRunStartupProcedure()
 # collectBlueEnergy()
 # scanBlocksAtTopHouse()
 
-wait(1000)
+DepositEnergy(utils.DepositPoint.TOP_HOUSE, 0).run()
+
+while True:
+    wait(10000000)
