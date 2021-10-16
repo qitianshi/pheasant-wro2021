@@ -198,6 +198,8 @@ class DepositEnergy:
             DRIVE_BASE.run_angle(100, 40)
             utils.RearClaw.closeGate()
 
+        utils.RearClaw.loads -= count
+
         self.__returnToNeutralPoint()
         utils.RearClaw.closeGate()
 
@@ -211,6 +213,8 @@ class DepositEnergy:
         if count == 1 and utils.FrontClaw.loads == 2:
             DRIVE_BASE.run_angle(-100, 40)
             utils.FrontClaw.lift()
+
+        utils.FrontClaw.loads -= count
 
         self.__returnToNeutralPoint()
         utils.FrontClaw.lift()
