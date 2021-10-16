@@ -167,10 +167,14 @@ class DepositEnergy:
 
         if self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.FRONT]:
 
+            #TODO: Not tested
+
             self.__getBlueClaw(1)
             self.__getFrontStore(1)
 
         elif self.requirements == [utils.BlockColor.GREEN, utils.BlockColor.REAR]:
+
+            #TODO: Not tested
 
             #TODO: Turn robot
             self.__getGreenClaw(1)
@@ -178,11 +182,15 @@ class DepositEnergy:
 
         elif self.requirements == [utils.BlockColor.FRONT, utils.BlockColor.REAR]:
 
+            #TODO: Not tested
+
             self.__getFrontStore(1)
             #TODO: Turn robot
             self.__getRearStore(1)
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.GREEN]:
+
+            #TODO: Not tested
 
             self.__getBlueClaw(1)
             #TODO: Turn robot
@@ -190,11 +198,15 @@ class DepositEnergy:
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.REAR]:
 
+            #TODO: Not tested
+
             self.__getBlueClaw(1)
             #TODO: Turn robot
             self.__getRearStore(1)
 
         elif self.requirements == [utils.BlockColor.FRONT, utils.BlockColor.GREEN]:
+
+            #TODO: Not tested
 
             self.__getGreenClaw(1)
             #TODO: Turn robot
@@ -202,18 +214,26 @@ class DepositEnergy:
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.BLUE]:
 
+            #TODO: Not tested
+
             self.__getBlueClaw(2)
 
         elif self.requirements == [utils.BlockColor.GREEN, utils.BlockColor.GREEN]:
+
+            #TODO: Not tested
 
             #TODO: Turn robot
             self.__getGreenClaw(2)
 
         elif self.requirements == [utils.BlockColor.FRONT, utils.BlockColor.FRONT]:
 
+            #TODO: Not tested
+
             self.__getFrontStore(2)
 
         elif self.requirements == [utils.BlockColor.REAR, utils.BlockColor.REAR]:
+
+            #TODO: Not tested
 
             #TODO: Turn robot
             self.__getRearStore(2)
