@@ -7,7 +7,7 @@
 
 from pybricks.ev3devices import ColorSensor
 
-from ColorInput import ColorInput
+from .ColorInput import ColorInput                                           # pylint: disable=relative-beyond-top-level
 
 class DoubleColorInput(ColorInput):
 
