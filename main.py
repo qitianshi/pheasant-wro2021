@@ -56,7 +56,7 @@ if BRICK.battery.voltage() < 7750:      # In millivolts.
 
     print("Low battery.")
 
-    from sys import exit
+    from sys import exit                                                              #pylint: disable=redefined-builtin
     exit()
 
 #endregion

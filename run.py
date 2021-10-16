@@ -10,7 +10,7 @@
 # To pause tracking, run `git update-index --skip-worktree run.py`.
 
 
-from main import *                                              #pylint: disable=wildcard-import, unused-wildcard-import
+from main import *                           #pylint: disable=wildcard-import, unused-wildcard-import, redefined-builtin
 
 # To initialize hardware and run variables when the robot starts from a save point on the field instead of the start
 # zone. Comment out the call to this function if running from the start zone.
