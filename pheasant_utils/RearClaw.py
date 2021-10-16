@@ -23,3 +23,7 @@ class RearClaw(Claw):
     @classmethod
     def collect(cls):
         cls.goTo(0.31)
+
+    @classmethod
+    def closeGate(cls):
+        cls.goTo(0.37)

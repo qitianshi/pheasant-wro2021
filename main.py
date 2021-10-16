@@ -73,7 +73,7 @@ def partialRunStartupProcedure():
 
     # Claws
     utils.RearClaw.loads = 2
-    utils.RearClaw.lift()
+    utils.RearClaw.closeGate()
     utils.FrontClaw.loads = 2
     utils.FrontClaw.lift()
 
@@ -134,22 +134,27 @@ class DepositEnergy:
         self.mustDumpBlue = (utils.FrontClaw.loads == 2 and self.requirements[0] == utils.BlockColor.FRONT)
 
     def __returnToNeutralPoint(self):
+        #TODO: Return to neutral point.
         pass
 
     @staticmethod
     def __getGreenClaw(count: int):
+        #TODO: Get green claw
         pass
 
     @staticmethod
     def __getBlueClaw(count: int):
+        #TODO: Get blue claw
         pass
 
     @staticmethod
     def __getFrontStore(count: int):
+        #TODO: Get front storage
         pass
 
     @staticmethod
     def __getRearStore(count: int):
+        #TODO: Get rear storage
         pass
 
     def run(self):
