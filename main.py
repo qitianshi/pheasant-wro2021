@@ -88,8 +88,8 @@ def partialRunStartupProcedure():
     # Run variables
     # utils.RunLogic.undercarriageStorage = []
     utils.RunLogic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
-                             utils.DepositPoint.TOP_HOUSE: [utils.BlockColor.BLUE, utils.BlockColor.BLUE],
-                             utils.DepositPoint.RIGHT_HOUSE: []}
+                             utils.DepositPoint.TOP_HOUSE: [],
+                             utils.DepositPoint.RIGHT_HOUSE: [utils.BlockColor.GREEN, utils.BlockColor.GREEN]}
 
 def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stopCondition, thenHoldMotors: bool):
 
@@ -553,7 +553,7 @@ partialRunStartupProcedure()
 # collectBlueEnergy()
 # scanBlocksAtTopHouse()
 
-DepositEnergy(utils.DepositPoint.TOP_HOUSE, 0).run()
+DepositEnergy(utils.DepositPoint.RIGHT_HOUSE, 0).run()
 
 while True:
     wait(10000000)
