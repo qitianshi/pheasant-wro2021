@@ -168,42 +168,36 @@ class DepositEnergy:
         if self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.FRONT]:
 
             self.__getBlueClaw(1)
-            self.__returnToNeutralPoint()
             self.__getFrontStore(1)
 
         elif self.requirements == [utils.BlockColor.GREEN, utils.BlockColor.REAR]:
 
             #TODO: Turn robot
             self.__getGreenClaw(1)
-            self.__returnToNeutralPoint()
             self.__getRearStore(1)
 
         elif self.requirements == [utils.BlockColor.FRONT, utils.BlockColor.REAR]:
 
             self.__getFrontStore(1)
             #TODO: Turn robot
-            self.__returnToNeutralPoint()
             self.__getRearStore(1)
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.GREEN]:
 
             self.__getBlueClaw(1)
             #TODO: Turn robot
-            self.__returnToNeutralPoint()
             self.__getGreenClaw(1)
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.REAR]:
 
             self.__getBlueClaw(1)
             #TODO: Turn robot
-            self.__returnToNeutralPoint()
             self.__getRearStore(1)
 
         elif self.requirements == [utils.BlockColor.FRONT, utils.BlockColor.GREEN]:
 
             self.__getGreenClaw(1)
             #TODO: Turn robot
-            self.__returnToNeutralPoint()
             self.__getFrontStore(1)
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.BLUE]:
@@ -223,8 +217,6 @@ class DepositEnergy:
 
             #TODO: Turn robot
             self.__getRearStore(2)
-
-        self.__returnToNeutralPoint()
 
         if self.mustDumpBlue:
             #TODO: Recollect dumped blue.
