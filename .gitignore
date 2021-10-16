@@ -1,5 +1,5 @@
 # Pheasant-specific files
-run.py
+/run.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
