@@ -71,7 +71,7 @@ def partialRunStartupProcedure():
 
     print("-" * 10, "Begin partialRunStartupProcedure", sep='\n')
 
-    # Delay for claw loading
+    # Delay for manual claw loading
     utils.FrontClaw.lift()
     utils.RearClaw.lift()
     wait(10000)
@@ -149,21 +149,23 @@ class DepositEnergy:
         self.currentlyFacing = self.__class__.FacingDirection.TOWARDS
         self.mustDumpBlue = (utils.FrontClaw.loads == 2 and self.requirements[0] == utils.BlockColor.FRONT)
 
+        DRIVE_BASE.reset_angle()
+
     def __returnToNeutralPoint(self):
 
         if self.currentlyFacing == self.__class__.FacingDirection.TOWARDS:
-
             ev3pid.GyroStraight(-200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() < 0)
             DRIVE_BASE.hold()
 
         else:
-
-            #TODO: Implement this case.
-            pass
+            ev3pid.GyroStraight(200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() > 0)
+            DRIVE_BASE.hold()
 
     def __turnAround(self):
 
         if self.currentlyFacing == self.__class__.FacingDirection.TOWARDS:
+
+            DRIVE_BASE.run_angle(-200, 120)
 
             ev3pid.GyroTurn(self.gyroAngle + 90, True, False).run()
             ev3pid.GyroTurn(self.gyroAngle + 180, False, True).run()
@@ -171,10 +173,11 @@ class DepositEnergy:
             self.gyroAngle += 180
             self.currentlyFacing = self.__class__.FacingDirection.AWAY
 
-            DRIVE_BASE.run_angle(200, 150)
             DRIVE_BASE.reset_angle()
 
-        else:
+        else:   # .AWAY
+
+            DRIVE_BASE.run_angle(200, 120)
 
             ev3pid.GyroTurn(self.gyroAngle - 90, True, False).run()
             ev3pid.GyroTurn(self.gyroAngle - 180, False, True).run()
@@ -182,18 +185,28 @@ class DepositEnergy:
             self.gyroAngle -= 180
             self.currentlyFacing = self.__class__.FacingDirection.TOWARDS
 
-            DRIVE_BASE.run_angle(-200, 150)
             DRIVE_BASE.reset_angle()
 
     def __getGreenClaw(self, count: int):
-        #TODO: Get green claw
-        pass
+
+        ev3pid.GyroStraight(-200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() <= -200)
+        DRIVE_BASE.hold()
+        utils.RearClaw.drop()
+        wait(500)
+
+        if count == 1 and utils.RearClaw.loads == 2:
+            DRIVE_BASE.run_angle(100, 40)
+            utils.RearClaw.closeGate()
+
+        self.__returnToNeutralPoint()
+        utils.RearClaw.closeGate()
 
     def __getBlueClaw(self, count: int):
 
         ev3pid.GyroStraight(200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 200)
         DRIVE_BASE.hold()
         utils.FrontClaw.drop()
+        wait(500)
 
         if count == 1 and utils.FrontClaw.loads == 2:
             DRIVE_BASE.run_angle(-100, 40)
@@ -271,10 +284,7 @@ class DepositEnergy:
             self.__getBlueClaw(2)
 
         elif self.requirements == [utils.BlockColor.GREEN, utils.BlockColor.GREEN]:
-
-            #TODO: Not tested
-
-            #TODO: Turn robot
+            self.__turnAround()
             self.__getGreenClaw(2)
 
         elif self.requirements == [utils.BlockColor.FRONT, utils.BlockColor.FRONT]:
@@ -293,6 +303,8 @@ class DepositEnergy:
         if self.mustDumpBlue:
             #TODO: Recollect dumped blue.
             pass
+
+        DRIVE_BASE.reset_angle()
 
         print("Deposit complete.")
 
