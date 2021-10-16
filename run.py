@@ -6,6 +6,9 @@
 
 # Executes robot run.
 
+# Only major changes to this file should be tracked by Git; minor changes for testing should not.
+# To pause tracking, run `git update-index --skip-worktree run.py`.
+
 
 from main import *                                              #pylint: disable=wildcard-import, unused-wildcard-import
 
