@@ -71,6 +71,11 @@ def partialRunStartupProcedure():
 
     print("-" * 10, "Begin partialRunStartupProcedure", sep='\n')
 
+    # Delay for claw loading
+    utils.FrontClaw.lift()
+    utils.RearClaw.lift()
+    wait(10000)
+
     # Claws
     utils.RearClaw.loads = 2
     utils.RearClaw.closeGate()
