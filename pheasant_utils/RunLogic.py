@@ -35,7 +35,7 @@ class BlockColor:
 
 class RunLogic:
 
-    # Robot undercarriage storage
+    # Robot undercarriage storage, from rear to front
     undercarriageStorage = [BlockColor.YELLOW, BlockColor.YELLOW, BlockColor.SURPLUS, BlockColor.SURPLUS]
 
     # Run randomization
