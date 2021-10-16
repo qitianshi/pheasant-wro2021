@@ -128,10 +128,14 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 class DepositEnergy:
 
     """
-    Used at houses and storage battery to drop energy blocks.
+    Procedures for depositing energy blocks.
 
     ## Discussion
-    Ensure `FrontClaw` position is set to `lift` and `RearClaw` is set to `closeGate`.
+    Before the procedure, ensure that `FrontClaw` position is set to `lift` and `RearClaw` is set to `closeGate`; ensure
+    that robot is at accetaple neutral point.
+
+    Following the procedure, backtrack to safe distance and gyro turn to the original angle or align to known direction.
+    DRIVE_BASE will be reset during the procedure.
     """
 
     class FacingDirection:
