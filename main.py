@@ -122,6 +122,13 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
 class DepositEnergy:
 
+    """
+    Used at houses and storage battery to drop energy blocks.
+
+    ## Discussion
+    Ensure `FrontClaw` position is set to `lift` and `RearClaw` is set to `closeGate`.
+    """
+
     class FacingDirection:
         TOWARDS = hash("TOWARDS")                 #HACK: enum workaround
         AWAY = hash("AWAY")
@@ -158,6 +165,8 @@ class DepositEnergy:
         pass
 
     def run(self):
+
+        print("Depositing:", self.requirements)
 
         # The robot must dump its front claw first.
         if self.mustDumpBlue:
@@ -241,6 +250,8 @@ class DepositEnergy:
         if self.mustDumpBlue:
             #TODO: Recollect dumped blue.
             pass
+
+        print("Deposit complete.")
 
 #endregion
 
