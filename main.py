@@ -157,6 +157,30 @@ class DepositEnergy:
             #TODO: Implement this case.
             pass
 
+    def __turnAround(self):
+
+        if self.currentlyFacing == self.__class__.FacingDirection.TOWARDS:
+
+            ev3pid.GyroTurn(self.gyroAngle + 90, True, False).run()
+            ev3pid.GyroTurn(self.gyroAngle + 180, False, True).run()
+
+            self.gyroAngle += 180
+            self.currentlyFacing = self.__class__.FacingDirection.AWAY
+
+            DRIVE_BASE.run_angle(200, 150)
+            DRIVE_BASE.reset_angle()
+
+        else:
+
+            ev3pid.GyroTurn(self.gyroAngle - 90, True, False).run()
+            ev3pid.GyroTurn(self.gyroAngle - 180, False, True).run()
+
+            self.gyroAngle -= 180
+            self.currentlyFacing = self.__class__.FacingDirection.TOWARDS
+
+            DRIVE_BASE.run_angle(-200, 150)
+            DRIVE_BASE.reset_angle()
+
     def __getGreenClaw(self, count: int):
         #TODO: Get green claw
         pass
