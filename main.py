@@ -104,10 +104,12 @@ class DepositEnergy:
 
     ## Discussion
     Before the procedure, ensure that `FrontClaw` position is set to `lift` and `RearClaw` is set to `closeGate`; ensure
-    that robot is at accetaple neutral point.
+    that the robot is at an accetaple neutral point; and ensure that pheasant_utils.RunLogic stores the correct values.
 
-    Following the procedure, backtrack to safe distance and gyro turn to the original angle or align to known direction.
-    DRIVE_BASE will be reset during the procedure.
+    The robot may rotate up to 360 deg in either direction. Following the procedure, backtrack to a safe position, and
+    gyro turn to the original angle or align to some known direction to reset the gyro.
+
+    DRIVE_BASE will be reset during the procedure. Gyro angle will not.
     """
 
     class FacingDirection:
