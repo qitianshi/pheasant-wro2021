@@ -51,14 +51,6 @@ utils.RearClaw.MOTOR = Motor(Port.D, positive_direction=Direction.COUNTERCLOCKWI
 utils.RearClaw.MOTOR.reset_angle(utils.RearClaw.ANGLE_RANGE)
 utils.SideScan.sensor = Ev3devSensor(Port.S1)
 
-# Preflight checks
-if BRICK.battery.voltage() < 7750:      # In millivolts.
-
-    print("Low battery.")
-
-    from sys import exit                                                              #pylint: disable=redefined-builtin
-    exit()
-
 #endregion
 
 #region Procedures
