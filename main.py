@@ -192,6 +192,7 @@ class DepositEnergy:
     def __getFrontStore(self, count: int):
 
         #FIXME: Doesn't work with any blocks on the front claw.
+        #FIXME: Doesn't work with wall.
 
         # Block distance: -45 deg
         # Claw distance: -70 deg
