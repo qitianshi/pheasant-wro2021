@@ -191,6 +191,8 @@ class DepositEnergy:
 
     def __getFrontStore(self, count: int):
 
+        #FIXME: Doesn't work with any blocks on the front claw.
+
         # Block distance: -45 deg
         # Claw distance: -70 deg
 
@@ -219,16 +221,16 @@ class DepositEnergy:
         wait(200)
         utils.FrontClaw.openGate()
 
-        # Secures subsequent blocks
-        ev3pid.GyroStraight(-150, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() <= 225)
-        DRIVE_BASE.hold()
-        wait(200)
-        utils.FrontClaw.closeGate()
+        # # Secures subsequent blocks
+        # ev3pid.GyroStraight(-150, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() <= 225)
+        # DRIVE_BASE.hold()
+        # wait(200)
+        # utils.FrontClaw.closeGate()
 
-        for _ in range(count):
-            utils.RunLogic.undercarriageStorage.pop()
+        # for _ in range(count):
+        #     utils.RunLogic.undercarriageStorage.pop()
 
-        self.__returnToNeutralPoint()
+        # self.__returnToNeutralPoint()
 
     def __getRearStore(self, count: int):
         #TODO: Get rear storage
