@@ -190,8 +190,45 @@ class DepositEnergy:
         utils.FrontClaw.lift()
 
     def __getFrontStore(self, count: int):
-        #TODO: Get front storage
-        pass
+
+        # Block distance: -45 deg
+        # Claw distance: -70 deg
+
+        gyroStraightBackwardsToGrabBlocks = ev3pid.GyroStraight(-200, self.gyroAngle)
+
+        # Drives backwards to realign blocks in undercarriage storage.
+        utils.FrontClaw.closeGate()
+        totalBackDist = -48 * (5 - len(utils.RunLogic.undercarriageStorage))
+        gyroStraightBackwardsToGrabBlocks.runUntil(lambda: DRIVE_BASE.angle() < totalBackDist)
+        DRIVE_BASE.hold()
+        wait(100)
+        DRIVE_BASE.run_angle(100, 10)
+
+        # Drives backwards and grabs blocks.
+        utils.FrontClaw.openGate()
+        totalBackDist += -70 - 45 * (count - 1)
+        gyroStraightBackwardsToGrabBlocks.speed = -100
+        gyroStraightBackwardsToGrabBlocks.runUntil(lambda: DRIVE_BASE.angle() < totalBackDist)
+        DRIVE_BASE.hold()
+        wait(200)
+        utils.FrontClaw.goTo(0.57)
+
+        # Deposits blocks
+        ev3pid.GyroStraight(400, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 275)
+        DRIVE_BASE.hold()
+        wait(200)
+        utils.FrontClaw.openGate()
+
+        # Secures subsequent blocks
+        ev3pid.GyroStraight(-150, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() <= 225)
+        DRIVE_BASE.hold()
+        wait(200)
+        utils.FrontClaw.closeGate()
+
+        for _ in range(count):
+            utils.RunLogic.undercarriageStorage.pop()
+
+        self.__returnToNeutralPoint()
 
     def __getRearStore(self, count: int):
         #TODO: Get rear storage
@@ -264,9 +301,6 @@ class DepositEnergy:
             self.__getGreenClaw(2)
 
         elif self.requirements == [utils.BlockColor.FRONT, utils.BlockColor.FRONT]:
-
-            #TODO: Not tested
-
             self.__getFrontStore(2)
 
         elif self.requirements == [utils.BlockColor.REAR, utils.BlockColor.REAR]:
