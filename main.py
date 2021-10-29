@@ -155,11 +155,13 @@ class DepositEnergy:
 
     def __getGreenClaw(self, count: int):
 
+        # Drives to the deposition zone.
         ev3pid.GyroStraight(-200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() <= -200)
         DRIVE_BASE.hold()
         utils.RearClaw.drop()
         wait(500)
 
+        # If only 1 of 2 blocks is needed, the robot must pick up one set of blocks.
         if count == 1 and utils.RearClaw.loads == 2:
             DRIVE_BASE.run_angle(100, 40)
             utils.RearClaw.closeGate()
@@ -171,11 +173,13 @@ class DepositEnergy:
 
     def __getBlueClaw(self, count: int):
 
+        # Drives to the deposition zone.
         ev3pid.GyroStraight(200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 200)
         DRIVE_BASE.hold()
         utils.FrontClaw.drop()
         wait(500)
 
+        # If only 1 of 2 blocks is needed, the robot must pick up one set of blocks.
         if count == 1 and utils.FrontClaw.loads == 2:
             DRIVE_BASE.run_angle(-100, 40)
             utils.FrontClaw.lift()
@@ -194,6 +198,8 @@ class DepositEnergy:
         pass
 
     def run(self):
+
+        # Each deposit function assumes that the robot is facing the correct direction.
 
         print("Depositing:", self.requirements)
 
