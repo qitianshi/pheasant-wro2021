@@ -113,6 +113,8 @@ class DepositEnergy:
         self.requirements = utils.RunLogic.blocksAtPoint(point)
         self.gyroAngle = gyroAngle
         self.currentlyFacing = self.__class__.FacingDirection.TOWARDS
+
+        #TODO: Update mustDumpBlue condition
         self.mustDumpBlue = (utils.FrontClaw.loads == 2 and self.requirements[0] == utils.BlockColor.FRONT)
 
         DRIVE_BASE.reset_angle()
