@@ -280,7 +280,7 @@ class DepositEnergy:
 
             #TODO: Not tested
 
-            #TODO: Turn robot
+            self.__turnAround()
             self.__getGreenClaw(1)
             self.__getRearStore(1)
 
