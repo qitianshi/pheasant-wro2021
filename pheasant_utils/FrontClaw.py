@@ -32,6 +32,8 @@ class FrontClaw(Claw):
     def closeGate(cls):
         cls.goTo(0.8)
 
+    #FIXME: Retune rubberDown and rubberUp methods for two blocks on claw.
+
     @classmethod
     def rubberDown(cls):
         cls.goTo(0.85)
