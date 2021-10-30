@@ -289,7 +289,7 @@ class DepositEnergy:
             #TODO: Not tested
 
             self.__getFrontStore(1)
-            #TODO: Turn robot
+            self.__turnAround()
             self.__getRearStore(1)
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.GREEN]:
@@ -297,7 +297,7 @@ class DepositEnergy:
             #TODO: Not tested
 
             self.__getBlueClaw(1)
-            #TODO: Turn robot
+            self.__turnAround()
             self.__getGreenClaw(1)
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.REAR]:
@@ -305,7 +305,7 @@ class DepositEnergy:
             #TODO: Not tested
 
             self.__getBlueClaw(1)
-            #TODO: Turn robot
+            self.__turnAround()
             self.__getRearStore(1)
 
         elif self.requirements == [utils.BlockColor.FRONT, utils.BlockColor.GREEN]:
@@ -313,7 +313,7 @@ class DepositEnergy:
             #TODO: Not tested
 
             self.__getGreenClaw(1)
-            #TODO: Turn robot
+            self.__turnAround()
             self.__getFrontStore(1)
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.BLUE]:
