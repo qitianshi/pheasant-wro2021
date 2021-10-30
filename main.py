@@ -191,8 +191,10 @@ class DepositEnergy:
 
     def __getFrontStore(self, count: int):
 
-        #FIXME: Doesn't work with any blocks on the front claw.
-        #FIXME: Doesn't work with wall.
+        # FOR TESTING ONLY
+        count = 2
+
+        #FIXME: Doesn't work with wall at storage battery.
 
         # Block distance: -45 deg
         # Claw distance: -70 deg
@@ -200,38 +202,34 @@ class DepositEnergy:
         gyroStraightBackwardsToGrabBlocks = ev3pid.GyroStraight(-200, self.gyroAngle)
 
         # Drives backwards to realign blocks in undercarriage storage.
-        utils.FrontClaw.closeGate()
-        totalBackDist = -48 * (5 - len(utils.RunLogic.undercarriageStorage))
+        totalBackDist = -40 - 45 * (5 - len(utils.RunLogic.undercarriageStorage))
         gyroStraightBackwardsToGrabBlocks.runUntil(lambda: DRIVE_BASE.angle() < totalBackDist)
         DRIVE_BASE.hold()
         wait(100)
-        DRIVE_BASE.run_angle(100, 10)
 
         # Drives backwards and grabs blocks.
-        utils.FrontClaw.openGate()
-        totalBackDist += -70 - 45 * (count - 1)
+        utils.FrontClaw.rubberUp()
+        totalBackDist += -75 - 45 * (count - 1)
         gyroStraightBackwardsToGrabBlocks.speed = -100
         gyroStraightBackwardsToGrabBlocks.runUntil(lambda: DRIVE_BASE.angle() < totalBackDist)
         DRIVE_BASE.hold()
-        wait(200)
-        utils.FrontClaw.goTo(0.57)
+        wait(100)
+        utils.FrontClaw.rubberDown()
 
         # Deposits blocks
         ev3pid.GyroStraight(400, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 275)
         DRIVE_BASE.hold()
-        wait(200)
-        utils.FrontClaw.openGate()
+        wait(100)
+        utils.FrontClaw.rubberUp()
 
-        # # Secures subsequent blocks
-        # ev3pid.GyroStraight(-150, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() <= 225)
-        # DRIVE_BASE.hold()
-        # wait(200)
-        # utils.FrontClaw.closeGate()
+        # Secures subsequent blocks
+        DRIVE_BASE.run_angle(-200, 100)
+        utils.FrontClaw.rubberDown()
+        self.__returnToNeutralPoint()
+        utils.FrontClaw.lift()
 
-        # for _ in range(count):
-        #     utils.RunLogic.undercarriageStorage.pop()
-
-        # self.__returnToNeutralPoint()
+        for _ in range(count):
+            utils.RunLogic.undercarriageStorage.pop()
 
     def __getRearStore(self, count: int):
         #TODO: Get rear storage
