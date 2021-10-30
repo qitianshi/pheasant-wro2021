@@ -25,5 +25,10 @@ class RearClaw(Claw):
         cls.goTo(0.31)
 
     @classmethod
+    def openGate(cls):
+        cls.MOTOR.run_target((cls.SINGLE_LOAD_SPEED if cls.loads < 2 else cls.DOUBLE_LOAD_SPEED), \
+            cls.ANGLE_RANGE * 0.65)                                  # To bypass load multiplier.
+
+    @classmethod
     def closeGate(cls):
-        cls.goTo(0.37)
+        cls.goTo(0.38)
