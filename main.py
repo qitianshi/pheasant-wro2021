@@ -191,9 +191,6 @@ class DepositEnergy:
 
     def __getFrontStore(self, count: int):
 
-        # FOR TESTING ONLY
-        count = 2
-
         #FIXME: Doesn't work with wall at storage battery.
 
         # Block distance: -45 deg
