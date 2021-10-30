@@ -165,7 +165,7 @@ class DepositEnergy:
     def __getBlueClaw(self, count: int):
 
         # Drives to the deposition zone.
-        ev3pid.GyroStraight(200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 200)
+        ev3pid.GyroStraight(200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 260)
         DRIVE_BASE.hold()
         utils.FrontClaw.drop()
         wait(500)
