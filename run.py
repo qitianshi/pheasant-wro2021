@@ -27,16 +27,13 @@ def partialRunStartupProcedure():
 
     print("-" * 10, "Begin partialRunStartupProcedure", sep='\n')
 
-    # Delay for manual claw loading
-    utils.FrontClaw.lift()
-    utils.RearClaw.lift()
-    wait(10000)
-
     # Claws
     utils.RearClaw.loads = 2
     utils.RearClaw.closeGate()
     utils.FrontClaw.loads = 2
     utils.FrontClaw.lift()
+    if utils.RearClaw.loads > 0 or utils.FrontClaw.loads > 0:            # Delay for claw loading
+        wait(10000)
 
     # Gyro
     GYRO.reset_angle(0)
