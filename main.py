@@ -231,8 +231,42 @@ class DepositEnergy:
             utils.RunLogic.undercarriageStorage.pop()
 
     def __getRearStore(self, count: int):
-        #TODO: Get rear storage
-        pass
+
+        #FIXME: Doesn't work with wall at storage battery.
+
+        # Block distance: -45 deg
+
+        gyroStraightForwardsToGrabBlocks = ev3pid.GyroStraight(175, self.gyroAngle)
+
+        # Drives forwards to realign blocks in undercarriage storage.
+        totalForwardsDist = 40 + 45 * (5 - len(utils.RunLogic.undercarriageStorage))
+        gyroStraightForwardsToGrabBlocks.runUntil(lambda: DRIVE_BASE.angle() > totalForwardsDist)
+        DRIVE_BASE.hold()
+        wait(100)
+        DRIVE_BASE.run_angle(-100, 10)
+
+        # Drives forwards and grabs blocks.
+        utils.RearClaw.openGate()
+        wait(100)
+        totalForwardsDist += 40 + 45 * (count - 1)
+        gyroStraightForwardsToGrabBlocks.speed = 100
+        gyroStraightForwardsToGrabBlocks.runUntil(lambda: DRIVE_BASE.angle() > totalForwardsDist)
+        DRIVE_BASE.hold()
+        wait(100)
+        utils.RearClaw.closeGate()
+
+        # Deposits blocks
+        ev3pid.GyroStraight(-300, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() <= -300)
+        DRIVE_BASE.hold()
+        utils.RearClaw.openGate()
+
+        # Secures subsequent blocks
+        DRIVE_BASE.run_angle(150, 50)
+        utils.RearClaw.closeGate()
+        self.__returnToNeutralPoint()
+
+        for _ in range(count):
+            utils.RunLogic.undercarriageStorage.pop(0)
 
     def run(self):
 
@@ -304,10 +338,7 @@ class DepositEnergy:
             self.__getFrontStore(2)
 
         elif self.requirements == [utils.BlockColor.REAR, utils.BlockColor.REAR]:
-
-            #TODO: Not tested
-
-            #TODO: Turn robot
+            self.__turnAround()
             self.__getRearStore(2)
 
         if self.mustDumpBlue:
