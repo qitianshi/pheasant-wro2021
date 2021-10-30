@@ -131,29 +131,18 @@ class DepositEnergy:
 
     def __turnAround(self):
 
-        if self.currentlyFacing == self.__class__.FacingDirection.TOWARDS:
+        multiplier = 1 if self.currentlyFacing == self.__class__.FacingDirection.TOWARDS else -1
 
-            DRIVE_BASE.run_angle(-200, 120)
+        DRIVE_BASE.run_angle(multiplier * 200 * -1, 120)
 
-            ev3pid.GyroTurn(self.gyroAngle + 90, True, False).run()
-            ev3pid.GyroTurn(self.gyroAngle + 180, False, True).run()
+        ev3pid.GyroTurn(self.gyroAngle + 90 * multiplier, True, False).run()
+        ev3pid.GyroTurn(self.gyroAngle + 180 * multiplier, False, True).run()
 
-            self.gyroAngle += 180
-            self.currentlyFacing = self.__class__.FacingDirection.AWAY
+        self.gyroAngle += 180 * multiplier
+        self.currentlyFacing = self.__class__.FacingDirection.AWAY if \
+            self.currentlyFacing == self.__class__.FacingDirection.TOWARDS else self.__class__.FacingDirection.TOWARDS
 
-            DRIVE_BASE.reset_angle()
-
-        else:   # .AWAY
-
-            DRIVE_BASE.run_angle(200, 120)
-
-            ev3pid.GyroTurn(self.gyroAngle - 90, True, False).run()
-            ev3pid.GyroTurn(self.gyroAngle - 180, False, True).run()
-
-            self.gyroAngle -= 180
-            self.currentlyFacing = self.__class__.FacingDirection.TOWARDS
-
-            DRIVE_BASE.reset_angle()
+        DRIVE_BASE.reset_angle()
 
     def __getGreenClaw(self, count: int):
 
