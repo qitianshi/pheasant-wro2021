@@ -27,10 +27,6 @@ class Claw:
             cls.ANGLE_RANGE * amount * (1 if amount <= cls.LIFTING_THRESHOLD else cls.LOAD_MULTIPLIER ** cls.loads))
 
     @classmethod
-    def drop(cls):
-        cls.goTo(cls.LIFTING_THRESHOLD)
-
-    @classmethod
     def maximum(cls):
         cls.goTo(0.99)
 
