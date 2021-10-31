@@ -23,6 +23,8 @@ if BRICK.battery.voltage() < 7750:      # In millivolts.
 
 def resetClaws():
 
+    print("-" * 10, "Begin resetClaws", sep='\n')
+
     FRONT_CLAW_MOTOR.dc(40)
     REAR_CLAW_MOTOR.dc(40)
     wait(3000)
