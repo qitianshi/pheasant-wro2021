@@ -25,7 +25,7 @@ def resetClaws():
 
     FRONT_CLAW_MOTOR.dc(40)
     REAR_CLAW_MOTOR.dc(40)
-    wait(300)
+    wait(3000)
 
     FRONT_CLAW_MOTOR.hold()
     REAR_CLAW_MOTOR.hold()
