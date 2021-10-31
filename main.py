@@ -135,8 +135,8 @@ class DepositEnergy:
 
         DRIVE_BASE.run_angle(multiplier * 200 * -1, 120)
 
-        ev3pid.GyroTurn(self.gyroAngle + 90 * multiplier, True, False).run()
-        ev3pid.GyroTurn(self.gyroAngle + 180 * multiplier, False, True).run()
+        ev3pid.GyroTurn(self.gyroAngle + 90 * multiplier, True, False, kp=20).run()
+        ev3pid.GyroTurn(self.gyroAngle + 180 * multiplier, False, True, kp=20).run()
 
         self.gyroAngle += 180 * multiplier
         self.currentlyFacing = self.__class__.FacingDirection.AWAY if \
