@@ -580,6 +580,8 @@ def collectBlueEnergy():
 
 def scanBlocksAtTopHouse():
 
+    print("-" * 10, "scanBlocksAtTopHouse")
+
     # Lifts claw to collect lower blue energy blocks.
     utils.FrontClaw.loads += 1
     utils.FrontClaw.lift()
