@@ -279,9 +279,6 @@ class DepositEnergy:
             self.__getRearStore(1)
 
         elif self.requirements == [utils.BlockColor.FRONT, utils.BlockColor.REAR]:
-
-            #TODO: Not tested
-
             self.__getFrontStore(1)
             self.__turnAround()
             self.__getRearStore(1)
