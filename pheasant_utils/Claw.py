@@ -10,7 +10,7 @@ from pybricks.tools import wait
 
 class Claw:
 
-    ANGLE_RANGE = None              # Use resetRaised() then resetLowered() and measure the difference in motor angle.
+    ANGLE_RANGE = None               # Use measureAngleRange() to find angle range.
     LOAD_MULTIPLIER = None
     LIFTING_THRESHOLD = None
 
@@ -29,34 +29,6 @@ class Claw:
     @classmethod
     def drop(cls):
         cls.goTo(cls.LIFTING_THRESHOLD)
-
-    @classmethod
-    def resetRaised(cls):
-
-        # Quickly goes near the maximum position.
-        cls.MOTOR.run_target(600, cls.ANGLE_RANGE - 100)
-
-        # Slowly goes to the max position.
-        cls.MOTOR.dc(40)                        # Outputs by duty cycle to bypass speed control.
-        wait(1250)
-        cls.MOTOR.hold()
-
-        wait(50)
-        cls.MOTOR.reset_angle(cls.ANGLE_RANGE)
-
-    @classmethod
-    def resetLowered(cls):
-
-        # Quickly goes near the minimum position.
-        cls.MOTOR.run_target(600, 100)
-
-        # Slowly goes to the max position.
-        cls.MOTOR.dc(-40)                       # Outputs by duty cycle to bypass speed control.
-        wait(1250)
-        cls.MOTOR.hold()
-
-        wait(50)
-        cls.MOTOR.reset_angle(0)
 
     @classmethod
     def measureAngleRange(cls, moveTime):
