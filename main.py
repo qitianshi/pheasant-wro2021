@@ -289,9 +289,6 @@ class DepositEnergy:
             self.__getGreenClaw(1)
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.REAR]:
-
-            #TODO: Not tested
-
             self.__getBlueClaw(1)
             self.__turnAround()
             self.__getRearStore(1)
