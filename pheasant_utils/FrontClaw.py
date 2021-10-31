@@ -9,9 +9,9 @@ from .Claw import Claw
 
 class FrontClaw(Claw):
 
-    ANGLE_RANGE = 1224
-    LOAD_MULTIPLIER = 1.05
-    LIFTING_THRESHOLD = 0.78
+    ANGLE_RANGE = 1030
+    LOAD_MULTIPLIER = 1.045
+    LIFTING_THRESHOLD = 0.79
 
     SINGLE_LOAD_SPEED = 900
     DOUBLE_LOAD_SPEED = 700
@@ -22,17 +22,15 @@ class FrontClaw(Claw):
 
     @classmethod
     def collect(cls):
-        cls.goTo(0.8)
+        cls.goTo(0.77)
 
     @classmethod
     def openGate(cls):
-        cls.goTo(0.2)
+        cls.goTo(0.07)
 
     @classmethod
     def closeGate(cls):
         cls.goTo(0.8)
-
-    #FIXME: Retune rubberDown and rubberUp methods for two blocks on claw.
 
     @classmethod
     def rubberDown(cls):
