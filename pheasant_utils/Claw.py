@@ -57,3 +57,34 @@ class Claw:
 
         wait(50)
         cls.MOTOR.reset_angle(0)
+
+    @classmethod
+    def measureAngleRange(cls, moveTime):
+
+        """
+        Measures the ANGLE_RANGE of the claw (for testing only).
+        """
+
+        print("-" * 10, "Begin measureAngleRange", sep='\n')
+
+        results = []
+        print("Full results:", end=' ')
+
+        for _ in range(10):
+
+            cls.MOTOR.dc(-40)
+            wait(moveTime)
+            cls.MOTOR.hold()
+            wait(1000)
+
+            cls.MOTOR.reset_angle(0)
+
+            cls.MOTOR.dc(40)
+            wait(moveTime)
+            cls.MOTOR.hold()
+            wait(1000)
+
+            results.append(cls.MOTOR.angle())
+            print(results[-1], end=' ')
+
+        print("\nAverage:", sum(results) / 10)
