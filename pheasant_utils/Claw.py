@@ -41,8 +41,6 @@ class Claw:
         Measures the ANGLE_RANGE of the claw (for testing only).
         """
 
-        print("-" * 10, "Begin measureAngleRange", sep='\n')
-
         results = []
         print("Full results:", end=' ')
 
