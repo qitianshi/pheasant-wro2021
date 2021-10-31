@@ -21,17 +21,6 @@ if BRICK.battery.voltage() < 7750:      # In millivolts.
     from sys import exit                                                             # pylint: disable=redefined-builtin
     exit()
 
-def resetClaws():
-
-    print("-" * 10, "Begin resetClaws", sep='\n')
-
-    FRONT_CLAW_MOTOR.dc(40)
-    REAR_CLAW_MOTOR.dc(40)
-    wait(3000)
-
-    FRONT_CLAW_MOTOR.hold()
-    REAR_CLAW_MOTOR.hold()
-
 # To initialize hardware and run variables when the robot starts from a save point on the field instead of the start
 # zone. Comment out the call to this function if running from the start zone.
 def partialRunStartupProcedure():
@@ -54,8 +43,6 @@ def partialRunStartupProcedure():
     utils.RunLogic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
                              utils.DepositPoint.TOP_HOUSE: [],
                              utils.DepositPoint.RIGHT_HOUSE: []}
-
-# resetClaws()
 
 # partialRunStartupProcedure()
 
