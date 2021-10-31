@@ -396,7 +396,7 @@ def rotateSolarPanels():
     ev3pid.GyroTurn(0, True, True).run()
 
     # Rotates solar panels.
-    utils.RearClaw.resetLowered()
+    utils.RearClaw.minimum()
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(-100, 0).runUntil(lambda: DRIVE_BASE.angle() < -120)
     ev3pid.GyroTurn(5, True, True).run()
@@ -404,7 +404,7 @@ def rotateSolarPanels():
     ev3pid.GyroTurn(-5, True, True).run()
     wait(10)
     ev3pid.GyroTurn(0, True, True).run()
-    utils.RearClaw.resetRaised()
+    utils.RearClaw.maximum()
 
     # Returns to line.
     ev3pid.GyroStraight(-300, -180).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == \
@@ -430,7 +430,7 @@ def collectYellowRightEnergy():
     DRIVE_BASE.hold()
 
     # Turns and collects.
-    utils.FrontClaw.resetRaised()
+    utils.FrontClaw.maximum()
     ev3pid.GyroTurn(-180, True, True, kp=9).run()
     DRIVE_BASE.hold()
     wait(50)

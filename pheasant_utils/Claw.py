@@ -31,6 +31,14 @@ class Claw:
         cls.goTo(cls.LIFTING_THRESHOLD)
 
     @classmethod
+    def maximum(cls):
+        cls.goTo(0.99)
+
+    @classmethod
+    def minimum(cls):
+        cls.goTo(0.01)
+
+    @classmethod
     def measureAngleRange(cls, moveTime):
 
         """
