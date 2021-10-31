@@ -326,7 +326,7 @@ class DepositEnergy:
 
 def moveToLeftHouse():
 
-    print("-" * 10, "Begin moveForwardTillGreenThenTurn", sep='\n')
+    print("-" * 10, "moveForwardTillGreenThenTurn")
 
     # Moves forward until robot reaches the green area.
     ev3pid.GyroStraight(800, 0).runUntil(lambda: DRIVE_BASE.angle() > 360)
@@ -340,14 +340,14 @@ def moveToLeftHouse():
 
 def scanBlocksAtLeftHouse():
 
-    print("-" * 10, "Begin scanBlocksAtLeftHouse", sep='\n')
+    print("-" * 10, "scanBlocksAtLeftHouse")
 
     scanHouseBlocksProcedure(utils.DepositPoint.LEFT_HOUSE, 90, \
                              lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, False)
 
 def collectYellowSurplusAndLeftEnergy():
 
-    print("-" * 10, "Begin collectYellowSurplusAndLeftEnergy", sep='\n')
+    print("-" * 10, "collectYellowSurplusAndLeftEnergy")
 
     # Drives forward to align with blocks.
     DRIVE_BASE.reset_angle()
@@ -376,7 +376,7 @@ def collectYellowSurplusAndLeftEnergy():
 
 def rotateSolarPanels():
 
-    print("-" * 10, "Begin rotateSolarPanels", sep='\n')
+    print("-" * 10, "rotateSolarPanels")
 
     # Turns to align to black line for line tracking.
     DRIVE_BASE.reset_angle()
@@ -413,7 +413,7 @@ def rotateSolarPanels():
 
 def collectYellowRightEnergy():
 
-    print("-" * 10, "Begin collectYellowRightEnergy", sep='\n')
+    print("-" * 10, "collectYellowRightEnergy")
 
     # Turns to align to black line for line tracking.
     DRIVE_BASE.reset_angle()
@@ -446,7 +446,7 @@ def collectYellowRightEnergy():
 
 def collectGreenSurplus():
 
-    print("-" * 10, "Begin collectGreenSurplus", sep='\n')
+    print("-" * 10, "collectGreenSurplus")
 
     # Turns to point side sensor at surplus green blocks.
     for _ in range(2):      # Performs turn twice to ensure accuracy.
@@ -471,7 +471,7 @@ def collectGreenSurplus():
 
 def collectGreenEnergy():
 
-    print("-" * 10, "Begin collectGreenEnergy", sep='\n')
+    print("-" * 10,  "collectGreenEnergy")
 
     def driveBackAndCollectGreenBlocks(moveBackDegrees):
 
@@ -519,7 +519,7 @@ def collectGreenEnergy():
 
 def collectBlueSurplus():
 
-    print("-" * 10, "Begin collectBlueSurplus", sep='\n')
+    print("-" * 10, "collectBlueSurplus")
 
     # Travels to blue area.
     DRIVE_BASE.reset_angle()
@@ -556,7 +556,7 @@ def collectBlueSurplus():
 
 def collectBlueEnergy():
 
-    print("-" * 10, "Begin collectBlueEnergy", sep='\n')
+    print("-" * 10, "collectBlueEnergy")
 
     # Lifts claw to collect upper blue energy blocks.
     utils.FrontClaw.loads += 1

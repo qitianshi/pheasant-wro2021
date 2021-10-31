@@ -25,7 +25,7 @@ if BRICK.battery.voltage() < 7750:      # In millivolts.
 # zone. Comment out the call to this function if running from the start zone.
 def partialRunStartupProcedure():
 
-    print("-" * 10, "Begin partialRunStartupProcedure", sep='\n')
+    print("-" * 10, "partialRunStartupProcedure")
 
     # Claws
     utils.RearClaw.loads = 2
