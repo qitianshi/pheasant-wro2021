@@ -270,9 +270,6 @@ class DepositEnergy:
             pass
 
         if self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.FRONT]:
-
-            #TODO: Not tested
-
             self.__getBlueClaw(1)
             self.__getFrontStore(1)
 
