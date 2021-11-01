@@ -44,19 +44,23 @@ class RunLogic:
     @classmethod
     def blocksAtPoint(cls, point: DepositPoint):
 
+        #FIXME: Unrequested color and surplus color are interchangeable for the single-color house and the storage
+        #       battery. Logic should determine the best arrangement.
+
         if point == DepositPoint.STORAGE_BATTERY:
 
             flattenedHouses = (color for house in cls.houses.values() for color in house)
-            missingColor = None
+            unrequestedColor = None
             for i in (BlockColor.BLUE, BlockColor.YELLOW, BlockColor.GREEN):
                 if flattenedHouses.count(i) == 1:
-                    missingColor = i
+                    unrequestedColor = i
                     break
 
-            return sorted([BlockColor.SURPLUS, missingColor])
+            return sorted([BlockColor.SURPLUS, unrequestedColor])
 
         elif len(cls.houses[point]) == 2:
             return sorted(cls.houses[point])
+
         else:
             return sorted(cls.houses[point].append(BlockColor.SURPLUS))
 
