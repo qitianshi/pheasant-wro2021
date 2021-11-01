@@ -18,7 +18,7 @@ if BRICK.battery.voltage() < 7750:      # In millivolts.
 
     print("Low battery.")
 
-    from sys import exit                                                             # pylint: disable=redefined-builtin
+    from sys import exit                                                              #pylint: disable=redefined-builtin
     exit()
 
 # To initialize hardware and run variables when the robot starts from a save point on the field instead of the start
