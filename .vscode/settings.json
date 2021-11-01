@@ -14,7 +14,6 @@
 		"test_*.py"
 	],
 	"python.testing.pytestEnabled": false,
-	"python.testing.nosetestsEnabled": false,
 	"python.testing.unittestEnabled": true,
 	"ev3devBrowser.download.exclude": "{**/.*,env/*,**/__pycache__/*,pheasant_tests/*,requirements.txt}"
 }
