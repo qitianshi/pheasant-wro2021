@@ -41,10 +41,13 @@ class Claw:
         Measures the ANGLE_RANGE of the claw (for testing only).
         """
 
+        #FIXME: The motor occasionally fails to move for an unknown reason. A workaround is currently implemented to
+        #       skip erroneous results.
+
         results = []
         print("Full results:", end=' ')
 
-        for _ in range(10):
+        while len(results) < 10:
 
             cls.MOTOR.dc(-40)
             wait(moveTime)
@@ -58,7 +61,9 @@ class Claw:
             cls.MOTOR.hold()
             wait(1000)
 
-            results.append(cls.MOTOR.angle())
-            print(results[-1], end=' ')
+            angle = cls.MOTOR.angle()
+            if angle != 0:                      # Skips erroneous results (see fixme above).
+                results.append(angle)
+                print(results[-1], end=' ')
 
-        print("\nAverage:", sum(results) / 10)
+        print("\nAverage:", sum(results) / len(results))
