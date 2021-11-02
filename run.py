@@ -26,7 +26,7 @@ def preflightChecks():
 def partialRunStartupProcedure():
 
     """
-    Initializes hardware and run variables when the robot starts from a save point instead of the start zone.
+    For initializing hardware and run variables when the robot starts from a save point instead of the start zone.
     """
 
     print("-" * 10, "partialRunStartupProcedure")
