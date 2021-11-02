@@ -89,7 +89,7 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
     print("House colors:", utils.RunLogic.houses[thisHouse])       #FIXME: Prints numbers; implement str representation.
 
-def gyroStraightToBlackLineWithSensorCheck(speed: int, gyroAngle: int):
+def gyroStraightToBlackLineWithSensorCheckProcedure(speed: int, gyroAngle: int):
 
     # Checks which sensors can be used to find the black line.
     useLeftSensor = LEFT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)       # Checks that sensor is not over
@@ -642,7 +642,7 @@ def depositBlocksAtTopHouse():
 
     ev3pid.GyroTurn(720, True, True).run()
 
-    gyroStraightToBlackLineWithSensorCheck(300, 720)
+    gyroStraightToBlackLineWithSensorCheckProcedure(300, 720)
     wait(100)
 
 def depositBlocksAtStorageBattery():
@@ -656,7 +656,7 @@ def depositBlocksAtStorageBattery():
 
     EnergyBlockDeposition(utils.DepositPoint.STORAGE_BATTERY, 720).run()
 
-    gyroStraightToBlackLineWithSensorCheck(300, 720)
+    gyroStraightToBlackLineWithSensorCheckProcedure(300, 720)
     wait(100)
 
 def depositBlocksAtRightHouse():
