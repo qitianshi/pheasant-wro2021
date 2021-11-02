@@ -679,4 +679,8 @@ def depositBlocksAtRightHouse():
 
     gyroStraightToBlackLineWithSensorCheckProcedure(-300, 720)
 
+def depositBlocksAtLeftHouse():
+
+    print("-" * 10, "depositBlocksAtLeftHouse")
+
 #endregion

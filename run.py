@@ -59,5 +59,6 @@ scanBlocksAtTopHouse()
 depositBlocksAtTopHouse()
 depositBlocksAtStorageBattery()
 depositBlocksAtRightHouse()
+depositBlocksAtLeftHouse()
 
 wait(1000)
