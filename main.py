@@ -666,4 +666,17 @@ def depositBlocksAtRightHouse():
 
     print("-" * 10, "depositBlocksAtRightHouse")
 
+    # Turns and tracks the black line to the right house.
+    ev3pid.GyroTurn(630, False, True).run()
+    ev3pid.LineTrack(400, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
+    DRIVE_BASE.hold()
+
+    # Moves to neutral position for block deposition.
+    ev3pid.GyroTurn(720, True, False).run()
+    gyroStraightToBlackLineWithSensorCheckProcedure(-300, 720)
+
+    EnergyBlockDeposition(utils.DepositPoint.RIGHT_HOUSE, 720).run()
+
+    gyroStraightToBlackLineWithSensorCheckProcedure(-300, 720)
+
 #endregion
