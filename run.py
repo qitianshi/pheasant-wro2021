@@ -6,7 +6,8 @@
 
 # Executes robot run.
 
-# Only major changes to this file should be tracked by Git; minor changes for testing should not.
+# Only major changes to this file should be tracked by Git; minor changes for testing should not. Committed versions
+# must always run the entire program in full.
 # To pause tracking, run `git update-index --skip-worktree run.py`.
 # To resume, run `git update-index --no-skip-worktree run.py`.
 
