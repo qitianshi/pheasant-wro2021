@@ -48,9 +48,23 @@ def partialRunStartupProcedure():
                              utils.DepositPoint.TOP_HOUSE: [],
                              utils.DepositPoint.RIGHT_HOUSE: []}
 
+def waitForButtonPress():
+
+    from pybricks.parameters import Button                                      #pylint: disable=import-outside-toplevel
+
+    while not BRICK.buttons.pressed():
+        wait(100)
+
+    while BRICK.buttons.pressed():
+        wait(100)
+
+    wait(500)
+
 preflightChecks()
 
 # partialRunStartupProcedure()
+
+waitForButtonPress()
 
 moveToLeftHouse()
 scanBlocksAtLeftHouse()
