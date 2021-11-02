@@ -28,11 +28,11 @@ class Claw:
 
     @classmethod
     def maximum(cls):
-        cls.goTo(0.99)
+        cls.MOTOR.dc(50)
 
     @classmethod
     def minimum(cls):
-        cls.goTo(0.01)
+        cls.MOTOR.dc(-50)
 
     @classmethod
     def measureAngleRange(cls, moveTime):
