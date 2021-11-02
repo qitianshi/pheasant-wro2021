@@ -48,3 +48,7 @@ class TwoWheelDrive(DoubleMotorBase):
     def run_target(self, speed, target_angle, then=Stop.HOLD, wait=True):
         self.leftMotor.run_target(speed, target_angle, then=then, wait=False)
         self.rightMotor.run_target(speed, target_angle, then=then, wait=wait)
+
+    def dc(self, duty):
+        self.leftMotor.dc(duty)
+        self.rightMotor.dc(duty)
