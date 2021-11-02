@@ -704,4 +704,16 @@ def returnToBase():
 
     print("-" * 10, "returnToBase")
 
+    utils.FrontClaw.maximum()
+    utils.RearClaw.maximum()
+
+    # Returns to base.
+    DRIVE_BASE.dc(-100)
+    wait(1500)
+    DRIVE_BASE.hold()
+    ev3pid.GyroTurn(630, False, True).run()
+    DRIVE_BASE.dc(-100)
+    wait(1000)
+    DRIVE_BASE.hold()
+
 #endregion
