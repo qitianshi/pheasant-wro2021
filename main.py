@@ -89,6 +89,19 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
     print("House colors:", utils.RunLogic.houses[thisHouse])       #FIXME: Prints numbers; implement str representation.
 
+def gyroStraightToBlackLineWithSensorCheck(speed: int, gyroAngle: int):
+
+    # Checks which sensors can be used to find the black line.
+    useLeftSensor = LEFT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)       # Checks that sensor is not over
+    useRightSensor = RIGHT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)     # the black line.
+
+    #TODO: Add code to handle the case where both left and right sensors are rejected.
+
+    # Travels to the black line.
+    ev3pid.GyroStraight(speed, gyroAngle).runUntil(lambda: (useLeftSensor and LEFT_COLOR.color() == Color.BLACK) or \
+        (useRightSensor and RIGHT_COLOR.color() == Color.BLACK))
+    DRIVE_BASE.hold()
+
 class EnergyBlockDeposition:
 
     """
@@ -629,16 +642,7 @@ def depositBlocksAtTopHouse():
 
     ev3pid.GyroTurn(720, True, True).run()
 
-    # Checks which sensors can be used to find the black line.
-    useLeftSensor = LEFT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)       # Checks that sensor is not over
-    useRightSensor = RIGHT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)     # the black line.
-
-    #TODO: Add code to handle the case where both left and right sensors are rejected.
-
-    # Travels to the black line.
-    ev3pid.GyroStraight(300, 720).runUntil(lambda: (useLeftSensor and LEFT_COLOR.color() == Color.BLACK) or \
-        (useRightSensor and RIGHT_COLOR.color() == Color.BLACK))
-    DRIVE_BASE.hold()
+    gyroStraightToBlackLineWithSensorCheck(300, 720)
     wait(100)
 
 def depositBlocksAtStorageBattery():
@@ -652,16 +656,7 @@ def depositBlocksAtStorageBattery():
 
     EnergyBlockDeposition(utils.DepositPoint.STORAGE_BATTERY, 720).run()
 
-    # Checks which sensors can be used to find the black line.
-    useLeftSensor = LEFT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)       # Checks that sensor is not over
-    useRightSensor = RIGHT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)     # the black line.
-
-    #TODO: Add code to handle the case where both left and right sensors are rejected.
-
-    # Travels to the black line.
-    ev3pid.GyroStraight(300, 720).runUntil(lambda: (useLeftSensor and LEFT_COLOR.color() == Color.BLACK) or \
-        (useRightSensor and RIGHT_COLOR.color() == Color.BLACK))
-    DRIVE_BASE.hold()
+    gyroStraightToBlackLineWithSensorCheck(300, 720)
     wait(100)
 
 def depositBlocksAtRightHouse():
