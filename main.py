@@ -136,8 +136,7 @@ class EnergyBlockDeposition:
             self.requirements = [utils.BlockColor.BLUE, utils.BlockColor.BLUE]          # .BLUE, .BLUE
 
         self.gyroAngle = gyroAngle
-        self.currentlyFacing = self.__class__.FacingDirection.TOWARDS
-        self.didTurnAround = False
+        self.currentlyFacing = EnergyBlockDeposition.FacingDirection.TOWARDS
 
         self.mustDumpBlue = False           #TODO: Update mustDumpBlue condition
 
@@ -145,7 +144,7 @@ class EnergyBlockDeposition:
 
     def __returnToNeutralPoint(self):
 
-        if self.currentlyFacing == self.__class__.FacingDirection.TOWARDS:
+        if self.currentlyFacing == EnergyBlockDeposition.FacingDirection.TOWARDS:
             ev3pid.GyroStraight(-200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() < 0)
             DRIVE_BASE.hold()
 
@@ -155,7 +154,7 @@ class EnergyBlockDeposition:
 
     def __turnAround(self):
 
-        multiplier = 1 if self.currentlyFacing == self.__class__.FacingDirection.TOWARDS else -1
+        multiplier = 1 if self.currentlyFacing == EnergyBlockDeposition.FacingDirection.TOWARDS else -1
 
         DRIVE_BASE.run_angle(multiplier * 200 * -1, 120)
 
@@ -163,9 +162,9 @@ class EnergyBlockDeposition:
         ev3pid.GyroTurn(self.gyroAngle + 180 * multiplier, False, True, kp=20).run()
 
         self.gyroAngle += 180 * multiplier
-        self.currentlyFacing = self.__class__.FacingDirection.AWAY if \
-            self.currentlyFacing == self.__class__.FacingDirection.TOWARDS else self.__class__.FacingDirection.TOWARDS
-        self.didTurnAround = True
+        self.currentlyFacing = EnergyBlockDeposition.FacingDirection.AWAY if \
+            self.currentlyFacing == EnergyBlockDeposition.FacingDirection.TOWARDS else \
+            EnergyBlockDeposition.FacingDirection.TOWARDS
 
         DRIVE_BASE.reset_angle()
 
@@ -346,7 +345,7 @@ class EnergyBlockDeposition:
             pass
 
         # Returns to the original orientation.
-        if self.didTurnAround:
+        if self.currentlyFacing == EnergyBlockDeposition.FacingDirection.AWAY:
             self.__turnAround()
 
         DRIVE_BASE.reset_angle()
