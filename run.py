@@ -23,9 +23,11 @@ def preflightChecks():
         from sys import exit                                 #pylint: disable=redefined-builtin, import-outside-toplevel
         exit()
 
-# To initialize hardware and run variables when the robot starts from a save point on the field instead of the start
-# zone. Comment out the call to this function if running from the start zone.
 def partialRunStartupProcedure():
+
+    """
+    Initializes hardware and run variables when the robot starts from a save point instead of the start zone.
+    """
 
     print("-" * 10, "partialRunStartupProcedure")
 
