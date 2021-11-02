@@ -13,13 +13,14 @@
 
 from main import *                                              #pylint: disable=wildcard-import, unused-wildcard-import
 
-# Preflight checks
-if BRICK.battery.voltage() < 7750:      # In millivolts.
+def preflightChecks():
 
-    print("Low battery.")
+    if BRICK.battery.voltage() < 7750:      # In millivolts.
 
-    from sys import exit                                                              #pylint: disable=redefined-builtin
-    exit()
+        print("Low battery.")
+
+        from sys import exit                                                          #pylint: disable=redefined-builtin
+        exit()
 
 # To initialize hardware and run variables when the robot starts from a save point on the field instead of the start
 # zone. Comment out the call to this function if running from the start zone.
@@ -43,6 +44,8 @@ def partialRunStartupProcedure():
     utils.RunLogic.houses = {utils.DepositPoint.LEFT_HOUSE: [],
                              utils.DepositPoint.TOP_HOUSE: [],
                              utils.DepositPoint.RIGHT_HOUSE: []}
+
+preflightChecks()
 
 # partialRunStartupProcedure()
 
