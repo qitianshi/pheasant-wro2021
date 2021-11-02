@@ -620,4 +620,24 @@ def depositBlocksAtTopHouse():
 
     print("-" * 10, "depositBlocksAtTopHouse")
 
+    # Moves to neutral position for blocks deposition.
+    DRIVE_BASE.reset_angle()
+    ev3pid.GyroStraight(300, 540).runUntil(lambda: DRIVE_BASE.angle() > 500)
+    DRIVE_BASE.hold()
+
+    DepositEnergy(utils.DepositPoint.TOP_HOUSE, 540).run()
+
+    ev3pid.GyroTurn(720, True, True).run()
+
+    # Checks which sensors can be used to find the black line.
+    useLeftSensor = LEFT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)       # Checks that sensor is not over
+    useRightSensor = RIGHT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)     # the black line.
+
+    #TODO: Add code to handle the case where both left and right sensors are rejected.
+
+    # Travels to the black line.
+    ev3pid.GyroStraight(300, 720).runUntil(lambda: (useLeftSensor and LEFT_COLOR.color() == Color.BLACK) or \
+        (useRightSensor and RIGHT_COLOR.color() == Color.BLACK))
+    DRIVE_BASE.hold()
+
 #endregion
