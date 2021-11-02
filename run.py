@@ -56,5 +56,6 @@ collectGreenEnergy()
 collectBlueSurplus()
 collectBlueEnergy()
 scanBlocksAtTopHouse()
+depositBlocksAtTopHouse()
 
 wait(1000)

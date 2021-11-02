@@ -611,4 +611,8 @@ def scanBlocksAtTopHouse():
     gyroStraightBackwardsToBlackLine.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
 
+def depositBlocksAtTopHouse():
+
+    print("-" * 10, "depositBlocksAtTopHouse")
+
 #endregion
