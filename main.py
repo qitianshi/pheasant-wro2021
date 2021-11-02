@@ -599,7 +599,16 @@ def scanBlocksAtTopHouse():
     # Turns to top house.
     ev3pid.GyroTurn(450, False, True).run()
 
-    scanHouseBlocksProcedure(utils.DepositPoint.TOP_HOUSE, 450, \
-                             lambda: LEFT_COLOR.color() != Color.BLACK and RIGHT_COLOR.color() != Color.BLACK, True)
+    scanHouseBlocksProcedure(utils.DepositPoint.TOP_HOUSE, 450,
+        lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, thenHoldMotors=True)
+
+    # Turns and aligns to proceeds to black line.
+    ev3pid.GyroTurn(540, True, True).run()
+    DRIVE_BASE.reset_angle()
+    gyroStraightBackwardsToBlackLine = ev3pid.GyroStraight(-1000, 540)
+    gyroStraightBackwardsToBlackLine.runUntil(lambda: DRIVE_BASE.angle() < -650)
+    gyroStraightBackwardsToBlackLine.speed = -200
+    gyroStraightBackwardsToBlackLine.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
+    DRIVE_BASE.hold()
 
 #endregion
