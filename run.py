@@ -28,10 +28,10 @@ def partialRunStartupProcedure():
     print("-" * 10, "partialRunStartupProcedure")
 
     # Claws
-    utils.RearClaw.loads = 2
-    utils.RearClaw.closeGate()
-    utils.FrontClaw.loads = 2
-    utils.FrontClaw.lift()
+    utils.RearClaw.loads = 0
+    # utils.RearClaw.collect()
+    utils.FrontClaw.loads = 0
+    # utils.FrontClaw.collect()
     if utils.RearClaw.loads > 0 or utils.FrontClaw.loads > 0:            # Delay for claw loading
         wait(10000)
 
