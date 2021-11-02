@@ -89,7 +89,7 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
     print("House colors:", utils.RunLogic.houses[thisHouse])       #FIXME: Prints numbers; implement str representation.
 
-class DepositEnergy:
+class EnergyBlockDeposition:
 
     """
     Procedures for depositing energy blocks.
@@ -625,7 +625,7 @@ def depositBlocksAtTopHouse():
     ev3pid.GyroStraight(300, 540).runUntil(lambda: DRIVE_BASE.angle() > 500)
     DRIVE_BASE.hold()
 
-    DepositEnergy(utils.DepositPoint.TOP_HOUSE, 540).run()
+    EnergyBlockDeposition(utils.DepositPoint.TOP_HOUSE, 540).run()
 
     ev3pid.GyroTurn(720, True, True).run()
 
