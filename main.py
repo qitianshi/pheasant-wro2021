@@ -273,6 +273,10 @@ class DepositEnergy:
 
         print("Depositing:", self.requirements)
 
+        # Resets claws.
+        utils.FrontClaw.lift()
+        utils.RearClaw.closeGate()
+
         # The robot must dump its front claw first.
         if self.mustDumpBlue:
 
