@@ -640,4 +640,8 @@ def depositBlocksAtTopHouse():
         (useRightSensor and RIGHT_COLOR.color() == Color.BLACK))
     DRIVE_BASE.hold()
 
+def depositBlocksAtStorageBattery():
+
+    print("-" * 10, "depositBlocksAtStorageBattery")
+
 #endregion
