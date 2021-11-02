@@ -620,7 +620,7 @@ def depositBlocksAtTopHouse():
 
     print("-" * 10, "depositBlocksAtTopHouse")
 
-    # Moves to neutral position for blocks deposition.
+    # Moves to neutral position for block deposition.
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(300, 540).runUntil(lambda: DRIVE_BASE.angle() > 500)
     DRIVE_BASE.hold()
