@@ -137,6 +137,7 @@ class EnergyBlockDeposition:
 
         self.gyroAngle = gyroAngle
         self.currentlyFacing = self.__class__.FacingDirection.TOWARDS
+        self.didTurnAround = False
 
         self.mustDumpBlue = False           #TODO: Update mustDumpBlue condition
 
@@ -164,6 +165,7 @@ class EnergyBlockDeposition:
         self.gyroAngle += 180 * multiplier
         self.currentlyFacing = self.__class__.FacingDirection.AWAY if \
             self.currentlyFacing == self.__class__.FacingDirection.TOWARDS else self.__class__.FacingDirection.TOWARDS
+        self.didTurnAround = True
 
         DRIVE_BASE.reset_angle()
 
@@ -342,6 +344,10 @@ class EnergyBlockDeposition:
         if self.mustDumpBlue:
             #TODO: Recollect dumped blue.
             pass
+
+        # Returns to the original orientation.
+        if self.didTurnAround:
+            self.__turnAround()
 
         DRIVE_BASE.reset_angle()
 
@@ -639,8 +645,6 @@ def depositBlocksAtTopHouse():
     DRIVE_BASE.hold()
 
     EnergyBlockDeposition(utils.DepositPoint.TOP_HOUSE, 540).run()
-
-    ev3pid.GyroTurn(720, True, True).run()
 
     gyroStraightToBlackLineWithSensorCheckProcedure(300, 720)
     wait(100)
