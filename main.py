@@ -645,4 +645,23 @@ def depositBlocksAtStorageBattery():
 
     print("-" * 10, "depositBlocksAtStorageBattery")
 
+    # Moves to neutral position for block deposition.
+    DRIVE_BASE.reset_angle()
+    ev3pid.GyroStraight(-200, 720).runUntil(lambda: DRIVE_BASE.angle() < -200)
+    DRIVE_BASE.hold()
+
+    EnergyBlockDeposition(utils.DepositPoint.STORAGE_BATTERY, 720).run()
+
+    # Checks which sensors can be used to find the black line.
+    useLeftSensor = LEFT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)       # Checks that sensor is not over
+    useRightSensor = RIGHT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)     # the black line.
+
+    #TODO: Add code to handle the case where both left and right sensors are rejected.
+
+    # Travels to the black line.
+    ev3pid.GyroStraight(300, 720).runUntil(lambda: (useLeftSensor and LEFT_COLOR.color() == Color.BLACK) or \
+        (useRightSensor and RIGHT_COLOR.color() == Color.BLACK))
+    DRIVE_BASE.hold()
+    wait(100)
+
 #endregion
