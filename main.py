@@ -610,6 +610,7 @@ def scanBlocksAtTopHouse():
     gyroStraightBackwardsToBlackLine.speed = -200
     gyroStraightBackwardsToBlackLine.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
+    wait(100)
 
 def depositBlocksAtTopHouse():
 
