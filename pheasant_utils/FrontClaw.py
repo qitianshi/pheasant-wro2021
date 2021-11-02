@@ -9,9 +9,9 @@ from .Claw import Claw
 
 class FrontClaw(Claw):
 
-    ANGLE_RANGE = 1030
-    LOAD_MULTIPLIER = 1.045
-    LIFTING_THRESHOLD = 0.8
+    ANGLE_RANGE = 950
+    LOAD_MULTIPLIER = 1.06
+    LIFTING_THRESHOLD = 0.78
 
     SINGLE_LOAD_SPEED = 900
     DOUBLE_LOAD_SPEED = 700
