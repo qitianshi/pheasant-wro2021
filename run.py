@@ -19,7 +19,7 @@ def preflightChecks():
 
         print("Low battery.")
 
-        from sys import exit                                                          #pylint: disable=redefined-builtin
+        from sys import exit                                 #pylint: disable=redefined-builtin, import-outside-toplevel
         exit()
 
 # To initialize hardware and run variables when the robot starts from a save point on the field instead of the start
