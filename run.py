@@ -58,5 +58,6 @@ collectBlueEnergy()
 scanBlocksAtTopHouse()
 depositBlocksAtTopHouse()
 depositBlocksAtStorageBattery()
+depositBlocksAtRightHouse()
 
 wait(1000)

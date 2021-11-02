@@ -664,4 +664,8 @@ def depositBlocksAtStorageBattery():
     DRIVE_BASE.hold()
     wait(100)
 
+def depositBlocksAtRightHouse():
+
+    print("-" * 10, "depositBlocksAtRightHouse")
+
 #endregion
