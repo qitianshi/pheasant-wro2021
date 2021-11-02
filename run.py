@@ -60,6 +60,8 @@ def waitForButtonPress():
 
     wait(500)
 
+#region Function calls
+
 preflightChecks()
 
 # partialRunStartupProcedure()
@@ -83,3 +85,5 @@ depositBlocksAtLeftHouse()
 returnToStartZone()
 
 wait(1000)
+
+#endregion
