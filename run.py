@@ -60,5 +60,6 @@ depositBlocksAtTopHouse()
 depositBlocksAtStorageBattery()
 depositBlocksAtRightHouse()
 depositBlocksAtLeftHouse()
+returnToBase()
 
 wait(1000)

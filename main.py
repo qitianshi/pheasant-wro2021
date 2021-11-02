@@ -700,4 +700,8 @@ def depositBlocksAtLeftHouse():
 
     EnergyBlockDeposition(utils.DepositPoint.LEFT_HOUSE, 720).run()
 
+def returnToBase():
+
+    print("-" * 10, "returnToBase")
+
 #endregion
