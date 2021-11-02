@@ -639,6 +639,7 @@ def depositBlocksAtTopHouse():
     ev3pid.GyroStraight(300, 720).runUntil(lambda: (useLeftSensor and LEFT_COLOR.color() == Color.BLACK) or \
         (useRightSensor and RIGHT_COLOR.color() == Color.BLACK))
     DRIVE_BASE.hold()
+    wait(100)
 
 def depositBlocksAtStorageBattery():
 
