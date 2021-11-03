@@ -358,7 +358,7 @@ class EnergyBlockDeposition:
 
 def scanBlocksAtLeftHouse():
 
-    print("-" * 10, "moveForwardTillGreenThenTurn")
+    print("-" * 10, "scanBlocksAtLeftHouse")
 
     # Moves forward until robot reaches the green area.
     ev3pid.GyroStraight(800, 0).runUntil(lambda: DRIVE_BASE.angle() > 360)
