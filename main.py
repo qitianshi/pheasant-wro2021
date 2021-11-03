@@ -364,7 +364,7 @@ def scanBlocksAtLeftHouse():
     gyroStraightForwardsToLeftHouse = ev3pid.GyroStraight(900, 0)
     gyroStraightForwardsToLeftHouse.runUntil(lambda: DRIVE_BASE.angle() > 720)
     gyroStraightForwardsToLeftHouse.speed = 350
-    gyroStraightForwardsToLeftHouse.runUntil(lambda: DRIVE_BASE.angle() > 965)
+    gyroStraightForwardsToLeftHouse.runUntil(lambda: DRIVE_BASE.angle() > 960)
     DRIVE_BASE.hold()
     wait(100)
 
@@ -372,9 +372,9 @@ def scanBlocksAtLeftHouse():
     ev3pid.GyroTurn(-90, False, True).run()
     DRIVE_BASE.run_time(-400, 1000)
 
-    #FIXME: Sensor occasionally detects black and stops the robot too early.
-
-    scanHouseBlocksProcedure(utils.DepositPoint.LEFT_HOUSE, -90, lambda: LEFT_COLOR.color() == Color.BLACK, False)
+    DRIVE_BASE.reset_angle()
+    scanHouseBlocksProcedure(utils.DepositPoint.LEFT_HOUSE, -90, lambda: DRIVE_BASE.angle() > 100, False)
+    ev3pid.GyroStraight(400, -90).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK)
 
 def collectYellowSurplusAndLeftEnergy():
 
