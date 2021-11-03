@@ -415,15 +415,15 @@ def rotateSolarPanels():
 
     # Turns to align to black line for line tracking.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(200, 60)
+    DRIVE_BASE.run_angle(150, 45)
     ev3pid.GyroTurn(-90, True, True).run()
 
     # Travels to solar panels.
-    ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
+    ev3pid.LineTrack(200, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.reset_angle()
-    ev3pid.LineTrack(75, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: DRIVE_BASE.angle() > 90)
+    ev3pid.LineTrack(100, ev3pid.LineEdge.RIGHT, LEFT_COLOR, kp=0.9, ki=0).runUntil(lambda: DRIVE_BASE.angle() > 77)
     DRIVE_BASE.hold()
-    wait(20)
+    wait(50)
 
     # Turns to solar panels.
     ev3pid.GyroTurn(0, True, True).run()
@@ -433,17 +433,17 @@ def rotateSolarPanels():
     # Rotates solar panels.
     utils.RearClaw.minimum()
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(-100, 0).runUntil(lambda: DRIVE_BASE.angle() < -120)
-    ev3pid.GyroTurn(5, True, True).run()
+    ev3pid.GyroStraight(-80, 0).runUntil(lambda: DRIVE_BASE.angle() < -120)
+    DRIVE_BASE.hold()
     wait(10)
-    ev3pid.GyroTurn(-5, True, True).run()
-    wait(10)
+    ev3pid.GyroTurn(3, True, True).run()
+    ev3pid.GyroTurn(-3, True, True).run()
     ev3pid.GyroTurn(0, True, True).run()
-    utils.RearClaw.maximum()
+    utils.RearClaw.closeGate()
 
     # Returns to line.
-    ev3pid.GyroStraight(-300, -180).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == \
-        Color.BLACK)
+    ev3pid.GyroStraight(-300, -180).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or \
+        RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
 
 def collectYellowRightEnergy():
