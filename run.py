@@ -50,8 +50,6 @@ def partialRunStartupProcedure():
 
 def waitForButtonPress():
 
-    from pybricks.parameters import Button                                      #pylint: disable=import-outside-toplevel
-
     while not BRICK.buttons.pressed():
         wait(100)
 
