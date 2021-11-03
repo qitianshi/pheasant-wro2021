@@ -380,7 +380,7 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Drives forward to align with blocks.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_target(150, 150)
+    DRIVE_BASE.run_target(150, 140)
     wait(100)
 
     # Turns, then aligns to black line.
