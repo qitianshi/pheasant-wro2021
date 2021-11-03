@@ -360,6 +360,9 @@ def scanBlocksAtLeftHouse():
 
     print("-" * 10, "scanBlocksAtLeftHouse")
 
+    # If speed reduction is too fast, the robot skids and the run is inconsistent. As a rule of thumb, avoid decreasing
+    # the speed to less than half of its original value each time.
+
     # Moves forward.
     gyroStraightForwardsToLeftHouse = ev3pid.GyroStraight(800, 0)
     gyroStraightForwardsToLeftHouse.runUntil(lambda: DRIVE_BASE.angle() > 720)
