@@ -372,6 +372,8 @@ def scanBlocksAtLeftHouse():
     ev3pid.GyroTurn(-90, False, True).run()
     DRIVE_BASE.run_time(-400, 1000)
 
+    #FIXME: Sensor occasionally detects black and stops the robot too early.
+
     scanHouseBlocksProcedure(utils.DepositPoint.LEFT_HOUSE, -90, lambda: LEFT_COLOR.color() == Color.BLACK, False)
 
 def collectYellowSurplusAndLeftEnergy():
