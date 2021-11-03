@@ -380,19 +380,23 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Drives forward to align with blocks.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_target(100, 170)
+    DRIVE_BASE.run_target(150, 150)
+    wait(100)
 
-    # Turns, then squares with the line.
-    ev3pid.GyroTurn(-170, False, True).run()
+    # Turns, then aligns to black line.
     ev3pid.GyroTurn(-180, False, True).run()
-    ev3pid.LineSquare(ev3pid.LinePosition.BEHIND).run()
+    ev3pid.GyroStraight(-200, -180).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or \
+        RIGHT_COLOR.color() == Color.BLACK)
+    DRIVE_BASE.hold()
+    utils.RearClaw.closeGate()
 
     # Drives forwards to collect the blocks.
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(300, -180).runUntil(lambda: DRIVE_BASE.angle() > 100)  # Move forward to get off the black line.
-    ev3pid.GyroStraight(300, -180).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
+    gyroStraightForwardsUntilLeftEnergy = ev3pid.GyroStraight(300, -180)
+    gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: DRIVE_BASE.angle() > 360)      # Moves off the black line.
+    gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(300, -180).runUntil(lambda: DRIVE_BASE.angle() > 220)
+    gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: DRIVE_BASE.angle() > 220)
     DRIVE_BASE.hold()
 
     # Lowers the front claw.
@@ -401,7 +405,7 @@ def collectYellowSurplusAndLeftEnergy():
     # Returns to the line.
     ev3pid.GyroStraight(-300, -180).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
-    wait(50)
+    wait(100)
 
 def rotateSolarPanels():
 
