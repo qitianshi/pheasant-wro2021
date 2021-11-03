@@ -366,7 +366,7 @@ def scanBlocksAtLeftHouse():
 
     # Turns around to align with blocks at left house.
     DRIVE_BASE.reset_angle(0)
-    DRIVE_BASE.run_angle(100, 30)
+    DRIVE_BASE.run_angle(100, 20)
     ev3pid.GyroTurn(-90, False, True).run()
     DRIVE_BASE.run_time(-400, 1000)
 
