@@ -703,13 +703,9 @@ def returnToStartZone():
     utils.FrontClaw.maximum()
     utils.RearClaw.maximum()
 
-    # Returns to base.
-    DRIVE_BASE.dc(-100)
-    wait(1500)
-    DRIVE_BASE.hold()
+    # Returns to the start zone.
+    DRIVE_BASE.run_time(-1000, 1000)
     ev3pid.GyroTurn(630, False, True).run()
-    DRIVE_BASE.dc(-100)
-    wait(1000)
-    DRIVE_BASE.hold()
+    DRIVE_BASE.run_time(-1000, 1000)
 
 #endregion
