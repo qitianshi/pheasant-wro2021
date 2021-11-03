@@ -382,7 +382,7 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Drives forward to align with blocks.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_target(150, 155)
+    DRIVE_BASE.run_target(150, 130)
     wait(100)
 
     # Turns, then aligns to black line.
@@ -446,7 +446,6 @@ def rotateSolarPanels():
     # Returns to line.
     ev3pid.GyroStraight(-300, -180).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or \
         RIGHT_COLOR.color() == Color.BLACK)
-    DRIVE_BASE.hold()
 
 def collectYellowRightEnergy():
 
@@ -454,7 +453,7 @@ def collectYellowRightEnergy():
 
     # Turns to align to black line for line tracking.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(200, 60)
+    DRIVE_BASE.run_angle(200, 85)
     ev3pid.GyroTurn(-90, True, True).run()
 
     # Reverses to align with vertical line.
@@ -463,7 +462,8 @@ def collectYellowRightEnergy():
     # Travels to yellow blocks.
     DRIVE_BASE.reset_angle()
     ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: DRIVE_BASE.angle() > 430)
-    ev3pid.GyroStraight(100, -90).runUntil(lambda: DRIVE_BASE.angle() > 560)
+    # ev3pid.GyroStraight(100, -90).runUntil(lambda: DRIVE_BASE.angle() > 560)
+    DRIVE_BASE.run_target(100, 560)
     DRIVE_BASE.hold()
 
     # Turns and collects.
@@ -472,7 +472,7 @@ def collectYellowRightEnergy():
     DRIVE_BASE.hold()
     wait(50)
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(300, -180).runUntil(lambda: DRIVE_BASE.angle() > 220)
+    ev3pid.GyroStraight(300, -180).runUntil(lambda: DRIVE_BASE.angle() > 120)
     DRIVE_BASE.hold()
     utils.FrontClaw.closeGate()
 
