@@ -356,7 +356,7 @@ class EnergyBlockDeposition:
 
 #region Mission run
 
-def moveToLeftHouse():
+def scanBlocksAtLeftHouse():
 
     print("-" * 10, "moveForwardTillGreenThenTurn")
 
@@ -369,10 +369,6 @@ def moveToLeftHouse():
     DRIVE_BASE.run_angle(100, 30)
     ev3pid.GyroTurn(-90, False, True).run()
     DRIVE_BASE.run_time(-400, 1000)
-
-def scanBlocksAtLeftHouse():
-
-    print("-" * 10, "scanBlocksAtLeftHouse")
 
     scanHouseBlocksProcedure(utils.DepositPoint.LEFT_HOUSE, 90, \
                              lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, False)

@@ -66,7 +66,6 @@ preflightChecks()
 
 waitForButtonPress()
 
-moveToLeftHouse()
 scanBlocksAtLeftHouse()
 collectYellowSurplusAndLeftEnergy()
 rotateSolarPanels()
