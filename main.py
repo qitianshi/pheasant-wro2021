@@ -416,8 +416,6 @@ def rotateSolarPanels():
     DRIVE_BASE.run_angle(200, 60)
     ev3pid.GyroTurn(-90, True, True).run()
 
-    wait(100000)
-
     # Travels to solar panels.
     ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.reset_angle()
