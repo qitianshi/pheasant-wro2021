@@ -360,14 +360,17 @@ def scanBlocksAtLeftHouse():
 
     print("-" * 10, "scanBlocksAtLeftHouse")
 
-    # Moves forward until robot reaches the green area.
-    ev3pid.GyroStraight(900, 0).runUntil(lambda: DRIVE_BASE.angle() > 720)
-    ev3pid.GyroStraight(300, 0).runUntil(lambda: LEFT_COLOR.color() == Color.GREEN)
+    # Moves forward.
+    gyroStraightForwardsToLeftHouse = ev3pid.GyroStraight(800, 0)
+    gyroStraightForwardsToLeftHouse.runUntil(lambda: DRIVE_BASE.angle() > 720)
+    gyroStraightForwardsToLeftHouse.speed = 400
+    gyroStraightForwardsToLeftHouse.runUntil(lambda: LEFT_COLOR.color() == Color.GREEN)
+    DRIVE_BASE.reset_angle()
+    gyroStraightForwardsToLeftHouse.runUntil(lambda: DRIVE_BASE.angle() >= 10)
+    DRIVE_BASE.hold()
+    wait(100)
 
     # Turns around to align with blocks at left house.
-    DRIVE_BASE.reset_angle(0)
-    DRIVE_BASE.run_angle(100, 20)
-    wait(100)
     ev3pid.GyroTurn(-90, False, True).run()
     DRIVE_BASE.run_time(-400, 1000)
 
