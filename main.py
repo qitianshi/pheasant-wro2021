@@ -371,7 +371,7 @@ def scanBlocksAtLeftHouse():
     DRIVE_BASE.run_time(-400, 1000)
 
     scanHouseBlocksProcedure(utils.DepositPoint.LEFT_HOUSE, -90, \
-                             lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, False)
+        lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, False)
 
 def collectYellowSurplusAndLeftEnergy():
 
