@@ -363,13 +363,13 @@ def scanBlocksAtLeftHouse():
     # If speed reduction is too fast, the robot skids and the run is inconsistent. As a rule of thumb, avoid decreasing
     # the speed to less than half of its original value each time.
 
+    #FIXME: This section is still very inconsistent when run at higher speeds.
+
     # Moves forward.
-    gyroStraightForwardsToLeftHouse = ev3pid.GyroStraight(800, 0)
+    gyroStraightForwardsToLeftHouse = ev3pid.GyroStraight(700, 0)
     gyroStraightForwardsToLeftHouse.runUntil(lambda: DRIVE_BASE.angle() > 720)
-    gyroStraightForwardsToLeftHouse.speed = 400
-    gyroStraightForwardsToLeftHouse.runUntil(lambda: LEFT_COLOR.color() == Color.GREEN)
-    DRIVE_BASE.reset_angle()
-    gyroStraightForwardsToLeftHouse.runUntil(lambda: DRIVE_BASE.angle() >= 10)
+    gyroStraightForwardsToLeftHouse.speed = 350
+    gyroStraightForwardsToLeftHouse.runUntil(lambda: DRIVE_BASE.angle() > 975)
     DRIVE_BASE.hold()
     wait(100)
 
@@ -386,7 +386,7 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Drives forward to align with blocks.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_target(150, 140)
+    DRIVE_BASE.run_target(150, 150)
     wait(100)
 
     # Turns, then aligns to black line.
