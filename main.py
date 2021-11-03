@@ -392,7 +392,7 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Drives forwards to collect the blocks.
     DRIVE_BASE.reset_angle()
-    gyroStraightForwardsUntilLeftEnergy = ev3pid.GyroStraight(400, -180)
+    gyroStraightForwardsUntilLeftEnergy = ev3pid.GyroStraight(500, -180)
     gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: DRIVE_BASE.angle() > 360)      # Moves off the black line.
     gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.reset_angle()
