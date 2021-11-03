@@ -31,6 +31,9 @@ def partialRunStartupProcedure():
 
     print("-" * 10, "partialRunStartupProcedure")
 
+    # Gyro
+    GYRO.reset_angle(0)
+
     # Claws
     utils.RearClaw.loads = 0
     # utils.RearClaw.collect()
@@ -38,9 +41,6 @@ def partialRunStartupProcedure():
     # utils.FrontClaw.collect()
     if utils.RearClaw.loads > 0 or utils.FrontClaw.loads > 0:            # Delay for claw loading
         wait(10000)
-
-    # Gyro
-    GYRO.reset_angle(0)
 
     # Run variables
     utils.RunLogic.undercarriageStorage = []
