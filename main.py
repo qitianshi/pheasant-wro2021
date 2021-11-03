@@ -375,8 +375,7 @@ def scanBlocksAtLeftHouse():
     ev3pid.GyroTurn(-90, False, True).run()
     DRIVE_BASE.run_time(-400, 1000)
 
-    scanHouseBlocksProcedure(utils.DepositPoint.LEFT_HOUSE, -90, \
-        lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, False)
+    scanHouseBlocksProcedure(utils.DepositPoint.LEFT_HOUSE, -90, lambda: LEFT_COLOR.color() == Color.BLACK, False)
 
 def collectYellowSurplusAndLeftEnergy():
 
@@ -419,6 +418,8 @@ def rotateSolarPanels():
     DRIVE_BASE.reset_angle()
     DRIVE_BASE.run_angle(200, 60)
     ev3pid.GyroTurn(-90, True, True).run()
+
+    wait(100000)
 
     # Travels to solar panels.
     ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
