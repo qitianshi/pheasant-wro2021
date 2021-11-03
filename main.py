@@ -382,7 +382,7 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Drives forward to align with blocks.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_target(150, 150)
+    DRIVE_BASE.run_target(150, 155)
     wait(100)
 
     # Turns, then aligns to black line.
@@ -392,13 +392,16 @@ def collectYellowSurplusAndLeftEnergy():
     DRIVE_BASE.hold()
     utils.RearClaw.closeGate()
 
+    #FIXME: Robot occasionally fails to detect black line and doesn't stop.
+
     # Drives forwards to collect the blocks.
     DRIVE_BASE.reset_angle()
-    gyroStraightForwardsUntilLeftEnergy = ev3pid.GyroStraight(500, -180)
+    gyroStraightForwardsUntilLeftEnergy = ev3pid.GyroStraight(450, -180)
     gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: DRIVE_BASE.angle() > 360)      # Moves off the black line.
+    gyroStraightForwardsUntilLeftEnergy.speed = 250
     gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.reset_angle()
-    gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: DRIVE_BASE.angle() > 220)
+    gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: DRIVE_BASE.angle() > 160)
     DRIVE_BASE.hold()
 
     # Lowers the front claw.
