@@ -522,7 +522,6 @@ def collectGreenEnergy():
         RIGHT_COLOR.color() == Color.GREEN)
     DRIVE_BASE.hold()
     ev3pid.GyroTurn(90, True, False).run()
-    wait(10000000000000)
     ev3pid.LineTrack(200, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     # driveBase.run_angle(100, 10)
     DRIVE_BASE.hold()
