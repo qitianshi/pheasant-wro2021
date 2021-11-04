@@ -34,7 +34,7 @@ class FrontClaw(Claw):
 
     @classmethod
     def closeGate(cls):
-        cls.goTo(0.79)
+        cls.goTo(0.78)
 
     @classmethod
     def rubberDown(cls):
