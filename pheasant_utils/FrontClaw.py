@@ -30,7 +30,7 @@ class FrontClaw(Claw):
 
     @classmethod
     def openGate(cls):
-        cls.goTo(0.07)
+        cls.goTo(0.02)
 
     @classmethod
     def closeGate(cls):

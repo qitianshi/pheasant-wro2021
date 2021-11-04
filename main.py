@@ -89,6 +89,20 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
     print("House colors:", utils.RunLogic.houses[thisHouse])       #FIXME: Prints numbers; implement str representation.
 
+def driveBackAndCollectGreenBlocksProcedure(moveBackDegrees):
+
+    # Collect left-most green energy blocks.
+    utils.RearClaw.collect()
+
+    DRIVE_BASE.reset_angle()
+    ev3pid.GyroStraight(-150, 180).runUntil(lambda: DRIVE_BASE.angle() < -1 * moveBackDegrees)
+    DRIVE_BASE.hold()
+
+    utils.RearClaw.loads += 1
+    utils.RearClaw.lift()
+
+    wait(100)
+
 def gyroStraightToBlackLineWithSensorCheckProcedure(speed: int, gyroAngle: int):
 
     # Checks which sensors can be used to find the black line.
@@ -382,7 +396,7 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Drives forward to align with blocks.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_target(150, 130)
+    DRIVE_BASE.run_target(100, 150)
     wait(100)
 
     # Turns, then aligns to black line.
@@ -398,10 +412,9 @@ def collectYellowSurplusAndLeftEnergy():
     DRIVE_BASE.reset_angle()
     gyroStraightForwardsUntilLeftEnergy = ev3pid.GyroStraight(450, -180)
     gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: DRIVE_BASE.angle() > 360)      # Moves off the black line.
-    gyroStraightForwardsUntilLeftEnergy.speed = 250
-    gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
+    gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: RIGHT_COLOR.reflection() < 20)
     DRIVE_BASE.reset_angle()
-    gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: DRIVE_BASE.angle() > 160)
+    gyroStraightForwardsUntilLeftEnergy.runUntil(lambda: DRIVE_BASE.angle() > 190)
     DRIVE_BASE.hold()
 
     # Lowers the front claw.
@@ -419,14 +432,14 @@ def rotateSolarPanels():
     # Turns to align to black line for line tracking.
     DRIVE_BASE.reset_angle()
     DRIVE_BASE.run_angle(150, 45)
-    ev3pid.GyroTurn(-90, True, True).run()
+    ev3pid.GyroTurn(-90, True, True, kp=18).run()
 
     #FIXME: Alignment with solar panels is still not reliable.
 
     # Travels to solar panels.
     ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(75, 83)
+    DRIVE_BASE.run_angle(75, 82)
     DRIVE_BASE.hold()
     wait(50)
 
@@ -438,7 +451,7 @@ def rotateSolarPanels():
     # Rotates solar panels.
     utils.RearClaw.minimum()
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(-150, 150)
+    DRIVE_BASE.run_angle(-150, 145)
     DRIVE_BASE.hold()
     wait(10)
     utils.RearClaw.closeGate()
@@ -453,23 +466,21 @@ def collectYellowRightEnergy():
 
     # Turns to align to black line for line tracking.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(200, 85)
+    DRIVE_BASE.run_angle(200, 110)
     ev3pid.GyroTurn(-90, True, True).run()
 
     # Reverses to align with vertical line.
-    ev3pid.GyroStraight(-100, -90).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
+    ev3pid.GyroStraight(-150, -90).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
 
     # Travels to yellow blocks.
     DRIVE_BASE.reset_angle()
     ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: DRIVE_BASE.angle() > 430)
-    # ev3pid.GyroStraight(100, -90).runUntil(lambda: DRIVE_BASE.angle() > 560)
     DRIVE_BASE.run_target(100, 560)
     DRIVE_BASE.hold()
 
     # Turns and collects.
     utils.FrontClaw.maximum()
     ev3pid.GyroTurn(-180, True, True, kp=9).run()
-    DRIVE_BASE.hold()
     wait(50)
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(300, -180).runUntil(lambda: DRIVE_BASE.angle() > 120)
@@ -477,58 +488,41 @@ def collectYellowRightEnergy():
     utils.FrontClaw.closeGate()
 
     # Returns to the line.
-    ev3pid.GyroStraight(-300, -180).runUntil(lambda: DRIVE_BASE.angle() < 50)
+    ev3pid.GyroStraight(-300, -180).runUntil(lambda: DRIVE_BASE.angle() <= 50)
     DRIVE_BASE.hold()
-    wait(50)
+    wait(100)
 
 def collectGreenSurplus():
 
     print("-" * 10, "collectGreenSurplus")
 
-    # Turns to point side sensor at surplus green blocks.
-    for _ in range(2):      # Performs turn twice to ensure accuracy.
-        ev3pid.GyroTurn(-90, False, True).run()
-        wait(20)
-    DRIVE_BASE.hold()
+    # Aligns to green surplus blocks.
+    ev3pid.GyroTurn(-90, False, True).run()
     wait(50)
-
-    # Drives forward while sensing if the surplus energy blocks are present.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(200, 340, then=Stop.HOLD, wait=True)
-
-    # Turns to face the blocks
+    ev3pid.GyroStraight(200, -90).runUntil(lambda: DRIVE_BASE.angle() >= 360)
+    DRIVE_BASE.hold()
+    wait(100)
     ev3pid.GyroTurn(0, False, True).run()
 
     # Drives forwards to collect.
-    utils.FrontClaw.openGate()
-    ev3pid.GyroStraight(300, 0).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK \
-        or RIGHT_COLOR.color() == Color.BLACK)
+    utils.FrontClaw.maximum()
+    wait(100)
+    ev3pid.GyroStraight(300, 0).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
     utils.FrontClaw.closeGate()
+    wait(100)
 
 def collectGreenEnergy():
 
     print("-" * 10,  "collectGreenEnergy")
 
-    def driveBackAndCollectGreenBlocks(moveBackDegrees):
-
-        # Collect left-most green energy blocks.
-        utils.RearClaw.collect()
-
-        DRIVE_BASE.reset_angle()
-        ev3pid.GyroStraight(-150, 180).runUntil(lambda: DRIVE_BASE.angle() < -1 * moveBackDegrees)
-        DRIVE_BASE.hold()
-
-        utils.RearClaw.loads += 1
-        utils.RearClaw.lift()
-
-        wait(100)
-
     # Turns and travels towards green energy blocks.
-    ev3pid.GyroStraight(-150, 0).runUntil(lambda: LEFT_COLOR.color() == Color.GREEN \
-        or RIGHT_COLOR.color() == Color.GREEN)
+    ev3pid.GyroStraight(-150, 0).runUntil(lambda: LEFT_COLOR.color() == Color.GREEN or \
+        RIGHT_COLOR.color() == Color.GREEN)
     DRIVE_BASE.hold()
     ev3pid.GyroTurn(90, True, False).run()
+    wait(10000000000000)
     ev3pid.LineTrack(200, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     # driveBase.run_angle(100, 10)
     DRIVE_BASE.hold()
@@ -536,7 +530,7 @@ def collectGreenEnergy():
     ev3pid.GyroTurn(180, True, True).run()
     DRIVE_BASE.hold()
 
-    driveBackAndCollectGreenBlocks(150)
+    driveBackAndCollectGreenBlocksProcedure(150)
 
     # Travels to right-most green blocks.
     ev3pid.GyroTurn(270, True, False).run()
@@ -546,7 +540,7 @@ def collectGreenEnergy():
     ev3pid.GyroTurn(180, True, True).run()
     DRIVE_BASE.hold()
 
-    driveBackAndCollectGreenBlocks(115)
+    driveBackAndCollectGreenBlocksProcedure(115)
 
     # Turns towards right side of playfield.
     DRIVE_BASE.reset_angle()
