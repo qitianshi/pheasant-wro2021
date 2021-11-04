@@ -89,17 +89,17 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
     print("House colors:", utils.RunLogic.houses[thisHouse])       #FIXME: Prints numbers; implement str representation.
 
-def driveBackAndCollectGreenBlocksProcedure(moveBackDegrees):
+def driveBackAndCollectGreenBlocksProcedure(moveBackDegrees, finalClawPosition):
 
     # Collect left-most green energy blocks.
     utils.RearClaw.collect()
 
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(-150, 180).runUntil(lambda: DRIVE_BASE.angle() < -1 * moveBackDegrees)
+    ev3pid.GyroStraight(-125, 180).runUntil(lambda: DRIVE_BASE.angle() < -1 * moveBackDegrees)
     DRIVE_BASE.hold()
 
     utils.RearClaw.loads += 1
-    utils.RearClaw.lift()
+    finalClawPosition()
 
     wait(100)
 
@@ -522,30 +522,32 @@ def collectGreenEnergy():
         RIGHT_COLOR.color() == Color.GREEN)
     DRIVE_BASE.hold()
     ev3pid.GyroTurn(90, True, False).run()
-    ev3pid.LineTrack(200, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
-    # driveBase.run_angle(100, 10)
+    ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
+    DRIVE_BASE.run_angle(100, 10)
     DRIVE_BASE.hold()
     wait(10)
     ev3pid.GyroTurn(180, True, True).run()
     DRIVE_BASE.hold()
 
-    driveBackAndCollectGreenBlocksProcedure(150)
+    driveBackAndCollectGreenBlocksProcedure(150, utils.RearClaw.closeGate)
 
     # Travels to right-most green blocks.
     ev3pid.GyroTurn(270, True, False).run()
+    wait(50)
     DRIVE_BASE.reset_angle()
-    ev3pid.LineTrack(200, ev3pid.LineEdge.LEFT, RIGHT_COLOR).runUntil(lambda: DRIVE_BASE.angle() > 125)
+    ev3pid.LineTrack(200, ev3pid.LineEdge.LEFT, RIGHT_COLOR).runUntil(lambda: DRIVE_BASE.angle() > 140)
     DRIVE_BASE.hold()
     ev3pid.GyroTurn(180, True, True).run()
     DRIVE_BASE.hold()
 
-    driveBackAndCollectGreenBlocksProcedure(115)
+    driveBackAndCollectGreenBlocksProcedure(100, lambda: utils.RearClaw.goTo(0.405))
 
     # Turns towards right side of playfield.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(100, -85)
+    DRIVE_BASE.run_angle(100, -80)
     wait(50)
-    ev3pid.GyroTurn(270, True, False).run()
+    ev3pid.GyroTurn(270, True, False, kp=15).run()
+    utils.RearClaw.closeGate()
 
 def collectBlueSurplus():
 
