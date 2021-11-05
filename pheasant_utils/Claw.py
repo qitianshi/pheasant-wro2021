@@ -17,7 +17,7 @@ class Claw:
     SINGLE_LOAD_SPEED = None         # Speeds defined in subclasses.
     DOUBLE_LOAD_SPEED = None
 
-    MOTOR: Motor = None
+    MOTOR = None
 
     loads = 0
 
