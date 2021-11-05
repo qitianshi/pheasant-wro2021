@@ -643,18 +643,21 @@ def scanBlocksAtTopHouse():
 
     utils.RunLogic.houses[utils.DepositPoint.TOP_HOUSE].reverse()       # Because the robot is scanning in reverse.
 
+    # Moves to neutral position for block deposition.
+    ev3pid.GyroTurn(540, True, True, kp=15).run()
+    utils.RearClaw.lift()
+    DRIVE_BASE.reset_angle()
+    ev3pid.GyroStraight(-600, 540).runUntil(lambda: DRIVE_BASE.angle() < -280)
+    DRIVE_BASE.hold()
+    wait(100)
+
 def depositBlocksAtTopHouse():
 
     print("-" * 10, "depositBlocksAtTopHouse")
 
-    # Moves to neutral position for block deposition.
-    DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(300, 540).runUntil(lambda: DRIVE_BASE.angle() > 500)
-    DRIVE_BASE.hold()
-
     EnergyBlockDeposition(utils.DepositPoint.TOP_HOUSE, 540).run()
 
-    gyroStraightToBlackLineWithSensorCheckProcedure(300, 720)
+    gyroStraightToBlackLineWithSensorCheckProcedure(speed=300, gyroAngle=720)
     wait(100)
 
 def depositBlocksAtStorageBattery():
