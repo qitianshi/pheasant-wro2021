@@ -22,11 +22,11 @@ class FrontClaw(Claw):
 
     @classmethod
     def drop(cls):
-        cls.goTo(0.77)
+        cls.goTo(0.75)
 
     @classmethod
     def collect(cls):
-        cls.goTo(0.77)
+        cls.drop()
 
     @classmethod
     def openGate(cls):
