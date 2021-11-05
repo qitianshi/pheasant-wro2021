@@ -80,6 +80,7 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
     if thenHoldMotors:
         DRIVE_BASE.hold()
+        wait(100)
 
     # To handle the case where there are more than two blocks detected. If this happenes, it's likely that .presence()
     # returned False erroneously. Keeping the first and last two colors is the best simple approach.
@@ -575,7 +576,6 @@ def scanBlocksAtRightHouse():
 def collectBlueSurplus():
 
     # Aligns with blue surplus blocks.
-    wait(50)
     DRIVE_BASE.reset_angle()
     DRIVE_BASE.run_angle(-200, 200)
     wait(50)
@@ -584,6 +584,7 @@ def collectBlueSurplus():
 
     # Collects blue surplus.
     utils.FrontClaw.maximum()
+    wait(100)
     ev3pid.GyroStraight(-150, 180).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or
         RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
@@ -633,20 +634,14 @@ def scanBlocksAtTopHouse():
     utils.FrontClaw.lift()
 
     # Turns to top house.
-    ev3pid.GyroTurn(450, False, True).run()
+    ev3pid.GyroTurn(450, False, True, kp=17).run()
 
     scanHouseBlocksProcedure(utils.DepositPoint.TOP_HOUSE, 450,
-        lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, thenHoldMotors=True)
+        lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, thenHoldMotors=False)
+    DRIVE_BASE.run_angle(200, 85)
+    wait(50)
 
-    # Turns and aligns to proceeds to black line.
-    ev3pid.GyroTurn(540, True, True).run()
-    DRIVE_BASE.reset_angle()
-    gyroStraightBackwardsToBlackLine = ev3pid.GyroStraight(-1000, 540)
-    gyroStraightBackwardsToBlackLine.runUntil(lambda: DRIVE_BASE.angle() < -650)
-    gyroStraightBackwardsToBlackLine.speed = -200
-    gyroStraightBackwardsToBlackLine.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
-    DRIVE_BASE.hold()
-    wait(100)
+    utils.RunLogic.houses[utils.DepositPoint.TOP_HOUSE].reverse()       # Because the robot is scanning in reverse.
 
 def depositBlocksAtTopHouse():
 
