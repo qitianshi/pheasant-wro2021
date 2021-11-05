@@ -68,7 +68,7 @@ preflightChecks()
 
 # partialRunStartupProcedure()
 
-waitForButtonPress()
+# waitForButtonPress()
 
 scanBlocksAtLeftHouse()
 collectYellowSurplusAndLeftEnergy()
@@ -76,6 +76,7 @@ rotateSolarPanels()
 collectYellowRightEnergy()
 collectGreenSurplus()
 collectGreenEnergy()
+scanBlocksAtRightHouse()
 collectBlueSurplus()
 collectBlueEnergy()
 scanBlocksAtTopHouse()
