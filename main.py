@@ -584,12 +584,12 @@ def collectBlueSurplus():
 
     # Collects blue surplus.
     utils.FrontClaw.maximum()
-    ev3pid.GyroStraight(-200, 180).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or
+    ev3pid.GyroStraight(-150, 180).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or
         RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
-    wait(100)
+    wait(120)
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(450, 180).runUntil(lambda: DRIVE_BASE.angle() > 590)
+    ev3pid.GyroStraight(450, 180).runUntil(lambda: DRIVE_BASE.angle() > 585)
     DRIVE_BASE.hold()
     utils.FrontClaw.collect()
 
@@ -597,7 +597,7 @@ def collectBlueSurplus():
     ev3pid.GyroTurn(270, True, False, kp=15).run()
     ev3pid.GyroStraight(250, 270).runUntil(lambda: LEFT_COLOR.color() == Color.WHITE)
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(100, 30)
+    DRIVE_BASE.run_angle(150, 30)
     DRIVE_BASE.hold()
 
 def collectBlueEnergy():
@@ -614,14 +614,14 @@ def collectBlueEnergy():
     DRIVE_BASE.hold()
     ev3pid.GyroTurn(360, True, False).run()
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(200, 360).runUntil(lambda: DRIVE_BASE.angle() > 210)
+    ev3pid.GyroStraight(200, 360).runUntil(lambda: DRIVE_BASE.angle() > 225)
     DRIVE_BASE.hold()
     ev3pid.GyroTurn(270, True, False).run()
 
     # Turns and aligns to lower blue energy blocks.
     utils.FrontClaw.collect()
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(250, 270).runUntil(lambda: DRIVE_BASE.angle() > 90)
+    ev3pid.GyroStraight(250, 270).runUntil(lambda: DRIVE_BASE.angle() > 115)
     DRIVE_BASE.hold()
 
 def scanBlocksAtTopHouse():
