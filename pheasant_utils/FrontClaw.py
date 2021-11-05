@@ -10,7 +10,7 @@ from .Claw import Claw
 class FrontClaw(Claw):
 
     ANGLE_RANGE = 950
-    LOAD_MULTIPLIER = 1.06
+    LOAD_MULTIPLIER = 1.055
     LIFTING_THRESHOLD = 0.78
 
     SINGLE_LOAD_SPEED = 900
@@ -18,11 +18,11 @@ class FrontClaw(Claw):
 
     @classmethod
     def lift(cls):
-        cls.goTo(0.83)
+        cls.goTo(0.79)
 
     @classmethod
     def drop(cls):
-        cls.goTo(0.75)
+        cls.goTo(0.74)
 
     @classmethod
     def collect(cls):
