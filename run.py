@@ -16,12 +16,16 @@ from main import *                                              #pylint: disable
 
 def preflightChecks():
 
-    if BRICK.battery.voltage() < 7750:      # In millivolts.
+    # Checks battery.
+    if BRICK.battery.voltage() < 8000:      # In millivolts.
 
         print("Low battery.")
 
         from sys import exit                                 #pylint: disable=redefined-builtin, import-outside-toplevel
         exit()
+
+    # Resets gyro.
+    GYRO.reset_angle(0)
 
 def partialRunStartupProcedure():
 
