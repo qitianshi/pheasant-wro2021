@@ -549,7 +549,7 @@ def collectGreenEnergy():
     ev3pid.GyroTurn(270, True, False, kp=15).run()
     utils.RearClaw.closeGate()
 
-def collectBlueSurplus():
+def scanBlocksAtRightHouse():
 
     print("-" * 10, "collectBlueSurplus")
 
@@ -557,9 +557,22 @@ def collectBlueSurplus():
     DRIVE_BASE.reset_angle()
     lineTrackGreenZoneToBlue = ev3pid.LineTrack(600, ev3pid.LineEdge.RIGHT, LEFT_COLOR)
     lineTrackGreenZoneToBlue.runUntil(lambda: DRIVE_BASE.angle() > 810)
-    lineTrackGreenZoneToBlue.speed = 250
+    lineTrackGreenZoneToBlue.speed = 350
     lineTrackGreenZoneToBlue.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
+    wait(100)
+
+    # Turns and aligns to blocks.
+    utils.RearClaw.goTo(0.405)
+    ev3pid.GyroTurn(225, True, False).run()
+    DRIVE_BASE.run_angle(200, -75)
+    ev3pid.GyroTurn(270, False, True).run()
+    DRIVE_BASE.run_angle(300, -130)
+    wait(50)
+
+    scanHouseBlocksProcedure(utils.DepositPoint.RIGHT_HOUSE, 270, lambda: LEFT_COLOR.color() == Color.BLACK, True)
+
+def collectBlueSurplus():
 
     # Aligns with blue surplus blocks.
     wait(10)
