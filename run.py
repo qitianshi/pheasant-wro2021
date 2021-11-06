@@ -39,8 +39,8 @@ def partialRunStartupProcedure():
     GYRO.reset_angle(0)
 
     # Claws
-    utils.FrontClaw.drop()
-    utils.RearClaw.drop()
+    utils.FrontClaw.goTo(utils.FrontClaw.LIFTING_THRESHOLD)
+    utils.RearClaw.goTo(utils.RearClaw.LIFTING_THRESHOLD)
     utils.FrontClaw.loads = 2
     utils.RearClaw.loads = 2
     if utils.RearClaw.loads > 0 or utils.FrontClaw.loads > 0:            # Delay for claw loading
