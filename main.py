@@ -10,7 +10,7 @@
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, ColorSensor, GyroSensor
 from pybricks.iodevices import Ev3devSensor
-from pybricks.parameters import Port, Stop, Direction, Color
+from pybricks.parameters import Port, Direction, Color
 from pybricks.tools import wait
 
 import ev3move
@@ -107,11 +107,12 @@ def driveBackAndCollectGreenBlocksProcedure(moveBackDegrees, finalClawPosition):
 def gyroStraightToBlackLineWithSensorCheckProcedure(speed: int, gyroAngle: int):
 
     # Checks which sensors can be used to find the black line.
-    useLeftSensor = LEFT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)       # Checks that sensor is not over
-    useRightSensor = RIGHT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)     # the black line.
+    useLeftSensor = LEFT_COLOR.color() != Color.BLACK       # Checks that sensor is not over the black line.
+    useRightSensor = RIGHT_COLOR.color() != Color.BLACK
 
     #TODO: Add code to handle the case where both left and right sensors are rejected.
-    print("ERROR: gyroStraightToBlackLineWithSensorCheckProcedure rejected both sensors.")
+    if not useLeftSensor and not useRightSensor:
+        print("ERROR: gyroStraightToBlackLineWithSensorCheckProcedure rejected both sensors.")
 
     # Travels to the black line.
     ev3pid.GyroStraight(speed, gyroAngle).runUntil(lambda: (useLeftSensor and LEFT_COLOR.color() == Color.BLACK) or \
@@ -170,14 +171,17 @@ class EnergyBlockDeposition:
             ev3pid.GyroStraight(300, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() > 0)
             DRIVE_BASE.hold()
 
-    def __turnAround(self):
+    def __turnAround(self, precisely: bool = True):
 
         multiplier = 1 if self.currentlyFacing == EnergyBlockDeposition.FacingDirection.TOWARDS else -1
 
         DRIVE_BASE.run_angle(multiplier * 300 * -1, 120)
 
-        ev3pid.GyroTurn(self.gyroAngle + 90 * multiplier, True, False, kp=20).run()
-        ev3pid.GyroTurn(self.gyroAngle + 180 * multiplier, False, True, kp=20).run()
+        if precisely:
+            ev3pid.GyroTurn(self.gyroAngle + 90 * multiplier, True, False, kp=20).run()
+            ev3pid.GyroTurn(self.gyroAngle + 180 * multiplier, False, True, kp=20).run()
+        else:
+            ev3pid.GyroTurn(self.gyroAngle + 180 * multiplier, True, True).run()
 
         self.gyroAngle += 180 * multiplier
         self.currentlyFacing = EnergyBlockDeposition.FacingDirection.AWAY if \
@@ -185,6 +189,19 @@ class EnergyBlockDeposition:
             EnergyBlockDeposition.FacingDirection.TOWARDS
 
         DRIVE_BASE.reset_angle()
+
+    @staticmethod
+    def __moveClawAtCustomSpeed(claw, amount: float, speedMultiple: float):
+
+        if claw.loads == 2:
+            claw.DOUBLE_LOAD_SPEED = int(claw.DOUBLE_LOAD_SPEED * speedMultiple)
+            claw.goTo(amount)
+            claw.DOUBLE_LOAD_SPEED = int(claw.DOUBLE_LOAD_SPEED / speedMultiple)
+
+        else:
+            claw.SINGLE_LOAD_SPEED = int(claw.SINGLE_LOAD_SPEED * speedMultiple)
+            claw.goTo(amount)
+            claw.SINGLE_LOAD_SPEED = int(claw.SINGLE_LOAD_SPEED / speedMultiple)
 
     def __getGreenClaw(self, count: int):
 
@@ -209,16 +226,7 @@ class EnergyBlockDeposition:
         if self.point == utils.DepositPoint.STORAGE_BATTERY:
 
             # Must slow down for high angle raise, otherwise the upper blocks fall off.
-
-            if utils.FrontClaw.loads == 2:
-                utils.FrontClaw.DOUBLE_LOAD_SPEED = int(utils.FrontClaw.DOUBLE_LOAD_SPEED * 0.25)
-                utils.FrontClaw.goTo(0.95)
-                utils.FrontClaw.DOUBLE_LOAD_SPEED = int(utils.FrontClaw.DOUBLE_LOAD_SPEED / 0.25)
-
-            else:
-                utils.FrontClaw.SINGLE_LOAD_SPEED = int(utils.FrontClaw.SINGLE_LOAD_SPEED * 0.25)
-                utils.FrontClaw.goTo(0.95)
-                utils.FrontClaw.SINGLE_LOAD_SPEED = int(utils.FrontClaw.SINGLE_LOAD_SPEED / 0.25)
+            self.__moveClawAtCustomSpeed(utils.FrontClaw, 0.95, 0.25)
 
         # Drives to the deposition zone.
         ev3pid.GyroStraight(300 if self.point == utils.DepositPoint.STORAGE_BATTERY else 150,\
@@ -226,9 +234,11 @@ class EnergyBlockDeposition:
         DRIVE_BASE.hold()
 
         if self.point == utils.DepositPoint.STORAGE_BATTERY:
-            wait(500)
+            self.__moveClawAtCustomSpeed(utils.FrontClaw, 0.74, 0.75)
 
-        utils.FrontClaw.drop()
+        else:
+            utils.FrontClaw.drop()
+
         wait(500)
 
         # If only 1 of 2 blocks is needed, the robot must pick up one set of blocks.
@@ -384,7 +394,7 @@ class EnergyBlockDeposition:
 
         # Returns to the original orientation.
         if self.finallyFacing != self.currentlyFacing:
-            ev3pid.GyroTurn(self.gyroAngle + 180, True, True).run()
+            self.__turnAround(precisely=False)
 
         DRIVE_BASE.reset_angle()
 
@@ -691,12 +701,12 @@ def depositBlocksAtStorageBattery():
 
     # Moves to neutral position for block deposition.
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(-200, 720).runUntil(lambda: DRIVE_BASE.angle() < -190)
+    ev3pid.GyroStraight(-200, 720).runUntil(lambda: DRIVE_BASE.angle() < -185)
     DRIVE_BASE.hold()
 
     EnergyBlockDeposition(utils.DepositPoint.STORAGE_BATTERY, 720, EnergyBlockDeposition.FacingDirection.TOWARDS).run()
 
-    utils.FrontClaw.lift()
+    utils.FrontClaw.goTo(0.79)
     gyroStraightToBlackLineWithSensorCheckProcedure(300, 720)
     wait(100)
 
@@ -712,10 +722,14 @@ def depositBlocksAtRightHouse():
     # Moves to neutral position for block deposition.
     ev3pid.GyroTurn(720, True, False).run()
     gyroStraightToBlackLineWithSensorCheckProcedure(-300, 720)
+    wait(100)
+
+    print("utils.FrontClaw.loads:", utils.FrontClaw.loads)
 
     EnergyBlockDeposition(utils.DepositPoint.RIGHT_HOUSE, 720, EnergyBlockDeposition.FacingDirection.TOWARDS).run()
 
     gyroStraightToBlackLineWithSensorCheckProcedure(-300, 720)
+    wait(100)
 
 def depositBlocksAtLeftHouse():
 
