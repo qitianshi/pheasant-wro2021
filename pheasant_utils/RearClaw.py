@@ -13,8 +13,8 @@ class RearClaw(Claw):
     LOAD_MULTIPLIER = 1.11
     LIFTING_THRESHOLD = 0.27
 
-    SINGLE_LOAD_SPEED = 400
-    DOUBLE_LOAD_SPEED = 300
+    SINGLE_LOAD_SPEED = 300
+    DOUBLE_LOAD_SPEED = 200
 
     @classmethod
     def lift(cls):
@@ -36,4 +36,4 @@ class RearClaw(Claw):
     @classmethod
     def closeGate(cls):
         cls.MOTOR.run_target((cls.SINGLE_LOAD_SPEED if cls.loads < 2 else cls.DOUBLE_LOAD_SPEED),
-            cls.ANGLE_RANGE * 0.41)                                  # To bypass load multiplier.
+            cls.ANGLE_RANGE * 0.42)                                  # To bypass load multiplier.
