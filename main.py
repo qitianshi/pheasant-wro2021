@@ -207,7 +207,18 @@ class EnergyBlockDeposition:
     def __getBlueClaw(self, count: int):
 
         if self.point == utils.DepositPoint.STORAGE_BATTERY:
-            utils.FrontClaw.goTo(0.95)
+
+            # Must slow down for high angle raise, otherwise the upper blocks fall off.
+
+            if utils.FrontClaw.loads == 2:
+                utils.FrontClaw.DOUBLE_LOAD_SPEED = int(utils.FrontClaw.DOUBLE_LOAD_SPEED * 0.25)
+                utils.FrontClaw.goTo(0.95)
+                utils.FrontClaw.DOUBLE_LOAD_SPEED = int(utils.FrontClaw.DOUBLE_LOAD_SPEED / 0.25)
+
+            else:
+                utils.FrontClaw.SINGLE_LOAD_SPEED = int(utils.FrontClaw.SINGLE_LOAD_SPEED * 0.25)
+                utils.FrontClaw.goTo(0.95)
+                utils.FrontClaw.SINGLE_LOAD_SPEED = int(utils.FrontClaw.SINGLE_LOAD_SPEED / 0.25)
 
         # Drives to the deposition zone.
         ev3pid.GyroStraight(300 if self.point == utils.DepositPoint.STORAGE_BATTERY else 150,\
@@ -680,7 +691,7 @@ def depositBlocksAtStorageBattery():
 
     # Moves to neutral position for block deposition.
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(-200, 720).runUntil(lambda: DRIVE_BASE.angle() < -185)
+    ev3pid.GyroStraight(-200, 720).runUntil(lambda: DRIVE_BASE.angle() < -190)
     DRIVE_BASE.hold()
 
     EnergyBlockDeposition(utils.DepositPoint.STORAGE_BATTERY, 720, EnergyBlockDeposition.FacingDirection.TOWARDS).run()
