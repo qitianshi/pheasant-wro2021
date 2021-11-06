@@ -111,6 +111,7 @@ def gyroStraightToBlackLineWithSensorCheckProcedure(speed: int, gyroAngle: int):
     useRightSensor = RIGHT_COLOR.color() in (Color.WHITE, Color.BLUE, Color.YELLOW)     # the black line.
 
     #TODO: Add code to handle the case where both left and right sensors are rejected.
+    print("ERROR: gyroStraightToBlackLineWithSensorCheckProcedure rejected both sensors.")
 
     # Travels to the black line.
     ev3pid.GyroStraight(speed, gyroAngle).runUntil(lambda: (useLeftSensor and LEFT_COLOR.color() == Color.BLACK) or \
@@ -150,6 +151,7 @@ class EnergyBlockDeposition:
         elif point == utils.DepositPoint.STORAGE_BATTERY:
             self.requirements = [utils.BlockColor.BLUE, utils.BlockColor.BLUE]          # .BLUE, .BLUE
 
+        self.point = point
         self.gyroAngle = gyroAngle
         self.currentlyFacing = EnergyBlockDeposition.FacingDirection.TOWARDS
         self.finallyFacing = finallyFacing
@@ -161,18 +163,18 @@ class EnergyBlockDeposition:
     def __returnToNeutralPoint(self):
 
         if self.currentlyFacing == EnergyBlockDeposition.FacingDirection.TOWARDS:
-            ev3pid.GyroStraight(-200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() < 0)
+            ev3pid.GyroStraight(-300, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() < 0)
             DRIVE_BASE.hold()
 
         else:
-            ev3pid.GyroStraight(200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() > 0)
+            ev3pid.GyroStraight(300, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() > 0)
             DRIVE_BASE.hold()
 
     def __turnAround(self):
 
         multiplier = 1 if self.currentlyFacing == EnergyBlockDeposition.FacingDirection.TOWARDS else -1
 
-        DRIVE_BASE.run_angle(multiplier * 200 * -1, 120)
+        DRIVE_BASE.run_angle(multiplier * 300 * -1, 120)
 
         ev3pid.GyroTurn(self.gyroAngle + 90 * multiplier, True, False, kp=20).run()
         ev3pid.GyroTurn(self.gyroAngle + 180 * multiplier, False, True, kp=20).run()
@@ -204,9 +206,17 @@ class EnergyBlockDeposition:
 
     def __getBlueClaw(self, count: int):
 
+        if self.point == utils.DepositPoint.STORAGE_BATTERY:
+            utils.FrontClaw.goTo(0.95)
+
         # Drives to the deposition zone.
-        ev3pid.GyroStraight(200, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 260)
+        ev3pid.GyroStraight(300 if self.point == utils.DepositPoint.STORAGE_BATTERY else 150,\
+            self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 260)
         DRIVE_BASE.hold()
+
+        if self.point == utils.DepositPoint.STORAGE_BATTERY:
+            wait(500)
+
         utils.FrontClaw.drop()
         wait(500)
 
@@ -227,7 +237,7 @@ class EnergyBlockDeposition:
         # Block distance: -45 deg
         # Claw distance: -70 deg
 
-        gyroStraightBackwardsToGrabBlocks = ev3pid.GyroStraight(-200, self.gyroAngle)
+        gyroStraightBackwardsToGrabBlocks = ev3pid.GyroStraight(-300, self.gyroAngle)
 
         # Drives backwards to realign blocks in undercarriage storage.
         totalBackDist = -40 - 45 * (5 - len(utils.RunLogic.undercarriageStorage))
@@ -285,13 +295,14 @@ class EnergyBlockDeposition:
         utils.RearClaw.closeGate()
 
         # Deposits blocks
-        ev3pid.GyroStraight(-300, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() <= -300)
+        ev3pid.GyroStraight(-400, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() <= -320)
         DRIVE_BASE.hold()
         utils.RearClaw.openGate()
 
         # Secures subsequent blocks
         DRIVE_BASE.run_angle(150, 50)
         utils.RearClaw.closeGate()
+        DRIVE_BASE.run_angle(-200, 100)
         self.__returnToNeutralPoint()
 
         for _ in range(count):
@@ -669,11 +680,12 @@ def depositBlocksAtStorageBattery():
 
     # Moves to neutral position for block deposition.
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(-200, 720).runUntil(lambda: DRIVE_BASE.angle() < -200)
+    ev3pid.GyroStraight(-200, 720).runUntil(lambda: DRIVE_BASE.angle() < -185)
     DRIVE_BASE.hold()
 
     EnergyBlockDeposition(utils.DepositPoint.STORAGE_BATTERY, 720, EnergyBlockDeposition.FacingDirection.TOWARDS).run()
 
+    utils.FrontClaw.lift()
     gyroStraightToBlackLineWithSensorCheckProcedure(300, 720)
     wait(100)
 
