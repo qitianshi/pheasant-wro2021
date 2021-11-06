@@ -38,7 +38,7 @@ class FrontClaw(Claw):
 
     @classmethod
     def rubberDown(cls):
-        cls.goTo(0.85)
+        cls.goTo(0.83)
 
     @classmethod
     def rubberUp(cls):
