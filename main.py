@@ -136,7 +136,7 @@ class EnergyBlockDeposition:
         TOWARDS = hash("TOWARDS")                 #HACK: enum workaround
         AWAY = hash("AWAY")
 
-    def __init__(self, point: utils.DepositPoint, gyroAngle: int):
+    def __init__(self, point: utils.DepositPoint, gyroAngle: int, finallyFacing: FacingDirection):
 
         # self.requirements = utils.RunLogic.blocksAtPoint(point)       # Manually programmed for qualifying round.
 
@@ -152,6 +152,7 @@ class EnergyBlockDeposition:
 
         self.gyroAngle = gyroAngle
         self.currentlyFacing = EnergyBlockDeposition.FacingDirection.TOWARDS
+        self.finallyFacing = finallyFacing
 
         self.mustDumpBlue = False           #TODO: Update mustDumpBlue condition
 
@@ -360,8 +361,8 @@ class EnergyBlockDeposition:
             pass
 
         # Returns to the original orientation.
-        if self.currentlyFacing == EnergyBlockDeposition.FacingDirection.AWAY:
-            self.__turnAround()
+        if self.finallyFacing != self.currentlyFacing:
+            ev3pid.GyroTurn(self.gyroAngle + 180, True, True).run()
 
         DRIVE_BASE.reset_angle()
 
@@ -634,7 +635,9 @@ def scanBlocksAtTopHouse():
     utils.FrontClaw.lift()
 
     # Turns to top house.
-    ev3pid.GyroTurn(450, False, True, kp=17).run()
+    ev3pid.GyroTurn(360, False, True).run()
+    DRIVE_BASE.run_angle(-100, 10)
+    ev3pid.GyroTurn(450, False, True).run()
 
     scanHouseBlocksProcedure(utils.DepositPoint.TOP_HOUSE, 450,
         lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, thenHoldMotors=False)
@@ -647,7 +650,7 @@ def scanBlocksAtTopHouse():
     ev3pid.GyroTurn(540, True, True, kp=15).run()
     utils.RearClaw.lift()
     DRIVE_BASE.reset_angle()
-    ev3pid.GyroStraight(-600, 540).runUntil(lambda: DRIVE_BASE.angle() < -280)
+    ev3pid.GyroStraight(-300, 540).runUntil(lambda: DRIVE_BASE.angle() < -260)
     DRIVE_BASE.hold()
     wait(100)
 
@@ -655,7 +658,7 @@ def depositBlocksAtTopHouse():
 
     print("-" * 10, "depositBlocksAtTopHouse")
 
-    EnergyBlockDeposition(utils.DepositPoint.TOP_HOUSE, 540).run()
+    EnergyBlockDeposition(utils.DepositPoint.TOP_HOUSE, 540, EnergyBlockDeposition.FacingDirection.AWAY).run()
 
     gyroStraightToBlackLineWithSensorCheckProcedure(speed=300, gyroAngle=720)
     wait(100)
@@ -669,7 +672,7 @@ def depositBlocksAtStorageBattery():
     ev3pid.GyroStraight(-200, 720).runUntil(lambda: DRIVE_BASE.angle() < -200)
     DRIVE_BASE.hold()
 
-    EnergyBlockDeposition(utils.DepositPoint.STORAGE_BATTERY, 720).run()
+    EnergyBlockDeposition(utils.DepositPoint.STORAGE_BATTERY, 720, EnergyBlockDeposition.FacingDirection.TOWARDS).run()
 
     gyroStraightToBlackLineWithSensorCheckProcedure(300, 720)
     wait(100)
@@ -687,7 +690,7 @@ def depositBlocksAtRightHouse():
     ev3pid.GyroTurn(720, True, False).run()
     gyroStraightToBlackLineWithSensorCheckProcedure(-300, 720)
 
-    EnergyBlockDeposition(utils.DepositPoint.RIGHT_HOUSE, 720).run()
+    EnergyBlockDeposition(utils.DepositPoint.RIGHT_HOUSE, 720, EnergyBlockDeposition.FacingDirection.TOWARDS).run()
 
     gyroStraightToBlackLineWithSensorCheckProcedure(-300, 720)
 
@@ -710,7 +713,7 @@ def depositBlocksAtLeftHouse():
     ev3pid.GyroTurn(720, False, True).run()
     gyroStraightToBlackLineWithSensorCheckProcedure(-300, 720)
 
-    EnergyBlockDeposition(utils.DepositPoint.LEFT_HOUSE, 720).run()
+    EnergyBlockDeposition(utils.DepositPoint.LEFT_HOUSE, 720, EnergyBlockDeposition.FacingDirection.TOWARDS).run()
 
 def returnToStartZone():
 
