@@ -737,6 +737,9 @@ def depositBlocksAtLeftHouse():
 
     # Turns and tracks the black line to the left house.
     ev3pid.GyroTurn(810, True, False).run()
+
+    wait(100000000)
+
     lineTrackToLeftHouse = ev3pid.LineTrack(800, ev3pid.LineEdge.LEFT, RIGHT_COLOR)
     lineTrackToLeftHouse.runUntil(lambda: LEFT_COLOR.color() == Color.BLACK)
     lineTrackToLeftHouse.speed = 500

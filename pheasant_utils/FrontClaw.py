@@ -18,7 +18,10 @@ class FrontClaw(Claw):
 
     @classmethod
     def lift(cls):
-        cls.goTo(0.79)
+        if cls.loads > 0:
+            cls.goTo(0.79)
+        else:
+            cls.drop()
 
     @classmethod
     def drop(cls):
