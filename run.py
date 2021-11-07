@@ -12,6 +12,7 @@
 # To resume, run `git update-index --no-skip-worktree run.py`.
 
 
+from pybricks.tools import StopWatch
 from main import *                                              #pylint: disable=wildcard-import, unused-wildcard-import
 
 def preflightChecks():
@@ -70,7 +71,9 @@ preflightChecks()
 
 # partialRunStartupProcedure()
 
-# waitForButtonPress()
+waitForButtonPress()
+
+runTimer = StopWatch()
 
 scanBlocksAtLeftHouse()
 collectYellowSurplusAndLeftEnergy()
@@ -88,6 +91,10 @@ depositBlocksAtRightHouse()
 depositBlocksAtLeftHouse()
 returnToStartZone()
 
+runTimer.pause()
+
 wait(1000)
+
+print("Runtime:", runTimer.time() / 1000)
 
 #endregion
