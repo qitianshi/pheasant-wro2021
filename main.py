@@ -276,7 +276,7 @@ class EnergyBlockDeposition:
         utils.FrontClaw.rubberDown()
 
         # Deposits blocks
-        ev3pid.GyroStraight(400, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 275)
+        ev3pid.GyroStraight(400, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 375)
         DRIVE_BASE.hold()
         wait(100)
         utils.FrontClaw.rubberUp()
@@ -355,9 +355,14 @@ class EnergyBlockDeposition:
             self.__getRearStore(1)
 
         elif self.requirements == [utils.BlockColor.FRONT, utils.BlockColor.REAR]:
-            self.__getFrontStore(1)
-            self.__turnAround()
-            self.__getRearStore(1)
+
+            if len(utils.RunLogic.undercarriageStorage) == 2:
+                self.__getFrontStore(2)
+
+            else:
+                self.__getFrontStore(1)
+                self.__turnAround()
+                self.__getRearStore(1)
 
         elif self.requirements == [utils.BlockColor.BLUE, utils.BlockColor.GREEN]:
             self.__getBlueClaw(1)
@@ -737,7 +742,6 @@ def depositBlocksAtLeftHouse():
 
     # Turns and tracks the black line to the left house.
     ev3pid.GyroTurn(810, True, False).run()
-
     lineTrackToLeftHouse = ev3pid.LineTrack(800, ev3pid.LineEdge.LEFT, RIGHT_COLOR)
     lineTrackToLeftHouse.runUntil(lambda: LEFT_COLOR.color() == Color.BLACK)
     lineTrackToLeftHouse.speed = 500
@@ -761,8 +765,8 @@ def returnToStartZone():
     utils.RearClaw.maximum()
 
     # Returns to the start zone.
-    DRIVE_BASE.run_time(-1000, 1000)
+    DRIVE_BASE.run_time(-1000, 1500)
     ev3pid.GyroTurn(630, False, True).run()
-    DRIVE_BASE.run_time(-1000, 1000)
+    DRIVE_BASE.run_time(-1000, 1500)
 
 #endregion
