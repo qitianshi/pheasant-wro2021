@@ -38,10 +38,11 @@ ev3pid.DoubleColorInput.setDefaultSensors(LEFT_COLOR, RIGHT_COLOR)
 ev3pid.GyroStraight.setDefaultTuning(22, 0.2, 100000)
 ev3pid.GyroStraight.setDefaultIntegralLimit(100)
 ev3pid.GyroStraight.setDefaultOutputLimit(1000)
-ev3pid.GyroTurn.setDefaultTuning(22, 0, 100000, 12, 0, 100000)
+ev3pid.GyroTurn.setDefaultTuning(kpSingle=23, kiSingle=0.00015, kdSingle=140,
+                                 kpDouble=12, kiDouble=0.0001, kdDouble=70)
 ev3pid.LineSquare.setDefaultTuning(20, 0, 100000)
 ev3pid.LineSquare.setDefaultOutputLimit(60)
-ev3pid.LineTrack.setDefaultTuning(1.8, 0.0002, 1)
+ev3pid.LineTrack.setDefaultTuning(1.8, 0.0002, 1.2)
 ev3pid.LineTrack.setDefaultIntegralLimit(50)
 
 # Initialize pheasant_utils package settings
@@ -435,7 +436,7 @@ def collectYellowSurplusAndLeftEnergy():
 
     # Drives forward to align with blocks.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_target(100, 150)
+    DRIVE_BASE.run_target(100, 160)
     wait(100)
 
     # Turns, then aligns to black line.
@@ -489,8 +490,9 @@ def rotateSolarPanels():
 
     # Rotates solar panels.
     utils.RearClaw.minimum()
+    wait(200)
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(-150, 145)
+    DRIVE_BASE.run_angle(-150, 135)
     DRIVE_BASE.hold()
     wait(10)
     utils.RearClaw.closeGate()
@@ -562,7 +564,8 @@ def collectGreenEnergy():
     DRIVE_BASE.hold()
     ev3pid.GyroTurn(90, True, False).run()
     ev3pid.LineTrack(300, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
-    DRIVE_BASE.run_angle(100, 10)
+    GYRO.reset_angle(90)
+    # DRIVE_BASE.run_angle(100, 10)
     DRIVE_BASE.hold()
     wait(10)
     ev3pid.GyroTurn(180, True, True).run()
@@ -574,7 +577,7 @@ def collectGreenEnergy():
     ev3pid.GyroTurn(270, True, False).run()
     wait(50)
     DRIVE_BASE.reset_angle()
-    ev3pid.LineTrack(200, ev3pid.LineEdge.LEFT, RIGHT_COLOR).runUntil(lambda: DRIVE_BASE.angle() > 140)
+    ev3pid.LineTrack(200, ev3pid.LineEdge.LEFT, RIGHT_COLOR).runUntil(lambda: DRIVE_BASE.angle() > 130)
     DRIVE_BASE.hold()
     ev3pid.GyroTurn(180, True, True).run()
     DRIVE_BASE.hold()
@@ -594,7 +597,7 @@ def scanBlocksAtRightHouse():
 
     # Travels to blue area.
     DRIVE_BASE.reset_angle()
-    lineTrackGreenZoneToBlue = ev3pid.LineTrack(600, ev3pid.LineEdge.RIGHT, LEFT_COLOR)
+    lineTrackGreenZoneToBlue = ev3pid.LineTrack(500, ev3pid.LineEdge.RIGHT, LEFT_COLOR)
     lineTrackGreenZoneToBlue.runUntil(lambda: DRIVE_BASE.angle() > 810)
     lineTrackGreenZoneToBlue.speed = 350
     lineTrackGreenZoneToBlue.runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
@@ -615,7 +618,7 @@ def collectBlueSurplus():
 
     # Aligns with blue surplus blocks.
     DRIVE_BASE.reset_angle()
-    DRIVE_BASE.run_angle(-200, 200)
+    DRIVE_BASE.run_angle(-200, 190)
     wait(50)
     ev3pid.GyroTurn(180, False, True).run()
     utils.RearClaw.closeGate()
@@ -672,13 +675,11 @@ def scanBlocksAtTopHouse():
     utils.FrontClaw.lift()
 
     # Turns to top house.
-    ev3pid.GyroTurn(360, False, True).run()
-    DRIVE_BASE.run_angle(-100, 10)
     ev3pid.GyroTurn(450, False, True).run()
 
     scanHouseBlocksProcedure(utils.DepositPoint.TOP_HOUSE, 450,
         lambda: LEFT_COLOR.color() == Color.BLACK or RIGHT_COLOR.color() == Color.BLACK, thenHoldMotors=False)
-    DRIVE_BASE.run_angle(200, 85)
+    DRIVE_BASE.run_angle(200, 50)
     wait(50)
 
     utils.RunLogic.houses[utils.DepositPoint.TOP_HOUSE].reverse()       # Because the robot is scanning in reverse.
