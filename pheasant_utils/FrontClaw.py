@@ -25,7 +25,7 @@ class FrontClaw(Claw):
 
     @classmethod
     def drop(cls):
-        cls.goTo(0.74)
+        cls.goTo(0.745)
 
     @classmethod
     def collect(cls):
