@@ -107,7 +107,7 @@ def driveBackAndCollectGreenBlocksProcedure(moveBackDegrees, finalClawPosition):
     utils.RearClaw.loads += 1
     finalClawPosition()
 
-    wait(100)
+    wait(50)
 
 def gyroStraightToBlackLineWithSensorCheckProcedure(speed: int, gyroAngle: int):
 
@@ -269,7 +269,7 @@ class EnergyBlockDeposition:
         totalBackDist = -40 - 45 * (5 - len(utils.RunLogic.undercarriageStorage))
         gyroStraightBackwardsToGrabBlocks.runUntil(lambda: DRIVE_BASE.angle() < totalBackDist)
         DRIVE_BASE.hold()
-        wait(100)
+        wait(50)
 
         # Drives backwards and grabs blocks.
         utils.FrontClaw.rubberUp()
@@ -277,13 +277,13 @@ class EnergyBlockDeposition:
         gyroStraightBackwardsToGrabBlocks.speed = -100
         gyroStraightBackwardsToGrabBlocks.runUntil(lambda: DRIVE_BASE.angle() < totalBackDist)
         DRIVE_BASE.hold()
-        wait(100)
+        wait(50)
         utils.FrontClaw.rubberDown()
 
         # Deposits blocks
         ev3pid.GyroStraight(400, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() >= 375)
         DRIVE_BASE.hold()
-        wait(100)
+        wait(50)
         utils.FrontClaw.rubberUp()
 
         # Secures subsequent blocks
@@ -307,17 +307,17 @@ class EnergyBlockDeposition:
         totalForwardsDist = 40 + 45 * (5 - len(utils.RunLogic.undercarriageStorage))
         gyroStraightForwardsToGrabBlocks.runUntil(lambda: DRIVE_BASE.angle() > totalForwardsDist)
         DRIVE_BASE.hold()
-        wait(100)
+        wait(50)
         DRIVE_BASE.run_angle(-100, 10)
 
         # Drives forwards and grabs blocks.
         utils.RearClaw.openGate()
-        wait(100)
+        wait(50)
         totalForwardsDist += 40 + 45 * (count - 1)
         gyroStraightForwardsToGrabBlocks.speed = 100
         gyroStraightForwardsToGrabBlocks.runUntil(lambda: DRIVE_BASE.angle() > totalForwardsDist)
         DRIVE_BASE.hold()
-        wait(100)
+        wait(50)
         utils.RearClaw.closeGate()
 
         # Deposits blocks
@@ -424,7 +424,7 @@ def scanBlocksAtLeftHouse():
     gyroStraightForwardsToLeftHouse.speed = 350
     gyroStraightForwardsToLeftHouse.runUntil(lambda: DRIVE_BASE.angle() > 960)
     DRIVE_BASE.hold()
-    wait(100)
+    wait(25)
 
     # Turns around to align with blocks at left house.
     ev3pid.GyroTurn(-90, False, True).run()
@@ -467,7 +467,7 @@ def collectYellowSurplusAndLeftEnergy():
     # Returns to the line.
     ev3pid.GyroStraight(-300, -180).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
-    wait(100)
+    wait(25)
 
 def rotateSolarPanels():
 
@@ -494,7 +494,7 @@ def rotateSolarPanels():
 
     # Rotates solar panels.
     utils.RearClaw.minimum()
-    wait(200)
+    wait(500)
     DRIVE_BASE.reset_angle()
     DRIVE_BASE.run_angle(-150, 135)
     DRIVE_BASE.hold()
@@ -535,7 +535,7 @@ def collectYellowRightEnergy():
     # Returns to the line.
     ev3pid.GyroStraight(-300, -180).runUntil(lambda: DRIVE_BASE.angle() <= 50)
     DRIVE_BASE.hold()
-    wait(100)
+    wait(50)
 
 def collectGreenSurplus():
 
@@ -547,7 +547,7 @@ def collectGreenSurplus():
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(200, -90).runUntil(lambda: DRIVE_BASE.angle() >= 360)
     DRIVE_BASE.hold()
-    wait(100)
+    wait(50)
     ev3pid.GyroTurn(0, False, True).run()
 
     # Drives forwards to collect.
@@ -571,7 +571,7 @@ def collectGreenEnergy():
     GYRO.reset_angle(90)
     # DRIVE_BASE.run_angle(100, 10)
     DRIVE_BASE.hold()
-    wait(10)
+    wait(50)
     ev3pid.GyroTurn(180, True, True).run()
     DRIVE_BASE.hold()
 
@@ -633,10 +633,11 @@ def collectBlueSurplus():
     ev3pid.GyroStraight(-150, 180).runUntil(lambda: LEFT_COLOR.color() == Color.BLACK or
         RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
-    wait(120)
+    wait(50)
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(450, 180).runUntil(lambda: DRIVE_BASE.angle() > 585)
     DRIVE_BASE.hold()
+    wait(25)
     utils.FrontClaw.collect()
 
     # Turns and aligns to upper blue energy blocks.
@@ -659,9 +660,11 @@ def collectBlueEnergy():
     ev3pid.GyroStraight(-200, 270).runUntil(lambda: DRIVE_BASE.angle() < -175)
     DRIVE_BASE.hold()
     ev3pid.GyroTurn(360, True, False).run()
+    wait(50)
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(200, 360).runUntil(lambda: DRIVE_BASE.angle() > 225)
     DRIVE_BASE.hold()
+    wait(50)
     ev3pid.GyroTurn(270, True, False).run()
 
     # Turns and aligns to lower blue energy blocks.
@@ -694,7 +697,7 @@ def scanBlocksAtTopHouse():
     DRIVE_BASE.reset_angle()
     ev3pid.GyroStraight(-300, 540).runUntil(lambda: DRIVE_BASE.angle() < -260)
     DRIVE_BASE.hold()
-    wait(100)
+    wait(50)
 
 def depositBlocksAtTopHouse():
 
@@ -718,7 +721,7 @@ def depositBlocksAtStorageBattery():
 
     utils.FrontClaw.goTo(0.79)
     gyroStraightToBlackLineWithSensorCheckProcedure(300, 720)
-    wait(100)
+    wait(50)
 
 def depositBlocksAtRightHouse():
 
@@ -728,6 +731,7 @@ def depositBlocksAtRightHouse():
     ev3pid.GyroTurn(630, False, True).run()
     ev3pid.LineTrack(400, ev3pid.LineEdge.RIGHT, LEFT_COLOR).runUntil(lambda: RIGHT_COLOR.color() == Color.BLACK)
     DRIVE_BASE.hold()
+    wait(25)
 
     # Moves to neutral position for block deposition.
     ev3pid.GyroTurn(720, True, False).run()
