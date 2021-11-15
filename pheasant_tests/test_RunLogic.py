@@ -6,9 +6,12 @@
 
 
 import unittest
-from pheasant_utils import RunLogic
+from pheasant.pheasant_utils import RunLogic
 
 class test_RunLogic(unittest.TestCase):
+
+    #TODO: Add logic tests.
+
     pass
 
 if __name__ == '__main__':
