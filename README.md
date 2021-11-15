@@ -33,6 +33,6 @@ The WRO 2021 competition season is over. This repository is no longer being main
 Copyright © 2021 Qi Tianshi. All rights reserved.
 
 This software is not open source or freely available. This is a summary of (not a substitute for) the
-[full copyright license.](https://github.com/qitianshi/pheasant-wro2021/blob/main/LICENSE)
+[full copyright license](https://github.com/qitianshi/pheasant-wro2021/blob/main/LICENSE).
 
 <p align="center">❤️</p>
