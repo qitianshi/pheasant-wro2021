@@ -58,9 +58,11 @@ utils.SideScan.sensor = Ev3devSensor(Port.S1)
 
 #region Procedures
 
-def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stopCondition, thenHoldMotors: bool):
-
-    MOVE_SPEED = 400
+def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint,
+                             gyroAngle: int,
+                             stopCondition,
+                             thenHoldMotors: bool,
+                             speed: int = 600):
 
     # Drives to top house while scanning.
     gyroStraightController = ev3pid.GyroStraight(None, gyroAngle)
@@ -70,8 +72,8 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
         # Control gyro straight
         gyroStraightControllerOutput = gyroStraightController.rawControllerOutput()
-        LEFT_MOTOR.run(MOVE_SPEED - gyroStraightControllerOutput)
-        RIGHT_MOTOR.run(MOVE_SPEED + gyroStraightControllerOutput)
+        LEFT_MOTOR.run(speed - gyroStraightControllerOutput)
+        RIGHT_MOTOR.run(speed + gyroStraightControllerOutput)
 
         # Scans house blocks.
         currentlyNextToHouseBlock = utils.SideScan.presence()
@@ -83,7 +85,7 @@ def scanHouseBlocksProcedure(thisHouse: utils.DepositPoint, gyroAngle: int, stop
 
     if thenHoldMotors:
         DRIVE_BASE.hold()
-        wait(100)
+        wait(50)
 
     # To handle the case where there are more than two blocks detected. If this happenes, it's likely that .presence()
     # returned False erroneously. Keeping the first and last two colors is the best simple approach.
