@@ -145,17 +145,7 @@ class EnergyBlockDeposition:
 
     def __init__(self, point: utils.DepositPoint, gyroAngle: int, finallyFacing: FacingDirection):
 
-        # self.requirements = utils.RunLogic.blocksAtPoint(point)       # Manually programmed for qualifying round.
-
-        # Randomizations for qualifying round.
-        if point == utils.DepositPoint.LEFT_HOUSE:
-            self.requirements = [utils.BlockColor.SURPLUS, utils.BlockColor.YELLOW]     # .FRONT, .REAR
-        elif point == utils.DepositPoint.TOP_HOUSE:
-            self.requirements = [utils.BlockColor.GREEN, utils.BlockColor.YELLOW]       # .GREEN, .REAR
-        elif point == utils.DepositPoint.RIGHT_HOUSE:
-            self.requirements = [utils.BlockColor.SURPLUS, utils.BlockColor.GREEN]      # .FRONT, .GREEN
-        elif point == utils.DepositPoint.STORAGE_BATTERY:
-            self.requirements = [utils.BlockColor.BLUE, utils.BlockColor.BLUE]          # .BLUE, .BLUE
+        self.requirements = utils.RunLogic.blocksAtPoint(point)
 
         self.point = point
         self.gyroAngle = gyroAngle
