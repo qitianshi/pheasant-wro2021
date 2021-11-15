@@ -27,7 +27,9 @@ LEFT_COLOR = ColorSensor(Port.S2)
 RIGHT_COLOR = ColorSensor(Port.S3)
 GYRO = GyroSensor(Port.S4, Direction.COUNTERCLOCKWISE)
 LEFT_MOTOR = Motor(Port.B, positive_direction=Direction.COUNTERCLOCKWISE)
+LEFT_MOTOR.control.limits(speed=1500)
 RIGHT_MOTOR = Motor(Port.C, positive_direction=Direction.CLOCKWISE)
+RIGHT_MOTOR.control.limits(speed=1500)
 DRIVE_BASE = ev3move.TwoWheelDrive(LEFT_MOTOR, RIGHT_MOTOR)
 
 # Initialize ev3pid package settings
