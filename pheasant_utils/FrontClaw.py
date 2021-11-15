@@ -17,32 +17,32 @@ class FrontClaw(Claw):
     DOUBLE_LOAD_SPEED = 700
 
     @classmethod
-    def lift(cls):
+    def lift(cls, wait: bool = True):
         if cls.loads > 0:
-            cls.goTo(0.79)
+            cls.goTo(0.79, wait)
         else:
-            cls.drop()
+            cls.closeGate(wait)
 
     @classmethod
-    def drop(cls):
-        cls.goTo(0.745)
+    def drop(cls, wait: bool = True):
+        cls.goTo(0.745, wait)
 
     @classmethod
-    def collect(cls):
-        cls.drop()
+    def collect(cls, wait: bool = True):
+        cls.drop(wait)
 
     @classmethod
-    def openGate(cls):
-        cls.goTo(0.02)
+    def openGate(cls, wait: bool = True):
+        cls.goTo(0.02, wait)
 
     @classmethod
-    def closeGate(cls):
-        cls.goTo(0.78)
+    def closeGate(cls, wait: bool = True):
+        cls.goTo(0.78, wait)
 
     @classmethod
-    def rubberDown(cls):
-        cls.goTo(0.83)
+    def rubberDown(cls, wait: bool = True):
+        cls.goTo(0.83, wait)
 
     @classmethod
-    def rubberUp(cls):
-        cls.goTo(0.9)
+    def rubberUp(cls, wait: bool = True):
+        cls.goTo(0.9, wait)

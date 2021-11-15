@@ -22,17 +22,18 @@ class Claw:
     loads = 0
 
     @classmethod
-    def goTo(cls, amount: float):
+    def goTo(cls, amount: float, wait: bool = True):
         cls.MOTOR.run_target((cls.SINGLE_LOAD_SPEED if cls.loads < 2 else cls.DOUBLE_LOAD_SPEED), \
-            cls.ANGLE_RANGE * amount * (1 if amount <= cls.LIFTING_THRESHOLD else cls.LOAD_MULTIPLIER ** cls.loads))
+            cls.ANGLE_RANGE * amount * (1 if amount <= cls.LIFTING_THRESHOLD else cls.LOAD_MULTIPLIER ** cls.loads), \
+            wait=wait)
 
     @classmethod
-    def maximum(cls):
-        cls.MOTOR.dc(50)
+    def maximum(cls, wait: bool = True):
+        cls.goTo(0.95, wait)
 
     @classmethod
-    def minimum(cls):
-        cls.MOTOR.dc(-50)
+    def minimum(cls, wait: bool = True):
+        cls.goTo(0.05, wait)
 
     @classmethod
     def measureAngleRange(cls, moveTime):
