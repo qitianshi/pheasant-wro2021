@@ -176,7 +176,7 @@ class EnergyBlockDeposition:
             ev3pid.GyroStraight(300, self.gyroAngle).runUntil(lambda: DRIVE_BASE.angle() > 0)
             DRIVE_BASE.hold()
 
-    def __turnAround(self, precisely: bool = True):
+    def __turnAround(self, precisely: bool = False):
 
         multiplier = 1 if self.currentlyFacing == EnergyBlockDeposition.FacingDirection.TOWARDS else -1
 
@@ -187,6 +187,7 @@ class EnergyBlockDeposition:
             ev3pid.GyroTurn(self.gyroAngle + 180 * multiplier, False, True, kp=20).run()
         else:
             ev3pid.GyroTurn(self.gyroAngle + 180 * multiplier, True, True).run()
+            DRIVE_BASE.run_angle(multiplier * 300 * -1, 180)         # Compensates for lost distance.
 
         self.gyroAngle += 180 * multiplier
         self.currentlyFacing = EnergyBlockDeposition.FacingDirection.AWAY if \
@@ -355,7 +356,7 @@ class EnergyBlockDeposition:
             self.__getFrontStore(1)
 
         elif self.requirements == [utils.BlockColor.GREEN, utils.BlockColor.REAR]:
-            self.__turnAround()
+            self.__turnAround(precisely=True)
             self.__getGreenClaw(1)
             self.__getRearStore(1)
 
