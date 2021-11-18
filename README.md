@@ -7,14 +7,14 @@ Olympiad (WRO) Regular Category Senior competition.
 
 We're Team Pheasant — Tianshi, Brian, and Stephanie from Hwa Chong Institution in Singapore; we participated in WRO 2021
 through the Singapore National Robotics Competition, working over thousands of hours, writing over ten thousand lines of
-code, and making hundreds of hardware revisions. Sadly, due to the Covid-19 pandemic here, we were regrettably unable to
-join the rest of the international robotics community for WRO.
+code, and making hundreds of hardware revisions. Sadly, due to the Covid-19 pandemic here, we couldn't join the rest of
+the international robotics community for WRO.
 
 Instead, we're leaving this here to aid and inspire future generations of tinkerers from around the world.
 
 ## Acknowledgments
 We'd like to thank all of our friends, seniors, and teachers from the Hwa Chong Infocomm and Robotics Society for giving
-us the resources to develop our robot.
+us the resources to explore and experiment.
 
 We'd like to thank the open source communities that put together Pybricks, ev3dev, and MicroPython, the technologies
 upon which this project was built.
@@ -32,7 +32,7 @@ The WRO 2021 competition season is over. This repository is no longer being main
 ## License
 Copyright © 2021 Qi Tianshi. All rights reserved.
 
-This software is not open source or freely available. This is a summary of (not a substitute for) the
-[full copyright license](https://github.com/qitianshi/pheasant-wro2021/blob/main/LICENSE).
+This software is not open source or freely available.
+[See the full copyright license.](https://github.com/qitianshi/pheasant-wro2021/blob/main/LICENSE)
 
 <p align="center">❤️</p>
