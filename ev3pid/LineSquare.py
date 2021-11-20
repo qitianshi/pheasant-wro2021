@@ -19,10 +19,8 @@ class LinePosition:
 
 class LineSquare(PIDController, DoubleColorInput, DoubleMotorBase):
 
-    MOVE_TO_LINE_SPEED = 250
     LINE_WAIT_TIME = 75
-    LINE_COLOR = Color.BLACK
-    THRESHOLD_TOLERANCE = 2
+    THRESHOLD_TOLERANCE = 0
 
     def __init__(self,
                  linePosition: LinePosition,
@@ -59,15 +57,6 @@ class LineSquare(PIDController, DoubleColorInput, DoubleMotorBase):
     def run(self):
 
         directionMultiplier = 1 if self.linePosition == LinePosition.AHEAD else -1
-
-        # Before running PID loop, the robot drives forward until it reaches the line.
-        while not (self.leftSensor.color() == LineSquare.LINE_COLOR \
-                   and self.rightSensor.color() == LineSquare.LINE_COLOR):
-            self.leftMotor.run(LineSquare.MOVE_TO_LINE_SPEED * directionMultiplier)
-            self.rightMotor.run(LineSquare.MOVE_TO_LINE_SPEED * directionMultiplier)
-        self.leftMotor.hold()
-        self.rightMotor.hold()
-        wait(LineSquare.LINE_WAIT_TIME)        # Stops for a short time to allow the motors to settle.
 
         while not (self.leftSensor.reflection() in range(self.leftThreshold - LineSquare.THRESHOLD_TOLERANCE, \
                    self.leftThreshold + LineSquare.THRESHOLD_TOLERANCE + 1) \
