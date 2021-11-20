@@ -18,8 +18,8 @@ import ev3pid
 import pheasant_utils as utils
 
 # Constants
-LEFT_THRESHOLD = 47
-RIGHT_THRESHOLD = 48
+LEFT_THRESHOLD = 30
+RIGHT_THRESHOLD = 27
 
 # Initialize hardware
 BRICK = EV3Brick()
