@@ -40,11 +40,11 @@ ev3pid.DoubleColorInput.setDefaultSensors(LEFT_COLOR, RIGHT_COLOR)
 ev3pid.GyroStraight.setDefaultTuning(22, 0.2, 100000)
 ev3pid.GyroStraight.setDefaultIntegralLimit(100)
 ev3pid.GyroStraight.setDefaultOutputLimit(1000)
-ev3pid.GyroTurn.setDefaultTuning(kpSingle=23, kiSingle=0.00015, kdSingle=140,
-                                 kpDouble=11, kiDouble=0.0001, kdDouble=70)
-ev3pid.LineSquare.setDefaultTuning(20, 0, 10)
+ev3pid.GyroTurn.setDefaultTuning(kpSingle=29, kiSingle=0.0004, kdSingle=200,
+                                 kpDouble=14, kiDouble=0.0002, kdDouble=100)
+ev3pid.LineSquare.setDefaultTuning(8, 0.05, 40)
 ev3pid.LineSquare.setDefaultOutputLimit(60)
-ev3pid.LineTrack.setDefaultTuning(1.8, 0.0002, 1.2)
+ev3pid.LineTrack.setDefaultTuning(1.9, 0.0002, 150)
 ev3pid.LineTrack.setDefaultIntegralLimit(50)
 
 # Initialize pheasant_utils package settings
