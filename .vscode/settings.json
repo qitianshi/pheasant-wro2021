@@ -3,7 +3,6 @@
 	"files.eol": "\n",
 	"debug.openDebug": "neverOpen",
 	"python.analysis.autoImportCompletions": false,
-	"python.defaultInterpreterPath": "./env/bin/python",
 	"python.linting.enabled": true,
 	"python.languageServer": "Default",
 	"python.testing.unittestArgs": [
