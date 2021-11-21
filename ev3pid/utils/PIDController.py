@@ -27,7 +27,7 @@ class PIDController:
         ki = ki if ki is not None else self.__class__.ki_DEFAULT
         kd = kd if kd is not None else self.__class__.kd_DEFAULT
         integralLimit = integralLimit if integralLimit is not None else self.__class__.INTEGRAL_LIMIT_DEFAULT
-        integralLimit = outputLimit if outputLimit is not None else self.__class__.OUTPUT_LIMIT_DEFAULT
+        outputLimit = outputLimit if outputLimit is not None else self.__class__.OUTPUT_LIMIT_DEFAULT
 
         # PID parameters
         self.setpoint = setpoint
