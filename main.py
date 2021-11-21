@@ -37,7 +37,7 @@ ev3pid.DoubleMotorBase.setDefaultMotors(LEFT_MOTOR, RIGHT_MOTOR)
 ev3pid.GyroInput.setDefaultSensor(GYRO)
 ev3pid.ColorInput.setKnownThresholds(([LEFT_COLOR, LEFT_THRESHOLD], [RIGHT_COLOR, RIGHT_THRESHOLD]))
 ev3pid.DoubleColorInput.setDefaultSensors(LEFT_COLOR, RIGHT_COLOR)
-ev3pid.GyroStraight.setDefaultTuning(22, 0.2, 100000)
+ev3pid.GyroStraight.setDefaultTuning(22, 0, 100)
 ev3pid.GyroStraight.setDefaultIntegralLimit(100)
 ev3pid.GyroStraight.setDefaultOutputLimit(1000)
 ev3pid.GyroTurn.setDefaultTuning(kpSingle=29, kiSingle=0.0004, kdSingle=200,
