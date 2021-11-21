@@ -72,10 +72,11 @@ class GyroTurn(PIDController, GyroInput, DoubleMotorBase):
 
     def run(self, precisely: bool = False):
 
+        ANGLE_TOLERANCE = 0 if precisely else 1
         EXIT_SPEED = 0 if precisely else 25
 
-        while not (self.sensor.angle() == self.angle and abs(self.leftMotor.speed()) <= EXIT_SPEED and \
-            abs(self.rightMotor.speed()) <= EXIT_SPEED):
+        while not (abs(self.sensor.angle() - self.angle) <= ANGLE_TOLERANCE and \
+            abs(self.leftMotor.speed()) <= EXIT_SPEED and abs(self.rightMotor.speed()) <= EXIT_SPEED):
 
             output = self.update(self.sensor.angle() - self.angle)
 
