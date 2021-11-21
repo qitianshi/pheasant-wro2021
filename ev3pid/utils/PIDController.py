@@ -48,10 +48,10 @@ class PIDController:
 
         # Integral term
         self.integral += error
-        iTerm = self.integral * self.ki
         if self.integralLimit is not None:          # Applies integral limit, if set.
             self.integral = min(self.integral, self.integralLimit)
             self.integral = max(self.integral, self.integralLimit * -1)
+        iTerm = self.integral * self.ki
 
         # Differential term
         dTerm = (error - self.prevError) * self.kd
