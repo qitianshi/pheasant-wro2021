@@ -20,7 +20,7 @@ class LinePosition:
 class LineSquare(PIDController, DoubleColorInput, DoubleMotorBase):
 
     LINE_WAIT_TIME = 75
-    THRESHOLD_TOLERANCE = 0
+    THRESHOLD_TOLERANCE = 1
 
     def __init__(self,
                  linePosition: LinePosition,
