@@ -41,13 +41,13 @@ class PIDController:
         self.prevError = 0
         self.integral = 0
 
-    def update(self, error: float) -> float:
+    def update(self, error: float, integralMultiplier: int = 1) -> float:
 
         # Proportional term
         pTerm = error * self.kp
 
         # Integral term
-        self.integral += error
+        self.integral = self.integral * integralMultiplier + error
         if self.integralLimit is not None:          # Applies integral limit, if set.
             self.integral = min(self.integral, self.integralLimit)
             self.integral = max(self.integral, self.integralLimit * -1)
