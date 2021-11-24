@@ -10,7 +10,7 @@ from .Claw import Claw
 class FrontClaw(Claw):
 
     ANGLE_RANGE = 950
-    LOAD_MULTIPLIER = 1.055
+    LOAD_MULTIPLIER = 1.03
     LIFTING_THRESHOLD = 0.78
 
     SINGLE_LOAD_SPEED = 900
@@ -19,13 +19,13 @@ class FrontClaw(Claw):
     @classmethod
     def lift(cls, wait: bool = True):
         if cls.loads > 0:
-            cls.goTo(0.79, wait)
+            cls.goTo(0.81, wait)
         else:
             cls.closeGate(wait)
 
     @classmethod
     def drop(cls, wait: bool = True):
-        cls.goTo(0.745, wait)
+        cls.goTo(0.74, wait)
 
     @classmethod
     def collect(cls, wait: bool = True):
@@ -37,7 +37,7 @@ class FrontClaw(Claw):
 
     @classmethod
     def closeGate(cls, wait: bool = True):
-        cls.goTo(0.78, wait)
+        cls.goTo(0.66, wait)
 
     @classmethod
     def rubberDown(cls, wait: bool = True):

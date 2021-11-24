@@ -10,7 +10,7 @@ from .Claw import Claw
 class RearClaw(Claw):
 
     ANGLE_RANGE = 310
-    LOAD_MULTIPLIER = 1.11
+    LOAD_MULTIPLIER = 1.09
     LIFTING_THRESHOLD = 0.27
 
     SINGLE_LOAD_SPEED = 250
@@ -36,4 +36,4 @@ class RearClaw(Claw):
     @classmethod
     def closeGate(cls, wait: bool = True):
         cls.MOTOR.run_target((cls.SINGLE_LOAD_SPEED if cls.loads < 2 else cls.DOUBLE_LOAD_SPEED),
-            cls.ANGLE_RANGE * 0.42, wait=wait)                                  # To bypass load multiplier.
+            cls.ANGLE_RANGE * 0.44, wait=wait)                                  # To bypass load multiplier.

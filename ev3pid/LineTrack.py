@@ -44,11 +44,13 @@ class LineTrack(PIDController, ColorInput, DoubleMotorBase):
 
     def runUntil(self, stopCondition):
         while not stopCondition():
-            output = self.update(self.sensor.reflection() - self.threshold, 0.5) * \
+            output = self.update(self.sensor.reflection() - self.threshold, 0.4) * \
                 (1 if self.trackingEdge == LineEdge.LEFT else -1)
 
             self.leftMotor.run(self.speed + output)
             self.rightMotor.run(self.speed - output)
+
+        self.reset()
 
     def rawControllerOutput(self):
         return self.update(self.sensor.reflection() - self.threshold) * \
