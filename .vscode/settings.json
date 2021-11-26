@@ -14,5 +14,5 @@
 	],
 	"python.testing.pytestEnabled": false,
 	"python.testing.unittestEnabled": true,
-	"ev3devBrowser.download.include": "{ev3move/**/*,ev3pid/**/*,pheasant_utils/**/*,testware/**/*,main.py,run.py}"
+	"ev3devBrowser.download.include": "pheasant/**/*"
 }
