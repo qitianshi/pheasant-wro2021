@@ -24,6 +24,10 @@ class FrontClaw(Claw):
             cls.closeGate(wait)
 
     @classmethod
+    def liftFromBattery(cls, wait: bool = True):
+        cls.goTo(0.86, wait)
+
+    @classmethod
     def drop(cls, wait: bool = True):
         cls.goTo(0.74, wait)
 
