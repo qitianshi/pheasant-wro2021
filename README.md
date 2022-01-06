@@ -1,6 +1,8 @@
 # Team Pheasant: WRO 2021
 Source code for Team Pheasant for the 2021 WRO Regular Category Senior competition.
 
+![IMG_2010](https://user-images.githubusercontent.com/65122416/148389601-fed66cf5-09b6-44ec-9a38-8f851dcd5bdc.jpeg)
+
 ## Intro
 Here you'll find the complete software repository for Team Pheasant's **_full score run_** for the 2021 World Robot
 Olympiad (WRO) Regular Category Senior competition.
